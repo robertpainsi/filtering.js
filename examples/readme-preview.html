@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Readme Preview</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <script src="../dist/index.js"></script>
+
+    <style>
+        html, body {
+            font-family: 'Roboto', serif;
+            width: 100vw;
+            height: 100vh;
+            margin: 24px 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .red {
+            background-color: #db4437;
+        }
+
+        .green {
+            background-color: #0f9d58;
+        }
+
+        .blue {
+            background-color: #4285f4;
+        }
+
+        #filtering {
+            display: flex;
+            justify-content: center;
+            user-select: none;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .filtering-group {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid lightgray;
+            border-radius: 6px;
+        }
+
+        .filtering-group-header {
+            align-self: flex-start;
+            background-color: white;
+            color: lightgray;
+            font-size: 15px;
+            margin-top: -10px;
+            margin-left: 8px;
+        }
+
+        .filtering-filter {
+            display: flex;
+            gap: 8px;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 3px 12px;
+        }
+
+        .filtering-filter:hover {
+            background-color: #eeeeee;
+        }
+
+        .filtering-filter.enabled {
+            font-weight: bold;
+            background-color: #ccf9ff;
+        }
+
+        .filtering-filter.disabled {
+            color: grey;
+        }
+
+        .filtering-filter.disabled:hover {
+            background-color: transparent;
+        }
+
+        #items {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .filtering-item {
+            width: 64px;
+            height: 64px;
+            border: 1px solid grey;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .filtering-item.small {
+            width: 48px;
+            height: 48px;
+        }
+
+        .filtering-item.large {
+            width: 80px;
+            height: 80px;
+        }
+
+        .filtering-item.filtered {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root">
+    <div id="filtering">
+        <div class="filtering-group" data-group-name="color">
+            <span class="filtering-group-header">Color</span>
+            <div class="filtering-filter" data-filter-name="red">Red <span class="total"></span></div>
+            <div class="filtering-filter" data-filter-name="green">Green <span class="total"></span></div>
+            <div class="filtering-filter" data-filter-name="blue">Blue <span class="total"></span></div>
+        </div>
+        <div class="filtering-group" data-group-name="size">
+            <span class="filtering-group-header">Size</span>
+            <div class="filtering-filter" data-filter-name="small">Small <span class="total"></span></div>
+            <div class="filtering-filter" data-filter-name="large">Large <span class="total"></span></div>
+        </div>
+    </div>
+
+    <div id="items">
+        <div id="item-1" class="filtering-item red small" data-filter-color="red" data-filter-size="small"></div>
+        <div id="item-2" class="filtering-item blue large" data-filter-color="blue" data-filter-size="large"></div>
+        <div id="item-3" class="filtering-item red large" data-filter-color="red" data-filter-size="large"></div>
+        <div id="item-4" class="filtering-item red small" data-filter-color="red" data-filter-size="small"></div>
+        <div id="item-5" class="filtering-item green small" data-filter-color="green" data-filter-size="small"></div>
+    </div>
+</div>
+
+<script>
+    const schema = parseSchemaFromHtml(document.querySelector('#root'));
+    const filtering = new Filtering(schema);
+
+    function updateFilter() {
+        const filterData = parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
+        filtering.filter(filterData)
+            .then((result) => {
+                for (const group of result.groups) {
+                    for (const filter of group.filters) {
+                        const filterElement = document.querySelector(`[data-group-name="${group.name}"] [data-filter-name="${filter.name}"]`);
+                        filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
+                        filterElement.classList.toggle('disabled', filter.possibleItems.length === 0);
+                    }
+                }
+                for (const item of result.allItems) {
+                    item.data.element.classList.toggle('filtered', !result.filteredItems.includes(item));
+                }
+            })
+    }
+
+    for (const filterElement of document.querySelectorAll('.filtering-filter')) {
+        filterElement.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (filterElement.classList.contains('disabled')) {
+                return;
+            }
+            filterElement.classList.toggle('enabled');
+            updateFilter();
+        });
+    }
+    updateFilter();
+</script>
+
+</body>
+</html>
