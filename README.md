@@ -22,8 +22,10 @@ This library is currently usable but still under construction. The filtering alg
 
 ! Difference to other libraries?
 
-- :zap: fast by using ES6 features supported by modern browsers
+- :zap: fast
 - :ant: 5.7kB small
+- :trophy: Supported by modern browsers using ES6 features
+<sup>[1](https://caniuse.com/mdn-javascript_builtins_set),[2](https://caniuse.com/mdn-javascript_builtins_map),[3](https://caniuse.com/mdn-api_htmlelement_dataset),[4](https://caniuse.com/mdn-api_domtokenlist_contains)</sup>
 - :baby: Easy to set up and use
 - :battery: Parse filter structure and items directly from HTML
 
