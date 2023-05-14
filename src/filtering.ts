@@ -29,11 +29,11 @@ export class Filtering {
     }
 
     private createEmptyResult(schema: Schema) {
-        const result = new Result();
+        const result = new Result(schema);
         for (const group of schema.groups) {
-            const groupResult = new GroupResult(group.name, group.type);
+            const groupResult = new GroupResult(group);
             for (const filter of group.filters) {
-                const filterResult = new FilterResult(filter.name, filter.type);
+                const filterResult = new FilterResult(filter);
                 groupResult.addFilter(filterResult);
             }
             result.addGroup(groupResult);

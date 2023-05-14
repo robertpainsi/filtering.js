@@ -266,7 +266,7 @@ data-filter-company="${company}"
                 document.getElementById('runtime').innerText = `${Date.now() - start} ms`;
                 for (const group of result.groups) {
                     for (const filter of group.filters) {
-                        const filterElement = document.querySelector(`[data-group-name="${group.name}"] [data-filter-name="${filter.name}"]`);
+                        const filterElement = filter.schemaFilter.data.element;
                         filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
                         filterElement.classList.toggle('disabled', filter.possibleItems.length === 0);
                     }
