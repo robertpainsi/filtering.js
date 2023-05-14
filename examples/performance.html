@@ -254,13 +254,13 @@ data-filter-company="${company}"
 ></div>`
     }
     document.getElementById('items').innerHTML = items_html;
-
-    const schema = parseSchemaFromHtml(document.querySelector('#root'));
+    const parser = new FilteringParser();
+    const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));
     const filtering = new Filtering(schema);
 
     function updateFilter() {
         const start = Date.now();
-        const filterData = parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
+        const filterData = parser.parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
         filtering.filter(filterData)
             .then((result) => {
                 document.getElementById('runtime').innerText = `${Date.now() - start} ms`;

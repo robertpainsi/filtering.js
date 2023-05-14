@@ -139,11 +139,12 @@
 </div>
 
 <script>
-    const schema = parseSchemaFromHtml(document.querySelector('#root'));
+    const parser = new FilteringParser();
+    const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));
     const filtering = new Filtering(schema);
 
     function updateFilter() {
-        const filterData = parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
+        const filterData = parser.parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
         filtering.filter(filterData)
             .then((result) => {
                 for (const group of result.groups) {
