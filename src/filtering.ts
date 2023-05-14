@@ -16,13 +16,23 @@ export class Filtering {
         return new Promise((resolve, reject) => {
             const result = this.createEmptyResult(this.schema);
 
-            for (const item of this.schema.items) {
+            let relevantItems: Item[] = [];
+            if (this.options.filterItem) {
+                for (const item of this.schema.items) {
+                    if (this.options.filterItem(item, this.schema, filterData)) {
+                        relevantItems.push(item);
+                    }
+                }
+            } else {
+                relevantItems = [...this.schema.items];
+            }
+            for (const item of relevantItems) {
                 result.addAllItem(item);
             }
-            for (const item of this.getFilterItems(this.schema.items, filterData)) {
+            for (const item of this.getFilterItems(relevantItems, filterData)) {
                 result.addFilteredItem(item);
             }
-            this.calculatePossibleItems(result, this.schema.items, filterData);
+            this.calculatePossibleItems(result, relevantItems, filterData);
 
             resolve(result);
         });
@@ -80,4 +90,5 @@ export class Filtering {
 }
 
 interface FilteringOptions {
+    filterItem?(item: Item, schema: Schema, filterData: FilterData): boolean,
 }
