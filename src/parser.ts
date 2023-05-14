@@ -7,14 +7,18 @@ export function parseSchemaFromHtml(element: HTMLElement) {
         const groupName = groupElement.dataset.groupName;
         const groupLabel = groupElement.dataset.groupLabel || groupName;
         const groupType = groupElement.dataset.groupType as GroupType;
-        const group = new Group(groupName, groupLabel, groupType);
+        const group = new Group(groupName, groupLabel, groupType, {
+            element: groupElement,
+        });
 
         const filterElements = [...groupElement.querySelectorAll('.filtering-filter')] as HTMLElement[];
         for (const filterElement of filterElements) {
             const filterName = filterElement.dataset.filterName;
             const filterLabel = filterElement.dataset.filterLabel || filterName;
             const filterType = filterElement.dataset.filterType as FilterType;
-            const filter = new Filter(filterName, filterLabel, filterType);
+            const filter = new Filter(filterName, filterLabel, filterType, {
+                element: filterElement,
+            });
 
             group.addFilter(filter);
         }

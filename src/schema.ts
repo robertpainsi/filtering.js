@@ -3,6 +3,11 @@ import {Pojo} from "./utils";
 export class Schema {
     #groups: Map<string, Group> = new Map();
     #items: Item[] = [];
+    #data?: Pojo;
+
+    constructor(data?: Pojo) {
+        this.#data = data;
+    }
 
     get groups(): Group[] {
         return [...this.#groups.values()];
@@ -25,6 +30,10 @@ export class Schema {
             this.addItem(item);
         }
     }
+
+    get data(): Pojo {
+        return this.#data;
+    }
 }
 
 export class Group {
@@ -32,11 +41,13 @@ export class Group {
     #label: string;
     #type: GroupType;
     #filters: Map<string, Filter> = new Map();
+    #data?: Pojo;
 
-    constructor(name: string, label?: string, type: GroupType = GroupType.singleSelect) {
+    constructor(name: string, label?: string, type: GroupType = GroupType.singleSelect, data?: Pojo) {
         this.#name = name;
         this.#label = label;
         this.#type = type;
+        this.#data = data;
     }
 
     get name(): string {
@@ -62,6 +73,10 @@ export class Group {
     getFilterNames() {
         return new Set(this.#filters.keys());
     }
+
+    get data(): Pojo {
+        return this.#data;
+    }
 }
 
 export enum GroupType {
@@ -73,11 +88,13 @@ export class Filter {
     #name: string;
     #label: string;
     #type: FilterType;
+    #data?: Pojo;
 
-    constructor(name: string, label?: string, type: FilterType = FilterType.single) {
+    constructor(name: string, label?: string, type: FilterType = FilterType.single, data?: Pojo) {
         this.#name = name;
         this.#label = label;
         this.#type = type;
+        this.#data = data;
     }
 
 
@@ -91,6 +108,10 @@ export class Filter {
 
     get type(): FilterType {
         return this.#type;
+    }
+
+    get data(): Pojo {
+        return this.#data;
     }
 }
 
