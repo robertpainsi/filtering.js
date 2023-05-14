@@ -31,6 +31,8 @@ This library is currently usable but still under construction. The filtering alg
 
 ! How to use?
 
+- Note that group and filter names need to be unique.
+
 ! Initialize
 - Parsed from html 
   - state selected/active/disabled

@@ -18,6 +18,9 @@ export class Schema {
     }
 
     addGroup(group: Group) {
+        if (this.#groups.has(group.name)) {
+            throw new Error(`Group with name ${group.name} already added to schema. Group names have to be unique.`);
+        }
         this.#groups.set(group.name, group);
     }
 
@@ -67,6 +70,9 @@ export class Group {
     }
 
     addFilter(filter: Filter) {
+        if (this.#filters.has(filter.name)) {
+            throw new Error(`Filter with name ${filter.name} already in group ${this.name}. Filter names have to be unique in a Group.`);
+        }
         this.#filters.set(filter.name, filter);
     }
 
