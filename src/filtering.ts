@@ -13,17 +13,19 @@ export class Filtering {
     }
 
     filter(filterData: FilterData): Promise<Result> {
-        const result = this.createEmptyResult(this.schema);
+        return new Promise((resolve, reject) => {
+            const result = this.createEmptyResult(this.schema);
 
-        for (const item of this.schema.items) {
-            result.addAllItem(item);
-        }
-        for (const item of this.getFilterItems(this.schema.items, filterData)) {
-            result.addFilteredItem(item);
-        }
-        this.calculatePossibleItems(result, this.schema.items, filterData);
+            for (const item of this.schema.items) {
+                result.addAllItem(item);
+            }
+            for (const item of this.getFilterItems(this.schema.items, filterData)) {
+                result.addFilteredItem(item);
+            }
+            this.calculatePossibleItems(result, this.schema.items, filterData);
 
-        return Promise.resolve(result);
+            resolve(result);
+        });
     }
 
     private createEmptyResult(schema: Schema) {
