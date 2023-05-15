@@ -17,6 +17,7 @@
 *.gif  binary
 
 # Manually declare special files
-/dist/index.js binary
+/dist/index.js    binary
+package-lock.json binary
 
 # For more info see https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
