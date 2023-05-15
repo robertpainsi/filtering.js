@@ -23,15 +23,15 @@ export class Filtering {
                 }
             }
         } else {
-                relevantItems = [...this.schema.items];
-            }
-            for (const item of relevantItems) {
-                result.addAllItem(item);
-            }
-            for (const item of this.getFilterItems(relevantItems, filterData)) {
-                result.addFilteredItem(item);
-            }
-            this.calculatePossibleItems(result, relevantItems, filterData);
+            relevantItems = [...this.schema.items];
+        }
+        for (const item of relevantItems) {
+            result.addAllItem(item);
+        }
+        for (const item of this.getFilterItems(relevantItems, filterData)) {
+            result.addFilteredItem(item);
+        }
+        this.calculatePossibleItems(result, relevantItems, filterData);
 
         return result;
     }

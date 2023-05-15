@@ -130,7 +130,7 @@ export class Item {
     #data?: Pojo;
     #groups = new Map<string, Set<string>>();
 
-    constructor(data: Pojo) {
+    constructor(data?: Pojo) {
         this.#data = data;
     }
 
