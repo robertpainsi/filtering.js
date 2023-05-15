@@ -12,18 +12,17 @@ export class Filtering {
         this.options = options;
     }
 
-    filter(filterData: FilterData): Promise<Result> {
-        return new Promise((resolve, reject) => {
-            const result = this.createEmptyResult(this.schema);
+    filter(filterData: FilterData): Result {
+        const result = this.createEmptyResult(this.schema);
 
-            let relevantItems: Item[] = [];
-            if (this.options.filterItem) {
-                for (const item of this.schema.items) {
-                    if (this.options.filterItem(item, this.schema, filterData)) {
-                        relevantItems.push(item);
-                    }
+        let relevantItems: Item[] = [];
+        if (this.options.filterItem) {
+            for (const item of this.schema.items) {
+                if (this.options.filterItem(item, this.schema, filterData)) {
+                    relevantItems.push(item);
                 }
-            } else {
+            }
+        } else {
                 relevantItems = [...this.schema.items];
             }
             for (const item of relevantItems) {
@@ -34,8 +33,7 @@ export class Filtering {
             }
             this.calculatePossibleItems(result, relevantItems, filterData);
 
-            resolve(result);
-        });
+        return result;
     }
 
     private createEmptyResult(schema: Schema) {

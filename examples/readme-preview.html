@@ -41,19 +41,17 @@
 
     function updateFilter() {
         const filterData = parser.parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
-        filtering.filter(filterData)
-            .then((result) => {
-                for (const group of result.groups) {
-                    for (const filter of group.filters) {
-                        const filterElement = filter.schemaFilter.data.element;
-                        filterElement.classList.toggle('disabled', filter.possibleItems.length === 0);
-                        filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
-                    }
-                }
-                for (const item of result.allItems) {
-                    item.data.element.classList.toggle('filtered', !result.filteredItems.includes(item));
-                }
-            })
+        const result = filtering.filter(filterData);
+        for (const group of result.groups) {
+            for (const filter of group.filters) {
+                const filterElement = filter.schemaFilter.data.element;
+                filterElement.classList.toggle('disabled', filter.possibleItems.length === 0);
+                filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
+            }
+        }
+        for (const item of result.allItems) {
+            item.data.element.classList.toggle('filtered', !result.filteredItems.includes(item));
+        }
     }
 
     for (const filterElement of document.querySelectorAll('.filtering-filter')) {

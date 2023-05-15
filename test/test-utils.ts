@@ -58,7 +58,7 @@ export async function testFiltering(data: TestData) {
         }
     }
 
-    const actual = await filtering.filter(filterData);
+    const actual = filtering.filter(filterData);
 
     const {expected} = data;
     const testCombinations = [];
