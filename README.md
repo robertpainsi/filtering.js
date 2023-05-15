@@ -8,7 +8,7 @@ This library is currently usable but still under construction. The filtering alg
 
 ! Explain
 
-![Preview](https://github.com/robertpainsi/filtering.js/blob/main/assets/preview.gif?raw=true)<br>
+![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
 *(Source: [readme-preview.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/readme-preview.html))*
 
 ! Difference to other libraries?
