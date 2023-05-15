@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>filtering.js - Performance</title>
+
+    <script src="../dist/index.js"></script>
+</head>
+<body>
+
+<pre id="root"></pre>
+
+<script>
+    const logger = {
+        log(...items) {
+            document.getElementById('root').innerHTML += items.map((item) => item.toString()).join(' ') + '<br>';
+        },
+        warn(...items) {
+            document.getElementById('root').innerHTML += '<span style="color: darkgoldenrod">' + items.map((item) => item.toString()).join(' ') + '</span><br>';
+        }
+    }
+
+    async function wait(millis) {
+        return new Promise((resolve, reject) => {
+            setTimeout(resolve, millis);
+        })
+    }
+
+    function random(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function randomIntFromInterval(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+
+    class Scenario {
+        #numberOfItems;
+        #numberOfGroups;
+        #numberOfFilters;
+
+        constructor(numberOfItems, numberOfGroups, numberOfFilters) {
+            this.#numberOfItems = numberOfItems;
+            this.#numberOfGroups = numberOfGroups;
+            this.#numberOfFilters = numberOfFilters;
+        }
+
+        get numberOfItems() {
+            return this.#numberOfItems;
+        }
+
+        get numberOfGroups() {
+            return this.#numberOfGroups;
+        }
+
+        get numberOfFilters() {
+            return this.#numberOfFilters;
+        }
+
+        toString() {
+            return `Scenario(#items: ${this.numberOfItems}, #groups: ${this.numberOfGroups}, #filters: ${this.numberOfFilters})`;
+        }
+    }
+
+    const NONE = Symbol('none');
+    const SINGLE = Symbol('single');
+    const A_FILTER_IN_EACH_GROUP = Symbol('a_filter_in_each_group');
+    const MULTIPLE_FILTERS_IN_EACH_GROUP = Symbol('multiple_filters_in_each_group');
+
+    const runs = 1000;
+    const scenarios = [];
+    const scenarioSettings = {
+        numberOfItems: [100, 1000],
+        numberOfGroups: [2, 4, 8],
+        numberOfFilters: [8, 24, 64],
+    }
+    const enabledFilters = [NONE, SINGLE, A_FILTER_IN_EACH_GROUP, MULTIPLE_FILTERS_IN_EACH_GROUP];
+    for (const numberOfItems of scenarioSettings.numberOfItems) {
+        for (const numberOfGroups of scenarioSettings.numberOfGroups) {
+            for (const numberOfFilters of scenarioSettings.numberOfFilters) {
+                scenarios.push(new Scenario(numberOfItems, numberOfGroups, numberOfFilters));
+            }
+        }
+    }
+
+    (async function () {
+        for (const scenario of scenarios) {
+            await wait(10);
+            const {numberOfItems, numberOfGroups, numberOfFilters} = scenario;
+
+            if (numberOfFilters % numberOfGroups !== 0) {
+                if (numberOfFilters < numberOfGroups) {
+                    logger.warn(`Ignoring ${scenario}. #groups(${numberOfGroups}) > #filters(${numberOfFilters}).`);
+                } else {
+                    logger.warn(`Ignoring ${scenario}. #filters(${numberOfFilters}) not dividable by #groups(${numberOfGroups}). Up to ${numberOfGroups - 1} filters may be missing`);
+                }
+                continue;
+            }
+
+            let totalRuntime = 0;
+            let actualRuns = 0;
+            for (let run = 0; run < runs; run++) {
+                const schema = new Schema();
+                for (let groupIndex = 0; groupIndex < numberOfGroups; groupIndex++) {
+                    const group = new Group(`group-${groupIndex}`);
+                    for (let filterIndex = 0; filterIndex < numberOfFilters / numberOfGroups; filterIndex++) {
+                        const filter = new Filter(`filter-${filterIndex}`);
+                        group.addFilter(filter);
+                    }
+                    schema.addGroup(group);
+                }
+                for (let itemIndex = 0; itemIndex < numberOfItems; itemIndex++) {
+                    const item = new Item({name: `item-${itemIndex}`});
+                    for (const group of schema.groups) {
+                        const filter = random(group.filters);
+                        item.addFilter(group.name, filter.name);
+                    }
+                    schema.addItem(item);
+                }
+
+                const filtering = new Filtering(schema);
+                for (const enabledFilter of enabledFilters) {
+                    const filterData = new FilterData();
+                    switch (enabledFilter) {
+                        case NONE: {
+                            break;
+                        }
+                        case SINGLE: {
+                            const group = random(schema.groups);
+                            const filter = random(group.filters);
+                            filterData.enableFilter(group.name, filter.name);
+                            break;
+                        }
+                        case A_FILTER_IN_EACH_GROUP: {
+                            for (const group of schema.groups) {
+                                const filter = random(group.filters);
+                                filterData.enableFilter(group.name, filter.name);
+                            }
+                            break;
+                        }
+                        case MULTIPLE_FILTERS_IN_EACH_GROUP: {
+                            for (const group of schema.groups) {
+                                for (let i = 0; i < (numberOfFilters / numberOfGroups) / 2; i++) {
+                                    const filter = random(group.filters);
+                                    filterData.enableFilter(group.name, filter.name);
+                                }
+                            }
+                            break;
+                        }
+                        default: {
+                            logger.warn(`Unknown enabledFilter(${enabledFilter}).`);
+                            continue;
+                        }
+                    }
+
+                    const start = Date.now();
+                    filtering.filter(filterData);
+                    const runtime = Date.now() - start;
+
+                    actualRuns++;
+                    totalRuntime += runtime;
+                }
+            }
+            let averageRuntime = Math.ceil(totalRuntime / (actualRuns));
+            logger.log(`[${scenario}] average runtime: ${averageRuntime}ms`);
+        }
+    })();
+</script>
+</body>
+</html>
