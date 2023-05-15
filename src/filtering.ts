@@ -1,4 +1,4 @@
-import {ENABLE_ALL_FILTER, FilterData, Item, Schema} from "./schema";
+import {FilterData, Item, Schema} from "./schema";
 import {FilterResult, GroupResult, Result} from "./result";
 import {findOne} from "./utils";
 
@@ -70,11 +70,9 @@ export class Filtering {
             let filtered = true;
 
             for (const [groupName, checkedFilters] of filterData.enabledFilters) {
-                if (!checkedFilters.has(ENABLE_ALL_FILTER)) {
-                    if (checkedFilters.size > 0 && !findOne(item.getFilterNames(groupName), checkedFilters)) {
-                        filtered = false;
-                        break;
-                    }
+                if (checkedFilters.size > 0 && !findOne(item.getFilterNames(groupName), checkedFilters)) {
+                    filtered = false;
+                    break;
                 }
             }
 

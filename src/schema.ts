@@ -41,28 +41,16 @@ export class Schema {
 
 export class Group {
     #name: string;
-    #label: string;
-    #type: GroupType;
     #filters: Map<string, Filter> = new Map();
     #data?: Pojo;
 
-    constructor(name: string, label?: string, type: GroupType = GroupType.singleSelect, data?: Pojo) {
+    constructor(name: string, data?: Pojo) {
         this.#name = name;
-        this.#label = label;
-        this.#type = type;
         this.#data = data;
     }
 
     get name(): string {
         return this.#name;
-    }
-
-    get label(): string {
-        return this.#label;
-    }
-
-    get type(): GroupType {
-        return this.#type;
     }
 
     get filters(): Filter[] {
@@ -85,21 +73,12 @@ export class Group {
     }
 }
 
-export enum GroupType {
-    singleSelect = '',
-    multiSelect = 'multiSelect',
-}
-
 export class Filter {
     #name: string;
-    #label: string;
-    #type: FilterType;
     #data?: Pojo;
 
-    constructor(name: string, label?: string, type: FilterType = FilterType.single, data?: Pojo) {
+    constructor(name: string, data?: Pojo) {
         this.#name = name;
-        this.#label = label;
-        this.#type = type;
         this.#data = data;
     }
 
@@ -108,22 +87,9 @@ export class Filter {
         return this.#name;
     }
 
-    get label(): string {
-        return this.#label;
-    }
-
-    get type(): FilterType {
-        return this.#type;
-    }
-
     get data(): Pojo {
         return this.#data;
     }
-}
-
-export enum FilterType {
-    single = '',
-    all = 'all',
 }
 
 export class Item {
@@ -176,22 +142,12 @@ export class FilterData {
 
     enableFilter(groupName: string, filterName: string | Symbol) {
         const filters = this.#getFiltersFromGroup(groupName);
-
-        if (filters.has(ENABLE_ALL_FILTER)) {
-            return;
-        }
-
-        if (filterName === ENABLE_ALL_FILTER) {
-            this.enableAllFilter(groupName);
-        } else {
-            filters.add(filterName);
-        }
+        filters.add(filterName);
     }
 
     enableAllFilter(groupName: string) {
         const filters = this.#getFiltersFromGroup(groupName);
         filters.clear();
-        filters.add(ENABLE_ALL_FILTER);
     }
 
     #getFiltersFromGroup(groupName: string) {
@@ -220,5 +176,3 @@ export class FilterData {
         return filterData;
     }
 }
-
-export const ENABLE_ALL_FILTER = Symbol('Enable all filter');

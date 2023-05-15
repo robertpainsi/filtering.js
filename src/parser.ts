@@ -1,4 +1,4 @@
-import {Filter, FilterData, FilterType, Group, GroupType, Item, Schema} from "./schema";
+import {Filter, FilterData, Group, Item, Schema} from "./schema";
 
 export interface ParseSchemaOptions {
     groupClass: string,
@@ -36,19 +36,19 @@ export class FilteringParser {
         const groupElements = [...element.querySelectorAll(`.${this.#options.groupClass}`)] as HTMLElement[];
         for (const groupElement of groupElements) {
             const groupName = groupElement.dataset.groupName;
-            const groupLabel = groupElement.dataset.groupLabel || groupName;
-            const groupType = groupElement.dataset.groupType as GroupType;
-            const group = new Group(groupName, groupLabel, groupType, {
+            const groupLabel = groupElement.dataset.groupLabel;
+            const group = new Group(groupName, {
                 element: groupElement,
+                label: groupLabel,
             });
 
             const filterElements = [...groupElement.querySelectorAll(`.${this.#options.filterClass}`)] as HTMLElement[];
             for (const filterElement of filterElements) {
                 const filterName = filterElement.dataset.filterName;
                 const filterLabel = filterElement.dataset.filterLabel || filterName;
-                const filterType = filterElement.dataset.filterType as FilterType;
-                const filter = new Filter(filterName, filterLabel, filterType, {
+                const filter = new Filter(filterName, {
                     element: filterElement,
+                    label: filterLabel,
                 });
 
                 group.addFilter(filter);
@@ -89,15 +89,9 @@ export class FilteringParser {
             const filterElements = [...groupElement.querySelectorAll(`.${this.#options.filterClass}`)] as HTMLElement[];
             for (const filterElement of filterElements) {
                 const filterName = filterElement.dataset.filterName;
-                const filterType = filterElement.dataset.filterType as FilterType;
 
                 if (filterElement.classList.contains(this.#options.filterEnabledClass)) {
-                    if (filterType === FilterType.all) {
-                        filterData.enableAllFilter(groupName);
-                        break;
-                    } else {
-                        filterData.enableFilter(groupName, filterName);
-                    }
+                    filterData.enableFilter(groupName, filterName);
                 }
             }
         }
