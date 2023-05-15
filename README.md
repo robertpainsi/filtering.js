@@ -19,6 +19,7 @@ This library is currently usable but still under construction. The filtering alg
   <sup>[1](https://caniuse.com/mdn-javascript_builtins_set),[2](https://caniuse.com/mdn-javascript_builtins_map),[3](https://caniuse.com/mdn-api_htmlelement_dataset),[4](https://caniuse.com/mdn-api_domtokenlist_contains)</sup>
 - :baby: Easy to set up and use
 - :battery: Parse filter structure and items directly from HTML
+- :crystal_ball: Info about how many items would be filtered. No more 0 results.
 
 ### Performance
 
