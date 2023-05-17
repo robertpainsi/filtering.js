@@ -2,11 +2,9 @@
 
 ### \> Under construction \<
 
-This library is currently usable but still under construction. The filtering algorithm is fully implemented but design and tests need improvement, and options and callbacks need to be added. This may change the API interface in the future.
+This library is currently usable but still under construction. The filtering algorithm is fully implemented but design and tests need improvement, and options and callbacks need to be added.
 
-### What is filtering.js?
-
-! Explain
+### What is Filtering.js
 
 ![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
 *(Source: [readme-preview.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/readme-preview.html))*
@@ -15,11 +13,11 @@ This library is currently usable but still under construction. The filtering alg
 
 - :zap: fast
 - :ant: 5.7kB small
-- :trophy: Supported by modern browsers using ES6 features
+- :trophy: Supported by modern browsers using ES6 features.
   <sup>[1](https://caniuse.com/mdn-javascript_builtins_set),[2](https://caniuse.com/mdn-javascript_builtins_map),[3](https://caniuse.com/mdn-api_htmlelement_dataset),[4](https://caniuse.com/mdn-api_domtokenlist_contains)</sup>
-- :weight_lifting: Lifting complex logic from the developer allowing to only concentrate on website specific parts
-- :crystal_ball: Info about how many items would be filtered. No more 0 results
-- :battery: Parse filter structure and items directly from HTML
+- :weight_lifting: Lifting complex logic from the developer allowing to only concentrate on website specific parts.
+- :crystal_ball: Info about how many items would be filtered. No more 0 results.
+- :battery: Parse filter structure and items directly from HTML.
 
 ### Performance
 
@@ -45,14 +43,15 @@ Following tables illustrate the performance of the library. The runtime is calcu
 | **64** | 2 ms  | 3 ms  | 6 ms  |
 </details>
 
-! How to use?
+### How to use?
 
-- Note that group and filter names need to be unique.
+[readme-preview.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/readme-preview.html)
 
 ! Initialize
 - Parsed from html 
-  - state selected/active/disabled
+  - [readme-preview.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/readme-preview.html)
 - JavaScript object
+  - [performance.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/performance.html)
 
 ! Filter
 - Trigger
