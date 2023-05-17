@@ -35,22 +35,27 @@
 </div>
 
 <script>
+    // Initializing and parsing filters, groups and items from HTML
     const {Filtering, FilteringParser} = filteringjs;
     const parser = new FilteringParser();
     const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));
     const filtering = new Filtering(schema);
 
     function updateFilter() {
+        // Parse enabled filter from HTML
         const filterData = parser.parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
         const result = filtering.filter(filterData);
         for (const group of result.groups) {
             for (const filter of group.filters) {
                 const filterElement = filter.schemaFilter.data.element;
+                // Disable filter if it would give 0 results
                 filterElement.classList.toggle('disabled', filter.possibleItems.length === 0);
+                // Total number is equal to the possible items the filter would give
                 filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
             }
         }
         for (const item of result.allItems) {
+            // Show or hide items
             item.data.element.classList.toggle('filtered', !result.filteredItems.includes(item));
         }
     }
@@ -59,9 +64,10 @@
         filterElement.addEventListener('click', (event) => {
             event.preventDefault();
             if (filterElement.classList.contains('disabled')) {
+                // Ignore click if the filter would give 0 results
                 return;
             }
-            filterElement.classList.toggle('enabled');
+            filterElement.classList.toggle('enabled'); // Enable or disable filter
             updateFilter();
         });
     }
