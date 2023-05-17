@@ -11,15 +11,15 @@ This library is currently usable but still under construction. The filtering alg
 ![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
 *(Source: [readme-preview.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/readme-preview.html))*
 
-! Difference to other libraries?
+### Difference to other libraries?
 
 - :zap: fast
 - :ant: 5.7kB small
 - :trophy: Supported by modern browsers using ES6 features
   <sup>[1](https://caniuse.com/mdn-javascript_builtins_set),[2](https://caniuse.com/mdn-javascript_builtins_map),[3](https://caniuse.com/mdn-api_htmlelement_dataset),[4](https://caniuse.com/mdn-api_domtokenlist_contains)</sup>
-- :baby: Easy to set up and use
+- :weight_lifting: Lifting complex logic from the developer allowing to only concentrate on website specific parts
+- :crystal_ball: Info about how many items would be filtered. No more 0 results
 - :battery: Parse filter structure and items directly from HTML
-- :crystal_ball: Info about how many items would be filtered. No more 0 results.
 
 ### Performance
 
