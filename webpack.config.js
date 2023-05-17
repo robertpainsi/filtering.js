@@ -17,6 +17,7 @@ export default {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].js',
+        library: ['filteringjs'],
         libraryTarget: 'umd',
         globalObject: 'this',
         umdNamedDefine: true,

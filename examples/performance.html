@@ -11,6 +11,8 @@
 <pre id="root"></pre>
 
 <script>
+    const {Filtering, Schema, Group, Filter, Item, FilterData} = filteringjs;
+
     const logger = {
         log(...items) {
             document.getElementById('root').innerHTML += items.map((item) => item.toString()).join(' ') + '<br>';

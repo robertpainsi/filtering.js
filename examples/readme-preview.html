@@ -35,6 +35,7 @@
 </div>
 
 <script>
+    const {Filtering, FilteringParser} = filteringjs;
     const parser = new FilteringParser();
     const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));
     const filtering = new Filtering(schema);
