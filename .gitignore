@@ -1,7 +1,9 @@
 node_modules
 /dist
 !/dist/index.js
+!/dist/index.js.map
 !/dist/example-style.css
+!/dist/example-style.css.map
 
 logs
 *.log

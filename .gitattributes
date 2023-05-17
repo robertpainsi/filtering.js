@@ -17,6 +17,8 @@
 *.gif  binary
 
 # Manually declare special files
+*.map             binary
+
 /dist/index.js    binary
 package-lock.json binary
 

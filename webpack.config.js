@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 export default {
     mode: 'production',
     target: 'web',
-    // devtool: 'inline-source-map',
+    devtool: 'source-map',
     entry: {
         index: './src/index.ts',
         'example-style': './examples/style/index.scss',
