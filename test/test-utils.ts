@@ -54,7 +54,7 @@ export async function testFiltering(data: TestData) {
     const filterData = new FilterData();
     for (const [group, filters] of Object.entries(data.expected.groups)) {
         for (const filter of filters) {
-            filterData.enableFilter(group, filter);
+            filterData.checkFilter(group, filter);
         }
     }
 

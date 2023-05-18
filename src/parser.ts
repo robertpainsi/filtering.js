@@ -5,7 +5,7 @@ export interface ParseSchemaOptions {
     filterClass: string,
     itemClass: string,
     itemFilterNameAttributePrefix: string,
-    filterEnabledClass: string,
+    filterCheckedClass: string,
 }
 
 export class FilteringParser {
@@ -15,7 +15,7 @@ export class FilteringParser {
         filterClass: 'filtering-filter',
         itemClass: 'filtering-item',
         itemFilterNameAttributePrefix: 'data-filter',
-        filterEnabledClass: 'enabled',
+        filterCheckedClass: 'checked',
     }
 
     readonly #options: ParseSchemaOptions;
@@ -84,7 +84,7 @@ export class FilteringParser {
         return items;
     }
 
-    parseEnabledFilterDataFromHtml(element: HTMLElement) {
+    parseCheckedFilterDataFromHtml(element: HTMLElement) {
         const filterData = new FilterData();
         const groupElements = [...element.querySelectorAll(`.${this.#options.groupClass}`)] as HTMLElement[];
         for (const groupElement of groupElements) {
@@ -94,8 +94,8 @@ export class FilteringParser {
             for (const filterElement of filterElements) {
                 const filterName = filterElement.dataset.filterName;
 
-                if (filterElement.classList.contains(this.#options.filterEnabledClass)) {
-                    filterData.enableFilter(groupName, filterName);
+                if (filterElement.classList.contains(this.#options.filterCheckedClass)) {
+                    filterData.checkFilter(groupName, filterName);
                 }
             }
         }

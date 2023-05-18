@@ -72,7 +72,7 @@
         numberOfGroups: [2, 4, 8],
         numberOfFilters: [8, 24, 64],
     }
-    const enabledFilters = [NONE, SINGLE, A_FILTER_IN_EACH_GROUP, MULTIPLE_FILTERS_IN_EACH_GROUP];
+    const checkedFilters = [NONE, SINGLE, A_FILTER_IN_EACH_GROUP, MULTIPLE_FILTERS_IN_EACH_GROUP];
     for (const numberOfItems of scenarioSettings.numberOfItems) {
         for (const numberOfGroups of scenarioSettings.numberOfGroups) {
             for (const numberOfFilters of scenarioSettings.numberOfFilters) {
@@ -117,22 +117,22 @@
                 }
 
                 const filtering = new Filtering(schema);
-                for (const enabledFilter of enabledFilters) {
+                for (const checkedFilter of checkedFilters) {
                     const filterData = new FilterData();
-                    switch (enabledFilter) {
+                    switch (checkedFilter) {
                         case NONE: {
                             break;
                         }
                         case SINGLE: {
                             const group = random(schema.groups);
                             const filter = random(group.filters);
-                            filterData.enableFilter(group.name, filter.name);
+                            filterData.checkFilter(group.name, filter.name);
                             break;
                         }
                         case A_FILTER_IN_EACH_GROUP: {
                             for (const group of schema.groups) {
                                 const filter = random(group.filters);
-                                filterData.enableFilter(group.name, filter.name);
+                                filterData.checkFilter(group.name, filter.name);
                             }
                             break;
                         }
@@ -140,13 +140,13 @@
                             for (const group of schema.groups) {
                                 for (let i = 0; i < (numberOfFilters / numberOfGroups) / 2; i++) {
                                     const filter = random(group.filters);
-                                    filterData.enableFilter(group.name, filter.name);
+                                    filterData.checkFilter(group.name, filter.name);
                                 }
                             }
                             break;
                         }
                         default: {
-                            logger.warn(`Unknown enabledFilter(${enabledFilter}).`);
+                            logger.warn(`Unknown checkedFilter(${checkedFilter}).`);
                             continue;
                         }
                     }

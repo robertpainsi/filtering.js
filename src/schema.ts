@@ -130,47 +130,38 @@ export class Item {
 }
 
 export class FilterData {
-    #enabledFilter: Map<string, Set<string | Symbol>> = new Map();
+    #checkedFilters: Map<string, Set<string | Symbol>> = new Map();
 
-    get enabledGroups() {
-        return this.#enabledFilter.keys();
+    get checkedFilters() {
+        return this.#checkedFilters;
     }
 
-    get enabledFilters() {
-        return this.#enabledFilter;
-    }
-
-    enableFilter(groupName: string, filterName: string | Symbol) {
+    checkFilter(groupName: string, filterName: string | Symbol) {
         const filters = this.#getFiltersFromGroup(groupName);
         filters.add(filterName);
     }
 
-    enableAllFilter(groupName: string) {
+    checkAllFilters(groupName: string) {
         const filters = this.#getFiltersFromGroup(groupName);
         filters.clear();
     }
 
     #getFiltersFromGroup(groupName: string) {
-        if (!this.#enabledFilter.has(groupName)) {
-            this.#enabledFilter.set(groupName, new Set());
+        if (!this.#checkedFilters.has(groupName)) {
+            this.#checkedFilters.set(groupName, new Set());
         }
-        return this.#enabledFilter.get(groupName);
-    }
-
-    enableGroup(groupName: string) {
-        this.#enabledFilter.delete(groupName);
-        this.enableAllFilter(groupName);
+        return this.#checkedFilters.get(groupName);
     }
 
     disableGroup(groupName: string) {
-        this.#enabledFilter.delete(groupName);
+        this.#checkedFilters.delete(groupName);
     }
 
     clone() {
         const filterData = new FilterData();
-        for (const [groupName, filterNames] of this.#enabledFilter.entries()) {
+        for (const [groupName, filterNames] of this.#checkedFilters.entries()) {
             for (const filterName of filterNames) {
-                filterData.enableFilter(groupName, filterName);
+                filterData.checkFilter(groupName, filterName);
             }
         }
         return filterData;

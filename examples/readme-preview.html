@@ -42,8 +42,8 @@
     const filtering = new Filtering(schema);
 
     function updateFilter() {
-        // Parse enabled filter from HTML
-        const filterData = parser.parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
+        // Parse checked filter from HTML
+        const filterData = parser.parseCheckedFilterDataFromHtml(document.querySelector('#filtering'));
         const result = filtering.filter(filterData);
         for (const group of result.groups) {
             for (const filter of group.filters) {
@@ -67,7 +67,7 @@
                 // Ignore click if the filter would give 0 results
                 return;
             }
-            filterElement.classList.toggle('enabled'); // Enable or disable filter
+            filterElement.classList.toggle('checked'); // Check or uncheck filter
             updateFilter();
         });
     }

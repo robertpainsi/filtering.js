@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>filtering.js - Readme Preview</title>
+    <title>filtering.js - Single select - Example</title>
 
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="../dist/example-style.css">
@@ -38,8 +38,8 @@
     const filtering = new Filtering(schema);
 
     function updateFilter() {
-        // Parse enabled filter from HTML
-        const filterData = parser.parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
+        // Parse checked filter from HTML
+        const filterData = parser.parseCheckedFilterDataFromHtml(document.querySelector('#filtering'));
         const result = filtering.filter(filterData);
         for (const group of result.groups) {
             for (const filter of group.filters) {
@@ -63,12 +63,12 @@
                 // Ignore click if the filter would give 0 results
                 return;
             }
-            if (!filterElement.classList.contains('enabled')) {
+            if (!filterElement.classList.contains('checked')) {
                 for (const fe of filterElement.closest('.filtering-group').querySelectorAll('.filtering-filter')) {
-                    fe.classList.remove('enabled');
+                    fe.classList.remove('checked');
                 }
             }
-            filterElement.classList.toggle('enabled'); // Enable or disable filter
+            filterElement.classList.toggle('checked'); // Check or uncheck filter
             updateFilter();
         });
     }

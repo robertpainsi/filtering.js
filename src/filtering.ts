@@ -69,7 +69,7 @@ export class Filtering {
         for (const item of items) {
             let filtered = true;
 
-            for (const [groupName, checkedFilters] of filterData.enabledFilters) {
+            for (const [groupName, checkedFilters] of filterData.checkedFilters) {
                 if (checkedFilters.size > 0 && !findOne(item.getFilterNames(groupName), checkedFilters)) {
                     filtered = false;
                     break;
