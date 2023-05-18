@@ -22,6 +22,7 @@ html, body {
     flex-direction: column;
     border: 1px solid lightgrey;
     border-radius: 6px;
+    min-width: 100px;
   }
 
   .filtering-group-header {
