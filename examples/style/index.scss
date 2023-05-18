@@ -20,7 +20,7 @@ html, body {
   .filtering-group {
     display: flex;
     flex-direction: column;
-    border: 1px solid lightgray;
+    border: 1px solid lightgrey;
     border-radius: 6px;
   }
 
@@ -29,7 +29,7 @@ html, body {
     margin-top: -10px;
     margin-left: 8px;
     background-color: white;
-    color: lightgray;
+    color: lightgrey;
     font-size: 15px;
   }
 
@@ -56,6 +56,10 @@ html, body {
 
     &.disabled:hover {
       background-color: transparent;
+    }
+
+    &[data-filter-type="all"] {
+      border-top: 1px solid lightgrey;
     }
   }
 }
