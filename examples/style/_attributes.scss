@@ -34,3 +34,11 @@
   width: 96px;
   height: 96px;
 }
+
+*[data-group-name="color"]:before {
+  content: 'Color';
+}
+
+*[data-group-name="size"]:before {
+  content: 'Size';
+}
