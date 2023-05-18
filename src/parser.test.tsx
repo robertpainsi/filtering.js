@@ -1,11 +1,11 @@
 import {describe, test} from "@jest/globals";
-import {FilteringParser} from "./parser";
+import {Parser} from "./parser";
 import {jsxToHtml, testSchema} from "../test/test-utils";
 import {blue, green, large, red, small} from "../test/test-data";
 
 describe('Parser', function () {
     test('Simple parser', () => {
-        const schema = new FilteringParser().parseSchemaFromHtml(jsxToHtml(
+        const schema = new Parser().parseSchemaFromHtml(jsxToHtml(
             <div>
                 <div id="filtering">
                     <div className="filtering-group" data-group-name="color">

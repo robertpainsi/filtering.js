@@ -30,8 +30,8 @@
 
 <script>
     // Initializing and parsing filters, groups and items from HTML
-    const {Filtering, FilteringParser} = filteringjs;
-    const parser = new FilteringParser();
+    const {Filtering, Parser} = filteringjs;
+    const parser = new Parser();
     const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));
     const filtering = new Filtering(schema);
 

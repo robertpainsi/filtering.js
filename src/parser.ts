@@ -1,6 +1,6 @@
 import {Filter, FilterData, Group, Item, Schema} from "./schema";
 
-export interface ParseSchemaOptions {
+export interface ParserOptions {
     groupClass: string,
     filterClass: string,
     itemClass: string,
@@ -8,9 +8,9 @@ export interface ParseSchemaOptions {
     filterCheckedClass: string,
 }
 
-export class FilteringParser {
+export class Parser {
 
-    static readonly #defaultOptions: ParseSchemaOptions = {
+    static readonly #defaultOptions: ParserOptions = {
         groupClass: 'filtering-group',
         filterClass: 'filtering-filter',
         itemClass: 'filtering-item',
@@ -18,10 +18,10 @@ export class FilteringParser {
         filterCheckedClass: 'checked',
     }
 
-    readonly #options: ParseSchemaOptions;
+    readonly #options: ParserOptions;
 
-    constructor(options?: ParseSchemaOptions | {}) {
-        this.#options = {...FilteringParser.#defaultOptions, ...options};
+    constructor(options?: ParserOptions | {}) {
+        this.#options = {...Parser.#defaultOptions, ...options};
     }
 
     parseSchemaFromHtml(element: HTMLElement, schema: Schema = new Schema()) {
