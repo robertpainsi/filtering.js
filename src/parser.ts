@@ -36,19 +36,23 @@ export class FilteringParser {
         const groupElements = [...element.querySelectorAll(`.${this.#options.groupClass}`)] as HTMLElement[];
         for (const groupElement of groupElements) {
             const groupName = groupElement.dataset.groupName;
-            const groupLabel = groupElement.dataset.groupLabel;
+            if (groupName === undefined) {
+                continue;
+            }
             const group = new Group(groupName, {
                 element: groupElement,
-                label: groupLabel,
+                label: groupElement.dataset.groupLabel,
             });
 
             const filterElements = [...groupElement.querySelectorAll(`.${this.#options.filterClass}`)] as HTMLElement[];
             for (const filterElement of filterElements) {
                 const filterName = filterElement.dataset.filterName;
-                const filterLabel = filterElement.dataset.filterLabel || filterName;
+                if (filterName === undefined) {
+                    continue;
+                }
                 const filter = new Filter(filterName, {
                     element: filterElement,
-                    label: filterLabel,
+                    label: filterElement.dataset.filterLabel,
                 });
 
                 group.addFilter(filter);
