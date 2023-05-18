@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>filtering.js - Enable all filters examples</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" href="../dist/example-style.css">
+    <script src="../dist/index.js"></script>
+</head>
+<body>
+
+<div id="root">
+    <div id="filtering">
+        <div class="filtering-group" data-group-name="color">
+            <div class="filtering-filter" data-filter-name="red">Red</div>
+            <div class="filtering-filter" data-filter-name="blue">Blue</div>
+            <div class="filtering-filter" data-filter-type="all">All</div>
+        </div>
+        <div class="filtering-group" data-group-name="size">
+            <div class="filtering-filter" data-filter-name="small">Small</div>
+            <div class="filtering-filter" data-filter-name="large">Large</div>
+            <div class="filtering-filter" data-filter-type="all">All</div>
+        </div>
+    </div>
+
+    <div id="items">
+        <div id="item-1" class="filtering-item" data-filter-color="red" data-filter-size="small"></div>
+        <div id="item-2" class="filtering-item" data-filter-color="blue" data-filter-size="large"></div>
+    </div>
+</div>
+
+<script>
+    // Initializing and parsing filters, groups and items from HTML
+    const {Filtering, FilteringParser} = filteringjs;
+    const parser = new FilteringParser();
+    const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));
+    const filtering = new Filtering(schema);
+
+    function updateFilter() {
+        // Parse enabled filter from HTML
+        const filterData = parser.parseEnabledFilterDataFromHtml(document.querySelector('#filtering'));
+        const result = filtering.filter(filterData);
+        for (const group of result.groups) {
+            for (const filter of group.filters) {
+                const filterElement = filter.schemaFilter.data.element;
+                // Disable filter if it would give 0 results
+                filterElement.classList.toggle('disabled', filter.possibleItems.length === 0);
+            }
+        }
+        for (const item of result.allItems) {
+            // Show or hide items
+            item.data.element.classList.toggle('filtered', !result.filteredItems.includes(item));
+        }
+    }
+
+    for (const filterElement of document.querySelectorAll('.filtering-filter')) {
+        filterElement.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (filterElement.classList.contains('disabled')) {
+                // Ignore click if the filter would give 0 results
+                return;
+            }
+            if (filterElement.dataset.filterType === 'all') {
+                // Removing enabled from all filters = no specific filter selected
+                for (const fe of filterElement.closest('.filtering-group').querySelectorAll('.filtering-filter')) {
+                    fe.classList.remove('enabled');
+                }
+            } else {
+                filterElement.classList.toggle('enabled'); // Enable or disable filter
+            }
+            updateFilter();
+        });
+    }
+    updateFilter();
+</script>
+
+</body>
+</html>
