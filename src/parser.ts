@@ -33,8 +33,7 @@ export class Parser {
     }
 
     parseGroupsAndFiltersFromHtml(element: HTMLElement, schema: Schema) {
-        const groupElements = [...element.querySelectorAll(`.${this.#options.groupClass}`)] as HTMLElement[];
-        for (const groupElement of groupElements) {
+        for (const groupElement of element.getElementsByClassName(this.#options.groupClass) as HTMLCollectionOf<HTMLElement>) {
             const groupName = groupElement.dataset.groupName;
             if (groupName === undefined) {
                 continue;
@@ -44,8 +43,7 @@ export class Parser {
                 label: groupElement.dataset.groupLabel,
             });
 
-            const filterElements = [...groupElement.querySelectorAll(`.${this.#options.filterClass}`)] as HTMLElement[];
-            for (const filterElement of filterElements) {
+            for (const filterElement of groupElement.getElementsByClassName(this.#options.filterClass) as HTMLCollectionOf<HTMLElement>) {
                 const filterName = filterElement.dataset.filterName;
                 if (filterName === undefined) {
                     continue;
@@ -65,8 +63,7 @@ export class Parser {
         const items: Item[] = [];
 
         const attributeRegex = new RegExp(`${this.#options.itemFilterNameAttributePrefix}-(?<groupName>.+)`, 'i');
-        const itemElements = [...element.querySelectorAll(`.${this.#options.itemClass}`)] as HTMLElement[];
-        for (const itemElement of itemElements) {
+        for (const itemElement of element.getElementsByClassName(this.#options.itemClass) as HTMLCollectionOf<HTMLElement>) {
             const item = new Item({
                 element: itemElement
             });
@@ -86,12 +83,10 @@ export class Parser {
 
     parseCheckedFilterDataFromHtml(element: HTMLElement) {
         const filterData = new FilterData();
-        const groupElements = [...element.querySelectorAll(`.${this.#options.groupClass}`)] as HTMLElement[];
-        for (const groupElement of groupElements) {
+        for (const groupElement of element.getElementsByClassName(this.#options.groupClass) as HTMLCollectionOf<HTMLElement>) {
             const groupName = groupElement.dataset.groupName;
 
-            const filterElements = [...groupElement.querySelectorAll(`.${this.#options.filterClass}`)] as HTMLElement[];
-            for (const filterElement of filterElements) {
+            for (const filterElement of groupElement.getElementsByClassName(this.#options.filterClass) as HTMLCollectionOf<HTMLElement>) {
                 const filterName = filterElement.dataset.filterName;
 
                 if (filterElement.classList.contains(this.#options.filterCheckedClass)) {
