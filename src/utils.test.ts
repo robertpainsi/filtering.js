@@ -18,4 +18,9 @@ describe('Utils findOne', function () {
         expect(findOne(new Set([1, 2, 3]), new Set([4]))).toBe(false);
         expect(findOne(new Set([4]), new Set([1, 2, 3]))).toBe(false);
     });
+
+    test('Multiple intersections', () => {
+        expect(findOne(new Set([1, 2, 3]), new Set([2, 3]))).toBe(true);
+        expect(findOne(new Set([1, 2]), new Set([1, 2, 3]))).toBe(true);
+    });
 });
