@@ -10,10 +10,3 @@ export function findOne<Type>(haystack: Set<Type>, values: Set<Type>) {
     }
     return false;
 }
-
-export function emptyFn() {
-}
-
-export function trueFn() {
-    return true;
-}
