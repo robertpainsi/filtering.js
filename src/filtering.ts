@@ -7,7 +7,7 @@ export class Filtering {
     readonly #schema: Schema;
     readonly #options: FilteringOptions;
 
-    constructor(data: Schema, options = {}) {
+    constructor(data: Schema, options: FilteringOptions = {}) {
         this.#schema = data;
         this.#options = options;
     }

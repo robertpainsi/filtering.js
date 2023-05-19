@@ -1,11 +1,11 @@
 import {Filter, FilterData, Group, Item, Schema} from "./schema";
 
 export interface ParserOptions {
-    groupClass: string,
-    filterClass: string,
-    itemClass: string,
-    itemFilterNameAttributePrefix: string,
-    filterCheckedClass: string,
+    groupClass?: string,
+    filterClass?: string,
+    itemClass?: string,
+    itemFilterNameAttributePrefix?: string,
+    filterCheckedClass?: string,
 }
 
 export class Parser {
@@ -20,7 +20,7 @@ export class Parser {
 
     readonly #options: ParserOptions;
 
-    constructor(options?: ParserOptions | {}) {
+    constructor(options: ParserOptions = {}) {
         this.#options = {...Parser.#defaultOptions, ...options};
     }
 
