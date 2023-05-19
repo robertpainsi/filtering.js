@@ -24,6 +24,10 @@ export class Parser {
         this.#options = {...Parser.#defaultOptions, ...options};
     }
 
+    get options(): ParserOptions {
+        return this.#options;
+    }
+
     parseSchemaFromHtml(element: HTMLElement, schema: Schema = new Schema()) {
         this.parseGroupsAndFiltersFromHtml(element, schema);
         for (const item of this.parseItemsFromHtml(element)) {

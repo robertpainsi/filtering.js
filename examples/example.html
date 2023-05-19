@@ -29,41 +29,8 @@
 </div>
 
 <script>
-    // Initializing and parsing filters, groups and items from HTML
-    const {Filtering, Parser} = filteringjs;
-    const parser = new Parser();
-    const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));
-    const filtering = new Filtering(schema);
-
-    function updateFilter() {
-        // Parse checked filter from HTML
-        const filterData = parser.parseCheckedFilterDataFromHtml(document.querySelector('#filtering'));
-        const result = filtering.filter(filterData);
-        for (const group of result.groups) {
-            for (const filter of group.filters) {
-                const filterElement = filter.schemaFilter.data.element;
-                // Disable filter if it would give 0 results
-                filterElement.classList.toggle('disabled', filter.possibleItems.length === 0);
-            }
-        }
-        for (const item of result.allItems) {
-            // Show or hide items
-            item.data.element.classList.toggle('filtered', !result.filteredItems.includes(item));
-        }
-    }
-
-    for (const filterElement of document.querySelectorAll('.filtering-filter')) {
-        filterElement.addEventListener('click', (event) => {
-            event.preventDefault();
-            if (filterElement.classList.contains('disabled')) {
-                // Ignore click if the filter would give 0 results
-                return;
-            }
-            filterElement.classList.toggle('checked'); // Check or uncheck filter
-            updateFilter();
-        });
-    }
-    updateFilter();
+    const {FilteringFlow} = filteringjs;
+    new FilteringFlow(document.querySelector('#root'));
 </script>
 
 </body>

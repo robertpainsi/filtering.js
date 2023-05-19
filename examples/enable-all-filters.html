@@ -31,48 +31,34 @@
 </div>
 
 <script>
-    // Initializing and parsing filters, groups and items from HTML
-    const {Filtering, Parser} = filteringjs;
-    const parser = new Parser();
-    const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));
-    const filtering = new Filtering(schema);
+    const {FilteringFlow} = filteringjs;
 
-    function updateFilter() {
-        // Parse checked filter from HTML
-        const filterData = parser.parseCheckedFilterDataFromHtml(document.querySelector('#filtering'));
-        const result = filtering.filter(filterData);
-        for (const group of result.groups) {
-            for (const filter of group.filters) {
-                const filterElement = filter.schemaFilter.data.element;
-                // Disable filter if it would give 0 results
-                filterElement.classList.toggle('disabled', filter.possibleItems.length === 0);
+    class MyFlow extends FilteringFlow {
+        initializeFilterListener() {
+            for (const filterElement of this.root.getElementsByClassName(this.parser.options.filterClass)) {
+                filterElement.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    if (filterElement.classList.contains(this.options.disabledFilterClass)) {
+                        // Ignore click if the filter would give 0 results
+                        return;
+                    }
+                    if (filterElement.dataset.filterType === 'all') {
+                        // Remove all checked classes in group if all is clicked
+                        if (!filterElement.classList.contains(this.parser.options.filterCheckedClass)) {
+                            for (const fe of filterElement.closest(`.${this.parser.options.groupClass}`).getElementsByClassName(this.parser.options.filterClass)) {
+                                fe.classList.remove(this.parser.options.filterCheckedClass);
+                            }
+                        }
+                    } else {
+                        filterElement.classList.toggle(this.parser.options.filterCheckedClass); // Check or uncheck filter
+                    }
+                    this.filter();
+                });
             }
-        }
-        for (const item of result.allItems) {
-            // Show or hide items
-            item.data.element.classList.toggle('filtered', !result.filteredItems.includes(item));
         }
     }
 
-    for (const filterElement of document.querySelectorAll('.filtering-filter')) {
-        filterElement.addEventListener('click', (event) => {
-            event.preventDefault();
-            if (filterElement.classList.contains('disabled')) {
-                // Ignore click if the filter would give 0 results
-                return;
-            }
-            if (filterElement.dataset.filterType === 'all') {
-                // Removing checked from all filters = no specific filter selected
-                for (const fe of filterElement.closest('.filtering-group').querySelectorAll('.filtering-filter')) {
-                    fe.classList.remove('checked');
-                }
-            } else {
-                filterElement.classList.toggle('checked'); // Check or uncheck filter
-            }
-            updateFilter();
-        });
-    }
-    updateFilter();
+    new MyFlow(document.querySelector('#root'));
 </script>
 
 </body>

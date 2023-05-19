@@ -85,6 +85,6 @@ export class Filtering {
     }
 }
 
-interface FilteringOptions {
+export interface FilteringOptions {
     filterItem?(item: Item, schema: Schema, filterData: FilterData): boolean,
 }

@@ -159,7 +159,7 @@
                     totalRuntime += runtime;
                 }
             }
-            let averageRuntime = Math.ceil(totalRuntime / (actualRuns));
+            let averageRuntime = Math.ceil(totalRuntime * 10 / (actualRuns)) / 10;
             logger.log(`[${scenario}] average runtime: ${averageRuntime}ms`);
         }
     })();
