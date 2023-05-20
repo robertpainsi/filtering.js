@@ -4,8 +4,8 @@ export class Result {
     readonly #schema: Schema;
     readonly #groups = new Map<string, GroupResult>();
 
-    #filteredItems = new Set<Item>();
-    #allItems = new Set<Item>();
+    readonly #filteredItems = new Set<Item>();
+    readonly #allItems = new Set<Item>();
 
     constructor(schema: Schema) {
         this.#schema = schema;
@@ -72,10 +72,10 @@ export class Result {
 export class GroupResult {
     readonly #schemaGroup: Group;
 
-    #filters = new Map<string, FilterResult>();
+    readonly #filters = new Map<string, FilterResult>();
 
-    #filteredItems = new Set<Item>();
-    #allItems = new Set<Item>();
+    readonly #filteredItems = new Set<Item>();
+    readonly #allItems = new Set<Item>();
 
     constructor(schemaGroup: Group) {
         this.#schemaGroup = schemaGroup;
@@ -117,9 +117,9 @@ export class GroupResult {
 export class FilterResult {
     readonly #schemaFilter: Filter;
 
-    #filteredItems = new Set<Item>();
-    #possibleItems = new Set<Item>();
-    #allItems = new Set<Item>();
+    readonly #filteredItems = new Set<Item>();
+    readonly #possibleItems = new Set<Item>();
+    readonly #allItems = new Set<Item>();
 
     constructor(schemaFilter: Filter) {
         this.#schemaFilter = schemaFilter;
