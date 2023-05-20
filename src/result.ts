@@ -9,6 +9,19 @@ export class Result {
 
     constructor(schema: Schema) {
         this.#schema = schema;
+
+        this.#initialize();
+    }
+
+    #initialize() {
+        for (const group of this.schema.groups) {
+            const groupResult = new GroupResult(group);
+            for (const filter of group.filters) {
+                const filterResult = new FilterResult(filter);
+                groupResult.addFilter(filterResult);
+            }
+            this.addGroup(groupResult);
+        }
     }
 
     get schema(): Schema {

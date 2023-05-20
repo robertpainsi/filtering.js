@@ -13,7 +13,7 @@ export class Filtering {
     }
 
     filter(filterData: FilterData): Result {
-        const result = this.#createEmptyResult(this.#schema);
+        const result = new Result(this.#schema);
 
         let relevantItems: Item[] = [];
         if (this.#options.filterItem) {
@@ -33,19 +33,6 @@ export class Filtering {
         }
         this.#calculatePossibleItems(result, relevantItems, filterData);
 
-        return result;
-    }
-
-    #createEmptyResult(schema: Schema) {
-        const result = new Result(schema);
-        for (const group of schema.groups) {
-            const groupResult = new GroupResult(group);
-            for (const filter of group.filters) {
-                const filterResult = new FilterResult(filter);
-                groupResult.addFilter(filterResult);
-            }
-            result.addGroup(groupResult);
-        }
         return result;
     }
 
