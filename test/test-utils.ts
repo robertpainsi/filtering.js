@@ -7,9 +7,9 @@ import {Filter, FilterData, Group, Item, Schema} from "../src/schema";
 import {Filtering} from "../src/filtering";
 import {JSDOM} from "jsdom";
 import {renderToStaticMarkup} from "react-dom/server";
-import {TestDataGroups, TestDataItem, TestDataSchema, TestDataTest} from "./test-data-types";
+import {TestDataFiltering, TestDataGroups, TestDataItem, TestDataSchema} from "./test-data-types";
 
-export function testFiltering(schema: Schema, test: TestDataTest) {
+export function testFiltering(schema: Schema, test: TestDataFiltering) {
     const filterData = createFilterData(test.checked);
     const result = new Filtering(schema).filter(filterData);
 

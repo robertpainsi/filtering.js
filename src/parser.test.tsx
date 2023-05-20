@@ -4,8 +4,9 @@ import {jsxToHtml, testSchema} from "../test/test-utils";
 import {blue, green, large, red, small} from "../test/test-data";
 
 describe('Parser', function () {
-    test('Simple parser', () => {
-        const schema = new Parser().parseSchemaFromHtml(jsxToHtml(
+    const testData = [{
+        name: 'Simple parser',
+        html: (
             <div>
                 <div id="filtering">
                     <div className="filtering-group" data-group-name="color">
@@ -24,8 +25,8 @@ describe('Parser', function () {
                     <div id="item-2" className="filtering-item" data-filter-color="blue" data-filter-size="large"></div>
                 </div>
             </div>
-        ));
-        const expectedSchema = {
+        ),
+        schema: {
             groups: {
                 color: ['red', 'green', 'blue'],
                 size: ['small', 'large'],
@@ -37,14 +38,19 @@ describe('Parser', function () {
                     size: ['small'],
                 }
             }, {
-                name: 'item-2',
+                name: 'item-3',
                 groups: {
                     color: ['blue'],
                     size: ['large'],
                 }
             }]
         }
+    }];
 
-        testSchema(schema, expectedSchema);
-    });
+    for (const singleTest of testData) {
+        test(singleTest.name, () => {
+            const schema = new Parser().parseSchemaFromHtml(jsxToHtml(singleTest.html));
+            testSchema(schema, singleTest.schema);
+        });
+    }
 });

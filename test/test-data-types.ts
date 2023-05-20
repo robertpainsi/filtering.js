@@ -1,9 +1,9 @@
-export interface TestData extends TestDataTest {
-    schema: TestDataSchema,
-}
-
 export interface TestDataTest {
     name: string,
+}
+
+export interface TestDataFiltering extends TestDataTest {
+    schema: TestDataSchema,
     checked: TestDataGroups,
     filteredItems?: string[],
     possibleItems?: string[],
