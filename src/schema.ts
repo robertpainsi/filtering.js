@@ -64,8 +64,8 @@ export class Group {
         this.#filters.set(filter.name, filter);
     }
 
-    getFilterNames() {
-        return new Set(this.#filters.keys());
+    getFilterNames(): string[] {
+        return [...this.#filters.keys()];
     }
 
     get data(): Pojo {

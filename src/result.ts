@@ -20,7 +20,7 @@ export class Result {
                 const filterResult = new FilterResult(filter);
                 groupResult.addFilter(filterResult);
             }
-            this.addGroup(groupResult);
+            this.#addGroup(groupResult);
         }
     }
 
@@ -36,7 +36,7 @@ export class Result {
         return [...this.#groups.keys()];
     }
 
-    addGroup(groupResult: GroupResult) {
+    #addGroup(groupResult: GroupResult) {
         this.#groups.set(groupResult.schemaGroup.name, groupResult);
     }
 

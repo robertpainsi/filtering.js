@@ -11,7 +11,7 @@ export function findOne<Type>(haystack: Set<Type>, values: Set<Type>) {
     return false;
 }
 
-export function mapProperty(object: any, propertyName: string): any {
+export function getProperty(object: any, propertyName: string): any {
     const parts = propertyName.split('.');
     let result = object;
     for (const part of parts) {

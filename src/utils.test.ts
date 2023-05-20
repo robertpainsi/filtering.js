@@ -1,6 +1,5 @@
 import {describe, expect, test} from "@jest/globals";
-import {compareStrings, findOne, mapProperty} from "./utils";
-
+import {compareStrings, findOne, getProperty} from "./utils";
 
 describe('Utils.findOne', function () {
     test('Empty lists', () => {
@@ -55,7 +54,7 @@ describe('Utils.mapProperty', function () {
 
     for (const {testName, object, propertyName, expectedResult} of scenarios) {
         test(testName, () => {
-            const result = mapProperty(object, propertyName);
+            const result = getProperty(object, propertyName);
             expect(result).toEqual(expectedResult);
         });
     }

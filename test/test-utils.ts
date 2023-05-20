@@ -8,17 +8,17 @@ import {Filtering} from "../src/filtering";
 import {JSDOM} from "jsdom";
 import {renderToStaticMarkup} from "react-dom/server";
 import {TestDataFiltering, TestDataGroups, TestDataItem, TestDataSchema} from "./test-data-types";
-import {compareStrings} from "../src/utils";
+import {compareStrings, getProperty} from "../src/utils";
 
 export function testFiltering(schema: Schema, test: TestDataFiltering) {
     const filterData = createFilterData(test.checked);
     const result = new Filtering(schema).filter(filterData);
 
     if (test.filteredItems) {
-        expect(result.filteredItems.map((item) => item.data.name).sort()).toEqual(test.filteredItems.sort());
+        expect(getSortedNames(result.filteredItems, 'data.name')).toEqual(test.filteredItems.sort());
     }
     if (test.possibleItems) {
-        expect(result.possibleItems.map((item) => item.data.name).sort()).toEqual(test.possibleItems.sort());
+        expect(getSortedNames(result.possibleItems, 'data.name')).toEqual(test.possibleItems.sort());
     }
 }
 
@@ -46,14 +46,14 @@ export function testSchema(schema: Schema, expectedSchema: TestDataSchema) {
 }
 
 export function testSchemaGroups(schemaGroups: Group[], expectedGroups: TestDataGroups) {
-    expect(schemaGroups.map((group) => group.name).sort()).toEqual(Object.keys(expectedGroups).sort());
+    expect(getSortedNames(schemaGroups)).toEqual(Object.keys(expectedGroups).sort());
     for (const group of schemaGroups) {
         testSchemaFilters(group.filters, expectedGroups[group.name]);
     }
 }
 
 export function testSchemaFilters(schemaFilters: Filter[], expectedFilters: string[]) {
-    expect(schemaFilters.map((filter) => filter.name).sort()).toEqual(expectedFilters.sort());
+    expect(getSortedNames(schemaFilters)).toEqual(expectedFilters.sort());
 }
 
 export function testSchemaItems(schemaItems: Item[], expectedItems: TestDataItem[]) {
@@ -86,22 +86,27 @@ export function jsxToHtml(jsx: ReactElement): HTMLElement {
 
 export function jsToSchema(o: TestDataSchema) {
     const schema = new Schema();
-    for (const [groupName, filterNames] of Object.entries(o.groups)) {
-        const group = new Group(groupName);
-        for (const filterName of filterNames) {
-            const filter = new Filter(filterName);
-            group.addFilter(filter);
-        }
-        schema.addGroup(group);
-    }
-    for (const item of o.items) {
-        const i = new Item({name: item.name});
-        for (const [groupName, filterNames] of Object.entries(item.groups)) {
+
+    if (o.groups) {
+        for (const [groupName, filterNames] of Object.entries(o.groups)) {
+            const group = new Group(groupName);
             for (const filterName of filterNames) {
-                i.addFilter(groupName, filterName);
+                const filter = new Filter(filterName);
+                group.addFilter(filter);
             }
+            schema.addGroup(group);
         }
-        schema.addItem(i);
+    }
+    if (o.items) {
+        for (const item of o.items) {
+            const i = new Item({name: item.name});
+            for (const [groupName, filterNames] of Object.entries(item.groups)) {
+                for (const filterName of filterNames) {
+                    i.addFilter(groupName, filterName);
+                }
+            }
+            schema.addItem(i);
+        }
     }
     return schema;
 }
@@ -117,4 +122,8 @@ export function testFilterData(filterData: FilterData, expectedChecked: TestData
 
         expect(filterDataFilters).toEqual(expectedCheckedFilters);
     }
+}
+
+export function getSortedNames(items: any[], propertyName: string = 'name'): string[] {
+    return items.map((item) => getProperty(item, propertyName)).sort();
 }
