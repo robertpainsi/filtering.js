@@ -22,3 +22,13 @@ export function mapProperty(object: any, propertyName: string): any {
     }
     return result;
 }
+
+export function compareStrings(a: string, b: string) {
+    if (a === b) {
+        return 0;
+    } else if (a < b) {
+        return -1;
+    } else {
+        return 1;
+    }
+}

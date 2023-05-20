@@ -1,3 +1,5 @@
+import {ParserOptions} from "../src/parser";
+
 export interface TestDataTest {
     name: string,
 }
@@ -12,11 +14,12 @@ export interface TestDataFiltering extends TestDataTest {
 export interface TestDataParserWithHtml extends TestDataTest {
     html: JSX.Element,
     schema: TestDataSchema,
+    options?: ParserOptions,
 }
 
 export interface TestDataSchema {
-    groups: TestDataGroups,
-    items: TestDataItem[],
+    groups?: TestDataGroups,
+    items?: TestDataItem[],
 }
 
 export interface TestDataGroups {

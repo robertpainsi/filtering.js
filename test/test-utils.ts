@@ -8,6 +8,7 @@ import {Filtering} from "../src/filtering";
 import {JSDOM} from "jsdom";
 import {renderToStaticMarkup} from "react-dom/server";
 import {TestDataFiltering, TestDataGroups, TestDataItem, TestDataSchema} from "./test-data-types";
+import {compareStrings} from "../src/utils";
 
 export function testFiltering(schema: Schema, test: TestDataFiltering) {
     const filterData = createFilterData(test.checked);
@@ -36,25 +37,47 @@ export function enableFilters(filterData: FilterData, checked: TestDataGroups): 
 }
 
 export function testSchema(schema: Schema, expectedSchema: TestDataSchema) {
-    // TODO
-    testSchemaGroups(schema.groups, expectedSchema.groups);
-    testSchemaItems(schema.items, expectedSchema.items);
-}
-
-export function testSchemaGroups(schemaGroups: Group[], expectedGroups: TestDataGroups) {
-    // TODO
-    expect(schemaGroups.length).toBe(Object.keys(expectedGroups).length);
-    for (const group of schemaGroups) {
-        // @ts-ignore
-        const expectedFilters = expectedGroups[group.name] as string[];
-        expect(group.filters.length).toBe(expectedFilters.length);
-        expect([...group.getFilterNames()].sort()).toEqual(expectedFilters.sort());
+    if (expectedSchema.groups) {
+        testSchemaGroups(schema.groups, expectedSchema.groups);
+    }
+    if (expectedSchema.items) {
+        testSchemaItems(schema.items, expectedSchema.items);
     }
 }
 
+export function testSchemaGroups(schemaGroups: Group[], expectedGroups: TestDataGroups) {
+    expect(schemaGroups.map((group) => group.name).sort()).toEqual(Object.keys(expectedGroups).sort());
+    for (const group of schemaGroups) {
+        testSchemaFilters(group.filters, expectedGroups[group.name]);
+    }
+}
+
+export function testSchemaFilters(schemaFilters: Filter[], expectedFilters: string[]) {
+    expect(schemaFilters.map((filter) => filter.name).sort()).toEqual(expectedFilters.sort());
+}
+
 export function testSchemaItems(schemaItems: Item[], expectedItems: TestDataItem[]) {
-    // TODO
-    expect(schemaItems.length).toBe(expectedItems.length);
+    const sortedSchemaItems = [...schemaItems].sort((a, b) => compareStrings(getItemName(a), getItemName(b)));
+    const sortedExpectedItems = [...expectedItems].sort((a, b) => compareStrings(a.name, b.name));
+
+    expect(sortedSchemaItems.length).toEqual(sortedExpectedItems.length);
+    for (let i = 0; i < sortedSchemaItems.length; i++) {
+        const schemaItem = sortedSchemaItems[i];
+        const expectedItem = sortedExpectedItems[i];
+
+        expect(getItemName(schemaItem)).toEqual(expectedItem.name);
+        expect([...schemaItem.getGroupNames()]).toEqual(Object.keys(expectedItem.groups).sort());
+        for (const groupName of schemaItem.getGroupNames()) {
+            const schemaFilters = [...schemaItem.getFilterNames(groupName)].sort();
+            const expectedFilters = expectedItem.groups[groupName].sort();
+
+            expect(schemaFilters).toEqual(expectedFilters);
+        }
+    }
+}
+
+function getItemName(item: Item): string {
+    return item.data.element.getAttribute('id');
 }
 
 export function jsxToHtml(jsx: ReactElement): HTMLElement {
@@ -81,4 +104,17 @@ export function jsToSchema(o: TestDataSchema) {
         schema.addItem(i);
     }
     return schema;
+}
+
+export function testFilterData(filterData: FilterData, expectedChecked: TestDataSchema) {
+    const filterDataGroups = [...filterData.checkedFilters.keys()].sort();
+    const expectedCheckedGroups = Object.keys(expectedChecked.groups).sort();
+
+    expect(filterDataGroups).toEqual(expectedCheckedGroups);
+    for (const groupName of filterDataGroups) {
+        const filterDataFilters = [...filterData.checkedFilters.get(groupName)].sort();
+        const expectedCheckedFilters = expectedChecked.groups[groupName].sort();
+
+        expect(filterDataFilters).toEqual(expectedCheckedFilters);
+    }
 }
