@@ -2,9 +2,10 @@ import {describe, test} from "@jest/globals";
 import {Parser} from "./parser";
 import {jsxToHtml, testSchema} from "../test/test-utils";
 import {blue, green, large, red, small} from "../test/test-data";
+import {TestDataParserWithHtml} from "../test/test-data-types";
 
 describe('Parser', function () {
-    const testData = [{
+    const testData: TestDataParserWithHtml[] = [{
         name: 'Simple parser',
         html: (
             <div>

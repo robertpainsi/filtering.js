@@ -9,6 +9,11 @@ export interface TestDataFiltering extends TestDataTest {
     possibleItems?: string[],
 }
 
+export interface TestDataParserWithHtml extends TestDataTest {
+    html: JSX.Element,
+    schema: TestDataSchema,
+}
+
 export interface TestDataSchema {
     groups: TestDataGroups,
     items: TestDataItem[],
