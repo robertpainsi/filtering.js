@@ -67,6 +67,18 @@ export class Result {
             groupResult.addAllItem(item);
         }
     }
+
+    get possibleItems(): Item[] {
+        const result = new Set<Item>();
+        for (const groupResult of this.groups) {
+            for (const filterResult of groupResult.filters) {
+                for (const item of filterResult.possibleItems) {
+                    result.add(item);
+                }
+            }
+        }
+        return [...result];
+    }
 }
 
 export class GroupResult {

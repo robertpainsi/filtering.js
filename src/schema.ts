@@ -130,34 +130,34 @@ export class Item {
 }
 
 export class FilterData {
-    #checkedFilters: Map<string, Set<string | Symbol>> = new Map();
+    #checkedFilters: Map<string, Set<string>> = new Map();
 
     get checkedFilters() {
         return this.#checkedFilters;
     }
 
-    checkFilter(groupName: string, filterName: string | Symbol) {
+    checkFilter(groupName: string, filterName: string): void {
         const filters = this.#getFiltersFromGroup(groupName);
         filters.add(filterName);
     }
 
-    checkAllFilters(groupName: string) {
+    checkAllFilters(groupName: string): void {
         const filters = this.#getFiltersFromGroup(groupName);
         filters.clear();
     }
 
-    #getFiltersFromGroup(groupName: string) {
+    #getFiltersFromGroup(groupName: string): Set<string> {
         if (!this.#checkedFilters.has(groupName)) {
             this.#checkedFilters.set(groupName, new Set());
         }
         return this.#checkedFilters.get(groupName);
     }
 
-    disableGroup(groupName: string) {
+    disableGroup(groupName: string): void {
         this.#checkedFilters.delete(groupName);
     }
 
-    clone() {
+    clone(): FilterData {
         const filterData = new FilterData();
         for (const [groupName, filterNames] of this.#checkedFilters.entries()) {
             for (const filterName of filterNames) {

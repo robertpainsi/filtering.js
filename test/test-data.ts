@@ -1,3 +1,5 @@
+import {TestDataGroups} from "./test-data-types";
+
 export const color = {
     red: 'red',
     green: 'green',
@@ -39,7 +41,7 @@ export const cheap = price.cheap;
 export const expensive = price.expensive;
 export const priceless = price.priceless;
 
-export const simpleTestGroups = {
+export const simpleTestGroups: TestDataGroups = {
     color: Object.values(color),
     size: Object.values(size),
     price: Object.values(price),

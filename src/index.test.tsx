@@ -1,55 +1,48 @@
+import {red, small} from "../test/test-data";
 import {describe, test} from "@jest/globals";
-import {TestData, testFiltering} from "../test/test-utils";
-import {anotherSimpleTestData, cheap, red, simpleTestGroups, small} from "../test/test-data";
+import {TestData} from "../test/test-data-types";
+import {jsToSchema, testFiltering} from "../test/test-utils";
 
 const testData: TestData[] = [{
-    name: 'Simple test',
-    items: anotherSimpleTestData,
-    groups: simpleTestGroups,
-    expected: {
+    schema: {
         groups: {
+            color: ['red', 'blue', 'green'],
+            size: ['small', 'large'],
+        },
+        items: [{
+            name: 'item-1',
+            groups: {
+                color: ['red'],
+                size: ['small'],
+            },
+        }, {
+            name: 'item-2',
+            groups: {
+                color: ['blue'],
+                size: ['small'],
+            }
+        }, {
+            name: 'item-3',
+            groups: {
+                color: ['green'],
+                size: ['large'],
+            }
+        }],
+    },
+    test: {
+        name: 'test',
+        checked: {
             color: [red],
             size: [small],
-            price: [cheap],
         },
-        items: [
-            'item-12',
-            'item-19',
-            'item-24',
-            'item-27',
-        ],
-        possibleItems: [
-            'item-10',
-            'item-11',
-            'item-12',
-            'item-13',
-            'item-14',
-            'item-15',
-            'item-16',
-            'item-17',
-            'item-18',
-            'item-19',
-            'item-2',
-            'item-20',
-            'item-21',
-            'item-24',
-            'item-26',
-            'item-27',
-            'item-29',
-            'item-30',
-            'item-31',
-            'item-4',
-            'item-6',
-            'item-7',
-            'item-9',
-        ],
+        filteredItems: ['item-1'],
+        possibleItems: ['item-1', 'item-2'],
     },
 }];
 
 describe('Test filter', function () {
     for (const data of testData) {
-        test(data.name, async () => {
-            await testFiltering(data);
-        });
+        const schema = jsToSchema(data.schema);
+        test(data.test.name, () => testFiltering(schema, data.test));
     }
 });
