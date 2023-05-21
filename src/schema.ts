@@ -131,19 +131,18 @@ export class Item {
 
 export class FilterData {
     #checkedFilters: Map<string, Set<string>> = new Map();
+    #disabledGroups: Set<string> = new Set();
 
     get checkedFilters() {
         return this.#checkedFilters;
     }
 
     checkFilter(groupName: string, filterName: string): void {
+        if (this.#disabledGroups.has(groupName)) {
+            return;
+        }
         const filters = this.#getFiltersFromGroup(groupName);
         filters.add(filterName);
-    }
-
-    checkAllFilters(groupName: string): void {
-        const filters = this.#getFiltersFromGroup(groupName);
-        filters.clear();
     }
 
     #getFiltersFromGroup(groupName: string): Set<string> {
@@ -154,6 +153,7 @@ export class FilterData {
     }
 
     disableGroup(groupName: string): void {
+        this.#disabledGroups.add(groupName);
         this.#checkedFilters.delete(groupName);
     }
 
@@ -163,6 +163,9 @@ export class FilterData {
             for (const filterName of filterNames) {
                 filterData.checkFilter(groupName, filterName);
             }
+        }
+        for (const groupName of this.#disabledGroups) {
+            filterData.disableGroup(groupName);
         }
         return filterData;
     }

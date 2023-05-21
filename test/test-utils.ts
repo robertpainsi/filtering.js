@@ -24,11 +24,11 @@ export function testFiltering(schema: Schema, test: TestDataFiltering) {
 
 export function createFilterData(checked: TestDataGroups): FilterData {
     const filterData = new FilterData();
-    enableFilters(filterData, checked);
+    checkFilters(filterData, checked);
     return filterData;
 }
 
-export function enableFilters(filterData: FilterData, checked: TestDataGroups): void {
+export function checkFilters(filterData: FilterData, checked: TestDataGroups): void {
     for (const [group, filters] of Object.entries(checked)) {
         for (const filter of filters) {
             filterData.checkFilter(group, filter);
