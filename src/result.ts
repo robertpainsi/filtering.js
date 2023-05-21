@@ -4,9 +4,6 @@ export class Result {
     readonly #schema: Schema;
     readonly #groups = new Map<string, GroupResult>();
 
-    readonly #filteredItems = new Set<Item>();
-    readonly #allItems = new Set<Item>();
-
     constructor(schema: Schema) {
         this.#schema = schema;
 
@@ -45,39 +42,47 @@ export class Result {
     }
 
     get filteredItems() {
-        return [...this.#filteredItems];
+        const result = new Set<Item>();
+        for (const groupResult of this.groups) {
+            for (const item of groupResult.filteredItems) {
+                result.add(item);
+            }
+        }
+        return [...result];
     }
 
     addFilteredItem(item: Item) {
-        this.#filteredItems.add(item);
         for (const groupName of item.getGroupNames()) {
             const groupResult = this.#groups.get(groupName);
             groupResult.addFilteredItem(item);
         }
     }
 
+    get possibleItems(): Item[] {
+        const result = new Set<Item>();
+        for (const groupResult of this.groups) {
+            for (const item of groupResult.possibleItems) {
+                result.add(item);
+            }
+        }
+        return [...result];
+    }
+
     get allItems() {
-        return [...this.#allItems];
+        const result = new Set<Item>();
+        for (const groupResult of this.groups) {
+            for (const item of groupResult.allItems) {
+                result.add(item);
+            }
+        }
+        return [...result];
     }
 
     addAllItem(item: Item) {
-        this.#allItems.add(item);
         for (const groupName of item.getGroupNames()) {
             const groupResult = this.#groups.get(groupName);
             groupResult.addAllItem(item);
         }
-    }
-
-    get possibleItems(): Item[] {
-        const result = new Set<Item>();
-        for (const groupResult of this.groups) {
-            for (const filterResult of groupResult.filters) {
-                for (const item of filterResult.possibleItems) {
-                    result.add(item);
-                }
-            }
-        }
-        return [...result];
     }
 }
 
@@ -85,9 +90,6 @@ export class GroupResult {
     readonly #schemaGroup: Group;
 
     readonly #filters = new Map<string, FilterResult>();
-
-    readonly #filteredItems = new Set<Item>();
-    readonly #allItems = new Set<Item>();
 
     constructor(schemaGroup: Group) {
         this.#schemaGroup = schemaGroup;
@@ -109,16 +111,44 @@ export class GroupResult {
         return this.#filters.get(filterName);
     }
 
+    get filteredItems(): Item[] {
+        const result = new Set<Item>();
+        for (const filterResult of this.filters) {
+            for (const item of filterResult.filteredItems) {
+                result.add(item);
+            }
+        }
+        return [...result];
+    }
+
     addFilteredItem(item: Item) {
-        this.#filteredItems.add(item);
         for (const filterName of item.getFilterNames(this.schemaGroup.name)) {
             const filterResult = this.#filters.get(filterName);
             filterResult.addFilteredItem(item);
         }
     }
 
+    get possibleItems(): Item[] {
+        const result = new Set<Item>();
+        for (const filterResult of this.filters) {
+            for (const item of filterResult.possibleItems) {
+                result.add(item);
+            }
+        }
+        return [...result];
+    }
+
+    get allItems(): Item[] {
+        const result = new Set<Item>();
+        for (const filterResult of this.filters) {
+            for (const item of filterResult.allItems) {
+                result.add(item);
+            }
+        }
+        return [...result];
+    }
+
     addAllItem(item: Item) {
-        this.#allItems.add(item);
         for (const filterName of item.getFilterNames(this.schemaGroup.name)) {
             const filterResult = this.#filters.get(filterName);
             filterResult.addAllItem(item);
@@ -147,6 +177,8 @@ export class FilterResult {
 
     addFilteredItem(item: Item) {
         this.#filteredItems.add(item);
+        this.addPossibleItem(item);
+        this.addAllItem(item);
     }
 
     get possibleItems() {
@@ -155,6 +187,7 @@ export class FilterResult {
 
     addPossibleItem(item: Item) {
         this.#possibleItems.add(item);
+        this.addAllItem(item);
     }
 
     get allItems() {

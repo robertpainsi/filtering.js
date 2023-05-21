@@ -77,6 +77,11 @@ export const simpleTestItems = [{
     }
 }];
 
+export const simpleTestSchema = {
+    groups: simpleTestGroups,
+    items: simpleTestItems,
+}
+
 export const anotherSimpleTestData = [{
     name: 'item-1',
     groups: {
