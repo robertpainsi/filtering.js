@@ -1,7 +1,8 @@
 import {describe, expect, test} from "@jest/globals";
 import {Result} from "./result";
-import {jsToSchema} from "../test/test-utils";
-import {simpleTestGroups, simpleTestSchema} from "../test/test-data";
+import {getSortedNames, jsToSchema} from "../test/test-utils";
+import {Item} from "./schema";
+import {simpleTestGroups, simpleTestSchema} from "../test/data/simple";
 
 describe('Result', () => {
     test('Result structure should be the same as Schema', () => {
@@ -18,21 +19,54 @@ describe('Result', () => {
 
     test('Result filtered/possible/all items', () => {
         const schema = jsToSchema(simpleTestSchema);
-        const filteredItem = schema.items[0];
-        const filteredItems = [filteredItem];
-        const possibleItems = [schema.items[1]];
-        const allItems = [schema.items[2]];
         const result = new Result(schema);
 
-        result.addFilteredItem(filteredItem);
+        const expectedFilteredItems: {
+            [key: string]: {
+                [key: string]: Item[],
+            }
+        } = {
+            color: {
+                red: [schema.items[0]],
+                blue: [],
+            },
+            size: {
+                small: [schema.items[0]],
+                large: [],
+            }
+        }
 
-        expect(result.filteredItems).toEqual(filteredItems);
-        expect(result.possibleItems).toEqual(possibleItems);
-        expect(result.allItems).toEqual(allItems);
-        for (const groupName of filteredItem.getGroupNames()) {
-            for (const filterName of filteredItem.getFilterNames(groupName)) {
-                const filterResult = result.getGroup(groupName).getFilter(filterName);
-                expect(filterResult.filteredItems).toEqual(filteredItems);
+        const expectedPossibleItems: {
+            [key: string]: {
+                [key: string]: Item[],
+            }
+        } = {
+            color: {
+                red: [schema.items[0], schema.items[2]],
+                blue: [],
+            },
+            size: {
+                small: [schema.items[0]],
+                large: [],
+            }
+        };
+
+        result.addFilteredItem(schema.items[0]);
+        result.addAllItem(schema.items[1]);
+
+        result.getGroup('color')
+            .getFilter('red')
+            .addPossibleItem(schema.items[2]);
+
+        expect(result.filteredItems).toEqual([schema.items[0]]);
+        expect(result.allItems).toEqual([schema.items[0], schema.items[1], schema.items[2]]);
+        for (const group of schema.groups) {
+            for (const filter of group.filters) {
+                const filterResult = result.getGroup(group.name).getFilter(filter.name);
+                expect(getSortedNames(filterResult.filteredItems, 'data.name'))
+                    .toEqual(getSortedNames(expectedFilteredItems[group.name][filter.name], 'data.name'));
+                expect(getSortedNames(filterResult.possibleItems, 'data.name'))
+                    .toEqual(getSortedNames(expectedPossibleItems[group.name][filter.name], 'data.name'));
             }
         }
     });

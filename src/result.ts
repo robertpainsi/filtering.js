@@ -58,16 +58,6 @@ export class Result {
         }
     }
 
-    get possibleItems(): Item[] {
-        const result = new Set<Item>();
-        for (const groupResult of this.groups) {
-            for (const item of groupResult.possibleItems) {
-                result.add(item);
-            }
-        }
-        return [...result];
-    }
-
     get allItems() {
         const result = new Set<Item>();
         for (const groupResult of this.groups) {

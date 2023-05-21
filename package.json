@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "jsdom": "^21.1.1",
+    "natural-orderby": "^3.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
