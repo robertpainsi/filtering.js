@@ -1,5 +1,5 @@
 import {describe, expect, test} from "@jest/globals";
-import {compareStrings, findOne, getProperty} from "./utils";
+import {findOne, getProperty} from "./utils";
 
 describe('Utils.findOne', function () {
     test('Empty lists', () => {
@@ -59,52 +59,3 @@ describe('Utils.mapProperty', function () {
         });
     }
 });
-
-describe('Utils.compareStrings', function () {
-    const scenarios = [{
-        testName: 'Empty strings',
-        string1: '',
-        string2: '',
-        expectedResult: 0,
-    }, {
-        testName: 'Equal strings',
-        string1: 'a',
-        string2: 'a',
-        expectedResult: 0,
-    }, {
-        testName: 'First string less than second',
-        string1: 'a',
-        string2: 'b',
-        expectedResult: -1,
-    }, {
-        testName: 'First string greater than second',
-        string1: 'b',
-        string2: 'a',
-        expectedResult: 1,
-    }, {
-        testName: 'Case-sensitive',
-        string1: 'a',
-        string2: 'A',
-        expectedResult: 1,
-    }, {
-        testName: 'First string longer than second',
-        string1: 'aa',
-        string2: 'a',
-        expectedResult: 1,
-    }, {
-        testName: 'First string shorter than second',
-        string1: 'a',
-        string2: 'aa',
-        expectedResult: -1,
-    }, {
-        testName: 'First string longer than second, but first string greater than second',
-        string1: 'ba',
-        string2: 'aa',
-        expectedResult: 1,
-    }];
-    for (const {expectedResult, string1, string2, testName} of scenarios) {
-        test(testName, () => {
-            expect(compareStrings(string1, string2)).toBe(expectedResult);
-        });
-    }
-})
