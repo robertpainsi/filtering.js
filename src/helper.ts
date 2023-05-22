@@ -1,6 +1,7 @@
 import {Schema} from "./schema";
 import {Parser, ParserOptions} from "./parser";
 import {Filtering, FilteringOptions} from "./filtering";
+import {Result} from './result';
 
 export class FilteringFlow {
 
@@ -69,6 +70,11 @@ export class FilteringFlow {
         // Parse checked filter from HTML
         const filterData = this.parser.parseCheckedFilterDataFromHtml(this.root);
         const result = this.filtering.filter(filterData);
+
+        this.handleFilterResult(result);
+    }
+
+    handleFilterResult(result: Result) {
         for (const group of result.groups) {
             for (const filter of group.filters) {
                 const filterElement = filter.schemaFilter.data.element;
@@ -80,7 +86,6 @@ export class FilteringFlow {
             // Show or hide items
             item.data.element.classList.toggle(this.options.filteredItemClass, !result.filteredItems.includes(item));
         }
-        return result;
     }
 }
 

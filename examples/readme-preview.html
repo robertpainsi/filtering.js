@@ -36,8 +36,8 @@
     const {FilteringFlow} = filteringjs;
 
     class MyFlow extends FilteringFlow {
-        filter() {
-            const result = super.filter();
+        handleFilterResult(result) {
+            super.handleFilterResult(result);
             for (const group of result.groups) {
                 for (const filter of group.filters) {
                     const filterElement = filter.schemaFilter.data.element;
