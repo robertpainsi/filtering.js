@@ -76,15 +76,16 @@ A simple, out of the box example:
 
 *That's it!*
 
-If you need more flexibility, you can override any `FilteringFlow` method and use your own implementation. See [examples](https://github.com/robertpainsi/filtering.js/tree/main/examples) for more information.
+#### Parser
 
-`FilteringFlow` uses `Parser.parseSchemaFromHtml` by default. Therefore please note the HTML structure, classes and attributes.
+The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example, [example.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/example.html), [initialize-from-html.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/initialize-from-html.html) or other [examples](https://github.com/robertpainsi/filtering.js/tree/main/examples).
+
 - Group element
   - `.filtering-group`
   - `data-group-name="color"`
-- Filter element
-  - `.filtering-filter`
-  - `data-filter-name="red"`
+  - Filter element
+    - `.filtering-filter`
+    - `data-filter-name="red"`
 - Item element
   - `.filtering-item`
   - `data-filter-color="red"`<br>(the attribute name ends with the group name and is assigned the filter name)
