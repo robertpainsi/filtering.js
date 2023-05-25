@@ -1,10 +1,8 @@
 # filtering.js
 
-### \> Under construction \<
-
-This library is currently usable but still under construction. The filtering algorithm is fully implemented but design and tests need improvement, and options and callbacks need to be added.
-
 ### What is Filtering.js
+
+With Filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in Node and Browser environments.
 
 ![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
 *(Source: [readme-preview.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/readme-preview.html))*
