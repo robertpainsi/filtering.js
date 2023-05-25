@@ -41,7 +41,7 @@
             for (const group of result.groups) {
                 for (const filter of group.filters) {
                     const filterElement = filter.schemaFilter.data.element;
-                    // Update the total items number of the filter
+                    // Update the number next to the filter to indicate how many items are or would be filtered
                     filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
                 }
             }
