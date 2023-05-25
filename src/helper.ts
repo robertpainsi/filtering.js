@@ -21,9 +21,9 @@ export class FilteringFlow {
         this.root = root;
         this.options = {...FilteringFlow.defaultOptions, ...options};
 
-        this.initializeParser();
-        this.initializeSchema();
-        this.initializeFiltering();
+        this.parser = this.initializeParser();
+        this.schema = this.initializeSchema();
+        this.filtering = this.initializeFiltering();
         this.initializeFilterListener();
 
         if (this.options.triggerFilterAfterInitializing) {
@@ -31,19 +31,16 @@ export class FilteringFlow {
         }
     }
 
-    initializeParser(parserOptions?: ParserOptions) {
-        this.parser = new Parser(parserOptions);
-        return this.parser;
+    initializeParser(parserOptions?: ParserOptions): Parser {
+        return new Parser(parserOptions);
     }
 
-    initializeSchema() {
-        this.schema = this.parser.parseSchemaFromHtml(this.root);
-        return this.schema;
+    initializeSchema(): Schema {
+        return this.parser.parseSchemaFromHtml(this.root);
     }
 
-    initializeFiltering(filteringOptions?: FilteringOptions) {
-        this.filtering = new Filtering(this.schema, filteringOptions);
-        return this.filtering;
+    initializeFiltering(filteringOptions?: FilteringOptions): Filtering {
+        return new Filtering(this.schema, filteringOptions);
     }
 
     initializeFilterListener() {
