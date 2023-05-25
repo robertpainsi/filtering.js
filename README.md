@@ -7,6 +7,8 @@ With Filtering.js you can easily add filtering functionality to your project. It
 ![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
 *(Source: [readme-preview.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/readme-preview.html))*
 
+---
+
 ### Difference to other libraries?
 
 - :zap: fast
@@ -17,6 +19,8 @@ With Filtering.js you can easily add filtering functionality to your project. It
 - :battery: Parse filter structure and items directly from HTML.
 - :crystal_ball: Info about how many items would be filtered. No more 0 results.
 - :family: Works in Node and Browser environment.
+
+---
 
 ### Performance
 
@@ -41,6 +45,8 @@ Following tables illustrate the performance of the library measured on Desktop. 
 | **24** | 2 ms  | 3 ms  | 6 ms  |
 | **64** | 2 ms  | 3 ms  | 5 ms  |
 </details>
+
+---
 
 ### How to use?
 
@@ -74,7 +80,9 @@ A simple, out of the box example:
 
 *That's it!*
 
-#### Parser
+---
+
+### Parser
 
 The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example, [example.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/example.html), [initialize-from-html.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/initialize-from-html.html) or other [examples](https://github.com/robertpainsi/filtering.js/tree/main/examples).
 
@@ -87,6 +95,8 @@ The Schema can be directly parsed from HTML. For this, the structure has to be b
 - Item element
   - `.filtering-item`
   - `data-filter-color="red"`<br>(the attribute name ends with the group name and is assigned the filter name)
+
+---
 
 ### API
 ! Filter
