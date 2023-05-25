@@ -1,4 +1,5 @@
-import {Filter, FilterData, Group, Item, Schema} from "./schema";
+import {Filter, Group, Item, Schema} from "./schema";
+import {FilterData} from './filtering';
 
 export interface ParserOptions {
     groupClass?: string,

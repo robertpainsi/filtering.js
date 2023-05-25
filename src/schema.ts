@@ -28,7 +28,7 @@ export class Schema {
         this.#items.push(item);
     }
 
-    addItems(items: Item[]) {
+    addItems(items: Iterable<Item>) {
         for (const item of items) {
             this.addItem(item);
         }
@@ -129,44 +129,3 @@ export class Item {
     }
 }
 
-export class FilterData {
-    #checkedFilters: Map<string, Set<string>> = new Map();
-    #disabledGroups: Set<string> = new Set();
-
-    get checkedFilters() {
-        return this.#checkedFilters;
-    }
-
-    checkFilter(groupName: string, filterName: string): void {
-        if (this.#disabledGroups.has(groupName)) {
-            return;
-        }
-        const filters = this.#getFiltersFromGroup(groupName);
-        filters.add(filterName);
-    }
-
-    #getFiltersFromGroup(groupName: string): Set<string> {
-        if (!this.#checkedFilters.has(groupName)) {
-            this.#checkedFilters.set(groupName, new Set());
-        }
-        return this.#checkedFilters.get(groupName);
-    }
-
-    disableGroup(groupName: string): void {
-        this.#disabledGroups.add(groupName);
-        this.#checkedFilters.delete(groupName);
-    }
-
-    clone(): FilterData {
-        const filterData = new FilterData();
-        for (const [groupName, filterNames] of this.#checkedFilters.entries()) {
-            for (const filterName of filterNames) {
-                filterData.checkFilter(groupName, filterName);
-            }
-        }
-        for (const groupName of this.#disabledGroups) {
-            filterData.disableGroup(groupName);
-        }
-        return filterData;
-    }
-}

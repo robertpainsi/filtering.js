@@ -7,6 +7,15 @@ With Filtering.js you can easily add filtering functionality to your project. It
 ![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
 *(Source: [readme-preview.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/readme-preview.html))*
 
+
+### Table of contents
+
+- [Difference to other libraries?](#difference-to-other-libraries)
+- [Performance](#performance)
+- [How to use?](#how-to-use)
+- [Parser](#parser)
+- [API](#api)
+
 ---
 
 ### Difference to other libraries?
@@ -19,32 +28,6 @@ With Filtering.js you can easily add filtering functionality to your project. It
 - :battery: Parse filter structure and items directly from HTML.
 - :crystal_ball: Info about how many items would be filtered. No more 0 results.
 - :family: Works in Node and Browser environment.
-
----
-
-### Performance
-
-Following tables illustrate the performance of the library measured on Desktop. The runtime is calculated by averaging 1.000 scenarios with various number of items, groups, and filters and also various number of checked filters.
-
-<details>
-  <summary>100 items</summary>
-
-| <sub>filters</sub> \ <sup>groups</sup> | **2** | **4** | **8** |
-|---|:-----:|:---:|:-----:|
-| **8** | <1 ms | <1 ms | <1 ms  |
-| **24** | <1 ms  | <1 ms | <1 ms  |
-| **64** | <1 ms  | <1 ms | <1 ms  |
-</details>
-
-<details>
-  <summary>1.000 items</summary>
-
-| <sub>filters</sub> \ <sup>groups</sup> | **2** | **4** | **8** |
-|---|:-----:|:-----:|:-----:|
-| **8** | 2 ms  | 3 ms  | 10 ms |
-| **24** | 2 ms  | 3 ms  | 6 ms  |
-| **64** | 2 ms  | 3 ms  | 5 ms  |
-</details>
 
 ---
 
@@ -80,6 +63,8 @@ A simple, out of the box example:
 
 *That's it!*
 
+Check out more [examples](https://github.com/robertpainsi/filtering.js/blob/main/examples/).
+
 ---
 
 ### Parser
@@ -98,13 +83,150 @@ The Schema can be directly parsed from HTML. For this, the structure has to be b
 
 ---
 
-### API
-! Filter
-- Trigger
-- Pre-filter
+### Performance
 
-! API
-- Options
-- Result
-- Functions
-- Callbacks
+Following tables illustrate the performance of the library measured on Desktop. The runtime is calculated by averaging 1.000 scenarios with various number of items, groups, and filters and also various number of checked filters.
+
+<details>
+  <summary>100 items</summary>
+
+| <sub>filters</sub> \ <sup>groups</sup> | **2** | **4** | **8** |
+|---|:-----:|:---:|:-----:|
+| **8** | <1 ms | <1 ms | <1 ms  |
+| **24** | <1 ms  | <1 ms | <1 ms  |
+| **64** | <1 ms  | <1 ms | <1 ms  |
+</details>
+
+<details>
+  <summary>1.000 items</summary>
+
+| <sub>filters</sub> \ <sup>groups</sup> | **2** | **4** | **8** |
+|---|:-----:|:-----:|:-----:|
+| **8** | 2 ms  | 3 ms  | 10 ms |
+| **24** | 2 ms  | 3 ms  | 6 ms  |
+| **64** | 2 ms  | 3 ms  | 5 ms  |
+</details>
+
+---
+
+### API
+
+#### Schema
+
+###### Properties
+
+| Name     | Type      | Description     |
+|----------|-----------|-----------------|
+| `groups` | `Group[]` | List of groups. |
+| `items`  | `Item[]`  | List of items.  |
+| `data`   | `object`  | User data.      |
+
+###### Functions
+
+| Name                         | Return type | Description                                                       |
+|------------------------------|-------------|-------------------------------------------------------------------|
+| `constructor(data?: object)` |             | - data, a usable plain old JavaScript object defined by the user. |
+| `addGroup(group: Group)`     |             | Adds a new Group to the Schema.                                   |
+| `addItem(item: Item)`        |             | Adds a new Item to the Schema.                                    |
+| `addItems(items: Item[])`    |             | Adds multiple items to the Schema.                                |
+
+<br>
+
+#### Group
+
+###### Properties
+
+| Name      | Type       | Description        |
+|-----------|------------|--------------------|
+| `name`    | `string`   | Name of the group. |
+| `filters` | `Filter[]` | List of filters.   |
+| `data`    | `object`   | User data.         |
+
+###### Functions
+
+| Name                                     | Return type | Description                                                                                     |
+|------------------------------------------|-------------|-------------------------------------------------------------------------------------------------|
+| `constructor(name: string, data?: Pojo)` |             | - name, name of the group.<br>- data, a usable plain old JavaScript object defined by the user. |
+| `addFilter(filter: Filter)`              |             | Adds a new Filter to the Group.                                                                 |
+| `getFilterNames() `                      | `string[]`  | Returns a list of all filter names.                                                             |
+
+<br>
+
+#### Filter
+
+###### Properties
+
+| Name   | Type     | Description     |
+|--------|----------|-----------------|
+| `name` | `string` | Name of filter. |
+| `data` | `object` | User data.      |
+
+###### Functions
+
+<br>
+
+#### Item
+
+###### Properties
+
+| Name   | Type     | Description |
+|--------|----------|-------------|
+| `data` | `object` | User data.  |
+
+###### Functions
+
+| Name                                               | Return type   | Description                                                            |
+|----------------------------------------------------|---------------|------------------------------------------------------------------------|
+| `constructor(data?: Pojo)`                         |               | - data, a usable plain old JavaScript object defined by the user.      |
+| `addFilter(groupName: string, filterName: string)` |               | Specifies the                                                          |
+| `getGroupNames()`                                  | `Set<string>` | Returns a set of all Group names the Item is in.                       |
+| `getFilterNames(groupName: string)`                | `Set<string>` | Returns a set of all Filter names for a specific Group the Item is in. |
+
+<br>
+
+#### Filtering
+
+###### Functions
+
+| Name                                                      | Return type | Description       |
+|-----------------------------------------------------------|-------------|-------------------|
+| `constructor(schema: Schema, options?: FilteringOptions)` |             | - [options](TODO) |
+
+<br>
+
+#### FilteringOptions
+
+###### Properties
+
+| Name                                                              | Return type | Description                                                                                                                    |
+|-------------------------------------------------------------------|-------------|--------------------------------------------------------------------------------------------------------------------------------|
+| `filterItem?(item: Item, schema: Schema, filterData: FilterData)` | `boolean`   | Called before `Filtering.filter` for each item. Returning true will consider the item for filtering and in the [Result](TODO). |
+
+<br>
+
+#### FilterData
+
+###### Properties
+
+| Name             | Type                      | Description                                                                                         |
+|------------------|---------------------------|-----------------------------------------------------------------------------------------------------|
+| `checkedFilters` | Map<string, Set\<string>> | A map representing the checked Data (key: Group names; values: Filter names in the specific group). |
+
+###### Functions
+
+| Name                                                 | Return type | Description                                                                                                         |
+|------------------------------------------------------|-------------|---------------------------------------------------------------------------------------------------------------------|
+| `checkFilter(groupName: string, filterName: string)` |             | Checks a Filter in a Group.                                                                                         |
+| `disableGroup(groupName: string)`                    |             | Unchecks all Filters in a Group. Also disables the Group, further checking Filter will have no effect on the Group. |
+
+<br>
+
+#### Result
+
+#### GroupResult
+
+#### FilterResult
+
+#### FilteringFlow
+
+#### FilteringFlowOptions

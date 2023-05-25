@@ -1,5 +1,6 @@
 import {describe, expect, test} from "@jest/globals";
-import {Filter, FilterData, Group, Item, Schema} from "./schema";
+import {Filter, Group, Item, Schema} from "./schema";
+import {FilterData} from './filtering';
 
 describe('Schema', () => {
     test('addGroup', () => {

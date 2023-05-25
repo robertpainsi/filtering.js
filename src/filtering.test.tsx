@@ -4,7 +4,8 @@ import {TestDataFiltering} from "../test/test-data-types";
 import {jsToSchema, testFiltering} from "../test/test-utils";
 import {simpleTestSchema} from "../test/data/simple";
 import {mediumTestSchema} from "../test/data/medium";
-import {FilterData, Item, Schema} from './schema';
+import {Item, Schema} from './schema';
+import {FilterData} from './filtering';
 
 describe('Test Tiltering', function () {
     const testData: TestDataFiltering[] = [{

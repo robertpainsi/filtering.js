@@ -3,8 +3,8 @@ import {ReactElement} from "react";
 
 import './initialize-test-utils';
 
-import {Filter, FilterData, Group, Item, Schema} from "../src/schema";
-import {Filtering} from "../src/filtering";
+import {Filter, Group, Item, Schema} from "../src/schema";
+import {FilterData, Filtering} from "../src/filtering";
 import {JSDOM} from "jsdom";
 import {renderToStaticMarkup} from "react-dom/server";
 import {TestDataFiltering, TestDataGroups, TestDataItem, TestDataPossibleItems, TestDataSchema} from "./test-data-types";

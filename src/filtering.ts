@@ -1,5 +1,5 @@
-import {FilterData, Item, Schema} from "./schema";
-import {FilterResult, GroupResult, Result} from "./result";
+import {Item, Schema} from "./schema";
+import {Result} from "./result";
 import {findOne} from "./utils";
 
 export class Filtering {
@@ -74,4 +74,46 @@ export class Filtering {
 
 export interface FilteringOptions {
     filterItem?(item: Item, schema: Schema, filterData: FilterData): boolean,
+}
+
+export class FilterData {
+    #checkedFilters: Map<string, Set<string>> = new Map();
+    #disabledGroups: Set<string> = new Set();
+
+    get checkedFilters() {
+        return this.#checkedFilters;
+    }
+
+    checkFilter(groupName: string, filterName: string): void {
+        if (this.#disabledGroups.has(groupName)) {
+            return;
+        }
+        const filters = this.#getFiltersFromGroup(groupName);
+        filters.add(filterName);
+    }
+
+    #getFiltersFromGroup(groupName: string): Set<string> {
+        if (!this.#checkedFilters.has(groupName)) {
+            this.#checkedFilters.set(groupName, new Set());
+        }
+        return this.#checkedFilters.get(groupName);
+    }
+
+    disableGroup(groupName: string): void {
+        this.#disabledGroups.add(groupName);
+        this.#checkedFilters.delete(groupName);
+    }
+
+    clone(): FilterData {
+        const filterData = new FilterData();
+        for (const [groupName, filterNames] of this.#checkedFilters.entries()) {
+            for (const filterName of filterNames) {
+                filterData.checkFilter(groupName, filterName);
+            }
+        }
+        for (const groupName of this.#disabledGroups) {
+            filterData.disableGroup(groupName);
+        }
+        return filterData;
+    }
 }
