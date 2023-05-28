@@ -29,16 +29,19 @@ export class Parser {
         return this.#options;
     }
 
-    parseSchemaFromHtml(element: HTMLElement, schema: Schema = new Schema()) {
-        this.parseGroupsAndFiltersFromHtml(element, schema);
-        for (const item of this.parseItemsFromHtml(element)) {
+    parseSchemaFromHtml(root: HTMLElement, schema: Schema = new Schema()) {
+        for (const group of this.parseGroupsAndFiltersFromHtml(root)) {
+            schema.addGroup(group);
+        }
+        for (const item of this.parseItemsFromHtml(root)) {
             schema.addItem(item);
         }
         return schema;
     }
 
-    parseGroupsAndFiltersFromHtml(element: HTMLElement, schema: Schema) {
-        for (const groupElement of element.getElementsByClassName(this.#options.groupClass) as HTMLCollectionOf<HTMLElement>) {
+    parseGroupsAndFiltersFromHtml(root: HTMLElement, schema: Schema = null): Group[] {
+        const groups = [];
+        for (const groupElement of root.getElementsByClassName(this.#options.groupClass) as HTMLCollectionOf<HTMLElement>) {
             const groupName = groupElement.dataset.groupName;
             if (groupName === undefined) {
                 continue;
@@ -60,17 +63,24 @@ export class Parser {
 
                 group.addFilter(filter);
             }
-            schema.addGroup(group);
+            groups.push(group);
         }
+
+        if (schema !== null) {
+            for (const group of groups) {
+                schema.addGroup(group);
+            }
+        }
+        return groups;
     }
 
-    parseItemsFromHtml(element: HTMLElement) {
+    parseItemsFromHtml(root: HTMLElement, schema: Schema = null) {
         const items: Item[] = [];
 
         const attributeRegex = new RegExp(`${this.#options.itemFilterNameAttributePrefix}-(?<groupName>.+)`, 'i');
-        for (const itemElement of element.getElementsByClassName(this.#options.itemClass) as HTMLCollectionOf<HTMLElement>) {
+        for (const itemElement of root.getElementsByClassName(this.#options.itemClass) as HTMLCollectionOf<HTMLElement>) {
             const item = new Item({
-                element: itemElement
+                element: itemElement,
             });
             for (const {name: attributeName, value: filterNames} of itemElement.attributes) {
                 const match = attributeName.match(attributeRegex);
@@ -83,12 +93,17 @@ export class Parser {
             }
             items.push(item);
         }
+
+        if (schema !== null) {
+            schema.addItems(items);
+        }
+
         return items;
     }
 
-    parseCheckedFilterDataFromHtml(element: HTMLElement) {
+    parseCheckedFilterDataFromHtml(root: HTMLElement) {
         const filterData = new FilterData();
-        for (const groupElement of element.getElementsByClassName(this.#options.groupClass) as HTMLCollectionOf<HTMLElement>) {
+        for (const groupElement of root.getElementsByClassName(this.#options.groupClass) as HTMLCollectionOf<HTMLElement>) {
             const groupName = groupElement.dataset.groupName;
 
             for (const filterElement of groupElement.getElementsByClassName(this.#options.filterClass) as HTMLCollectionOf<HTMLElement>) {

@@ -41,7 +41,7 @@ export class Result {
         return this.#groups.get(groupName);
     }
 
-    get filteredItems() {
+    get filteredItems(): Item[] {
         const result = new Set<Item>();
         for (const groupResult of this.groups) {
             for (const item of groupResult.filteredItems) {
@@ -116,16 +116,6 @@ export class GroupResult {
             const filterResult = this.#filters.get(filterName);
             filterResult.addFilteredItem(item);
         }
-    }
-
-    get possibleItems(): Item[] {
-        const result = new Set<Item>();
-        for (const filterResult of this.filters) {
-            for (const item of filterResult.possibleItems) {
-                result.add(item);
-            }
-        }
-        return [...result];
     }
 
     get allItems(): Item[] {

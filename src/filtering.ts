@@ -12,6 +12,14 @@ export class Filtering {
         this.#options = options;
     }
 
+    get schema(): Schema {
+        return this.#schema;
+    }
+
+    get options(): FilteringOptions {
+        return this.#options;
+    }
+
     filter(filterData: FilterData): Result {
         const result = new Result(this.#schema);
 

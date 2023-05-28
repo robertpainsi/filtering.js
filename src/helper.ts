@@ -5,30 +5,50 @@ import {Result} from './result';
 
 export class FilteringFlow {
 
-    readonly options: FilteringFlowOptions;
+    readonly #options: FilteringFlowOptions;
     static readonly defaultOptions: FilteringFlowOptions = {
         triggerFilterAfterInitializing: true,
         disabledFilterClass: 'disabled',
         filteredItemClass: 'filtered',
     }
 
-    readonly root: HTMLElement;
-    schema: Schema;
-    parser: Parser;
-    filtering: Filtering;
+    readonly #root: HTMLElement;
+    readonly #schema: Schema;
+    readonly #parser: Parser;
+    readonly #filtering: Filtering;
 
     constructor(root: HTMLElement, options: FilteringFlowOptions = {}) {
-        this.root = root;
-        this.options = {...FilteringFlow.defaultOptions, ...options};
+        this.#root = root;
+        this.#options = {...FilteringFlow.defaultOptions, ...options};
 
-        this.parser = this.initializeParser();
-        this.schema = this.initializeSchema();
-        this.filtering = this.initializeFiltering();
+        this.#parser = this.initializeParser();
+        this.#schema = this.initializeSchema();
+        this.#filtering = this.initializeFiltering();
         this.initializeFilterListener();
 
         if (this.options.triggerFilterAfterInitializing) {
             this.filter();
         }
+    }
+
+    get options(): FilteringFlowOptions {
+        return this.#options;
+    }
+
+    get root(): HTMLElement {
+        return this.#root;
+    }
+
+    get schema(): Schema {
+        return this.#schema;
+    }
+
+    get parser(): Parser {
+        return this.#parser;
+    }
+
+    get filtering(): Filtering {
+        return this.#filtering;
     }
 
     initializeParser(parserOptions?: ParserOptions): Parser {
@@ -39,8 +59,8 @@ export class FilteringFlow {
         return this.parser.parseSchemaFromHtml(this.root);
     }
 
-    initializeFiltering(filteringOptions?: FilteringOptions): Filtering {
-        return new Filtering(this.schema, filteringOptions);
+    initializeFiltering(): Filtering {
+        return new Filtering(this.schema);
     }
 
     initializeFilterListener() {

@@ -1,8 +1,9 @@
-import {describe, test} from "@jest/globals";
+import {describe, expect, test} from "@jest/globals";
 import {Parser} from "./parser";
-import {jsxToHtml, testFilterData, testSchema} from "../test/test-utils";
+import {jsxToHtml, testFilterData, testSchema, testSchemaGroups, testSchemaItems} from "../test/test-utils";
 import {blue, large, red, small} from "../test/test-data";
 import {TestDataParserWithHtml} from "../test/test-data-types";
+import {Schema} from './schema';
 
 describe('Parser', function () {
     const schemaTestData: TestDataParserWithHtml[] = [{
@@ -246,7 +247,7 @@ describe('Parser', function () {
         },
         options: {
             filterCheckedClass: 'my-checked',
-        }
+        },
     }];
     for (const singleTest of filterDataTestData) {
         test(singleTest.name, () => {
@@ -254,4 +255,80 @@ describe('Parser', function () {
             testFilterData(schema, singleTest.schema);
         });
     }
+
+    test('Parser.parseSchemaFromHtml optional Schema', () => {
+        const root = jsxToHtml(
+            <div id="filtering">
+                <div className="filtering-group" data-group-name="color">
+                    <div className="filtering-filter checked" data-filter-name="red"></div>
+                </div>
+            </div>,
+        );
+
+        const parsedSchema = new Parser().parseSchemaFromHtml(root);
+        testSchema(parsedSchema, {
+            groups: {
+                color: ['red'],
+            },
+        });
+
+        const schema = new Schema();
+        expect(new Parser().parseSchemaFromHtml(root, schema)).toBe(schema);
+        testSchema(schema, {
+            groups: {
+                color: ['red'],
+            },
+        });
+    });
+
+    test('Parser.parseGroupsAndFiltersFromHtml optional Schema', () => {
+        const root = jsxToHtml(
+            <div id="filtering">
+                <div className="filtering-group" data-group-name="color">
+                    <div className="filtering-filter checked" data-filter-name="red"></div>
+                </div>
+            </div>,
+        );
+
+        const parsedGroups = new Parser().parseGroupsAndFiltersFromHtml(root);
+        testSchemaGroups(parsedGroups, {
+            color: ['red'],
+        });
+
+        const schema = new Schema();
+        new Parser().parseGroupsAndFiltersFromHtml(root, schema);
+        testSchema(schema, {
+            groups: {
+                color: ['red'],
+            },
+        });
+    });
+
+    test('Parser.parseItemsFromHtml optional Schema', () => {
+        const root = jsxToHtml(
+            <div id="items">
+                <div id="item-1" className="filtering-item" data-filter-color="red"></div>
+            </div>,
+        );
+
+        const parsedItems = new Parser().parseItemsFromHtml(root);
+        testSchemaItems(parsedItems, [{
+            name: 'item-1',
+            groups: {
+                color: ['red'],
+            },
+        }]);
+
+        const schema = new Schema();
+        new Parser().parseItemsFromHtml(root, schema);
+        testSchema(schema, {
+            items: [{
+                name: 'item-1',
+                groups: {
+                    color: ['red'],
+                },
+            }],
+        });
+    });
+
 });
