@@ -19,7 +19,7 @@ describe('Parser', function () {
             groups: {
                 color: ['red'],
             },
-        }
+        },
     }, {
         name: 'One group with no filters',
         html: (
@@ -31,7 +31,7 @@ describe('Parser', function () {
             groups: {
                 color: [],
             },
-        }
+        },
     }, {
         name: 'Multiple groups with one filter',
         html: (
@@ -65,7 +65,7 @@ describe('Parser', function () {
             groups: {
                 color: ['red'],
             },
-        }
+        },
     }, {
         name: 'Custom group and filter name',
         html: (
@@ -83,7 +83,7 @@ describe('Parser', function () {
         options: {
             groupClass: 'custom-group',
             filterClass: 'custom-filter',
-        }
+        },
     }, {
         name: 'One item with one group and one filter',
         html: (
@@ -96,9 +96,9 @@ describe('Parser', function () {
                 name: 'item-1',
                 groups: {
                     color: ['red'],
-                }
-            }]
-        }
+                },
+            }],
+        },
     }, {
         name: 'Multiple items with multiple groups and multiple filter',
         html: (
@@ -113,15 +113,15 @@ describe('Parser', function () {
                 groups: {
                     color: ['red'],
                     size: ['small'],
-                }
+                },
             }, {
                 name: 'item-2',
                 groups: {
                     color: ['blue'],
                     size: ['large'],
-                }
-            }]
-        }
+                },
+            }],
+        },
     }, {
         name: 'Custom item class name',
         html: (
@@ -134,12 +134,12 @@ describe('Parser', function () {
                 name: 'item-1',
                 groups: {
                     color: ['red'],
-                }
-            }]
+                },
+            }],
         },
         options: {
             itemClass: 'custom-item',
-        }
+        },
     }, {
         name: `Custom prefix attribute for item's group name`,
         html: (
@@ -152,12 +152,12 @@ describe('Parser', function () {
                 name: 'item-1',
                 groups: {
                     color: ['red'],
-                }
-            }]
+                },
+            }],
         },
         options: {
             itemFilterNameAttributePrefix: 'foo',
-        }
+        },
     }];
 
     for (const singleTest of schemaTestData) {
@@ -181,7 +181,7 @@ describe('Parser', function () {
             groups: {
                 color: ['red'],
             },
-        }
+        },
     }, {
         name: 'Multiple checked filters',
         html: (
@@ -196,7 +196,7 @@ describe('Parser', function () {
             groups: {
                 color: ['red', 'blue'],
             },
-        }
+        },
     }, {
         name: 'No checked filter',
         html: (
@@ -209,7 +209,7 @@ describe('Parser', function () {
         ),
         schema: {
             groups: {},
-        }
+        },
     }, {
         name: 'One checked filter in each group',
         html: (
@@ -229,7 +229,7 @@ describe('Parser', function () {
                 color: ['red'],
                 size: ['large'],
             },
-        }
+        },
     }, {
         name: 'Custom checked class name',
         html: (

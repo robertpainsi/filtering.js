@@ -33,7 +33,7 @@ describe('Result', () => {
             size: {
                 small: [schema.items[0]],
                 large: [],
-            }
+            },
         }
 
         const expectedPossibleItems: {
@@ -48,7 +48,7 @@ describe('Result', () => {
             size: {
                 small: [schema.items[0]],
                 large: [],
-            }
+            },
         };
 
         result.addFilteredItem(schema.items[0]);
