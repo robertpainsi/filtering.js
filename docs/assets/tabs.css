@@ -1,0 +1,16 @@
+.js-tabs .js-tabs__header {
+    margin-bottom: 0;
+}
+
+.js-tabs .js-tabs__header .js-tabs__title {
+    margin: 0;
+}
+
+.js-tabs .js-tabs__header .js-tabs__title h1,
+.js-tabs .js-tabs__header .js-tabs__title h2,
+.js-tabs .js-tabs__header .js-tabs__title h3,
+.js-tabs .js-tabs__header .js-tabs__title h4,
+.js-tabs .js-tabs__header .js-tabs__title h5,
+.js-tabs .js-tabs__header .js-tabs__title h6 {
+    margin: 0;
+}

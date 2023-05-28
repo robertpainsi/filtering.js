@@ -1,0 +1,6 @@
+root: /
+baseurl: /filtering.js
+
+plugins:
+  - github-pages
+  - jemoji
