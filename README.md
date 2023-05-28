@@ -91,20 +91,22 @@ Following tables illustrate the performance of the library measured on Desktop. 
   <summary>100 items</summary>
 
 | <sub>filters</sub> \ <sup>groups</sup> | **2** | **4** | **8** |
-|---|:-----:|:---:|:-----:|
-| **8** | <1 ms | <1 ms | <1 ms  |
-| **24** | <1 ms  | <1 ms | <1 ms  |
-| **64** | <1 ms  | <1 ms | <1 ms  |
+|---------------------------------------:|:-----:|:-----:|:-----:|
+|                                  **8** | <1 ms | <1 ms | <1 ms |
+|                                 **24** | <1 ms | <1 ms | <1 ms |
+|                                 **64** | <1 ms | <1 ms | <1 ms |
+
 </details>
 
 <details>
   <summary>1.000 items</summary>
 
 | <sub>filters</sub> \ <sup>groups</sup> | **2** | **4** | **8** |
-|---|:-----:|:-----:|:-----:|
-| **8** | 2 ms  | 3 ms  | 10 ms |
-| **24** | 2 ms  | 3 ms  | 6 ms  |
-| **64** | 2 ms  | 3 ms  | 5 ms  |
+|---------------------------------------:|:-----:|:-----:|:-----:|
+|                                  **8** | 2 ms  | 3 ms  | 10 ms |
+|                                 **24** | 2 ms  | 3 ms  | 6 ms  |
+|                                 **64** | 2 ms  | 3 ms  | 5 ms  |
+
 </details>
 
 ---
