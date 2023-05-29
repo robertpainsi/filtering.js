@@ -2,6 +2,7 @@
 import path from 'path';
 import {fileURLToPath} from 'url';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyPlugin from "copy-webpack-plugin";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,7 +13,6 @@ export default {
     devtool: 'source-map',
     entry: {
         index: './src/index.ts',
-        'example-style': './examples/style/index.scss',
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -38,5 +38,12 @@ export default {
         new MiniCssExtractPlugin({
             filename: '[name].css',
         }),
+        new CopyPlugin({
+                patterns: [
+                    {from: 'dist/index.js', to: 'docs/assets/'},
+                    {from: 'dist/index.js.map', to: 'docs/assets/'},
+                ]
+            }
+        ),
     ],
 };
