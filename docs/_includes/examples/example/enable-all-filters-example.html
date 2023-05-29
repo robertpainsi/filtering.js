@@ -1,0 +1,49 @@
+<div id="filteringjs-enable-all-filters-example">
+    <div class="flex gap stretch">
+        <div class="filtering-group" data-group-name="color">
+            <div class="filtering-filter" data-filter-name="red">Red</div>
+            <div class="filtering-filter" data-filter-name="green">Green</div>
+            <div class="filtering-filter" data-filter-name="blue">Blue</div>
+            <div class="filtering-filter" data-filter-type="all">All</div>
+        </div>
+    </div>
+
+    <div class="flex">
+        <div class="filtering-item" data-filter-color="red"></div>
+        <div class="filtering-item" data-filter-color="green"></div>
+        <div class="filtering-item" data-filter-color="blue"></div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const {FilteringFlow} = filteringjs;
+
+        class MyFlow extends FilteringFlow {
+            initializeFilterListener() {
+                for (const filterElement of this.root.getElementsByClassName('filtering-filter')) {
+                    filterElement.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        if (filterElement.classList.contains('disabled')) {
+                            // Ignore click if the filter would give 0 results
+                            return;
+                        }
+                        if (filterElement.dataset.filterType === 'all') {
+                            // Remove all checked classes in group if all is clicked
+                            if (!filterElement.classList.contains('checked')) {
+                                for (const fe of filterElement.closest('.filtering-group').getElementsByClassName('filtering-filter')) {
+                                    fe.classList.remove('checked');
+                                }
+                            }
+                        } else {
+                            filterElement.classList.toggle('checked'); // Check or uncheck filter
+                        }
+                        this.filter();
+                    });
+                }
+            }
+        }
+
+        new MyFlow(document.querySelector('#filteringjs-enable-all-filters-example'));
+    }())
+</script>

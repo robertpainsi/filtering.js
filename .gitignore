@@ -3,6 +3,9 @@ node_modules
 !/dist/index.js
 !/dist/index.js.map
 
+docs/Gemfile.lock
+docs/_site/
+
 logs
 *.log
 npm-debug.log*

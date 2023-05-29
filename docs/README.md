@@ -1,4 +1,4 @@
-# filtering.js
+# [filtering.js](https://github.com/robertpainsi/filtering.js)
 
 ### What is Filtering.js
 
