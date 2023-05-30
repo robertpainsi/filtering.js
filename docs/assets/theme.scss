@@ -5,10 +5,6 @@ $base-color: #c6538c;
 $font-color: #212121;
 $link-color: #0969da;
 
-* {
-  color: $font-color;
-}
-
 a {
   color: $link-color;
 
@@ -34,13 +30,19 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
 }
 
-.site-header {
+.hidden {
+  display: none;
+}
+
+.site-header,
+.site-footer {
   border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   background-color: $font-color;
   color: white;
 
-  .site-title {
+  .site-title,
+  .footer-heading {
     color: white;
   }
 
