@@ -1,0 +1,63 @@
+---
+---
+
+$base-color: #c6538c;
+$font-color: #212121;
+$link-color: #0969da;
+
+* {
+  color: $font-color;
+}
+
+a {
+  color: $link-color;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited {
+    color: $link-color;
+  }
+}
+
+hr {
+  height: 0.1em;
+  padding: 0;
+  margin: 40px 0;
+  background-color: lightgrey;
+  border: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+.site-header {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  background-color: $font-color;
+  color: white;
+
+  .site-title {
+    color: white;
+  }
+
+  @media screen and (min-width: 600px) {
+    .site-nav {
+      .page-link {
+        color: white;
+      }
+    }
+  }
+}
+
+h1 {
+  font-size: 32px;
+}
+
+.page-heading,
+.post-header {
+  display: none;
+}
