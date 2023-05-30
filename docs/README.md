@@ -5,7 +5,7 @@
 With Filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in Node and Browser environments.
 
 ![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
-*(Source: [readme-preview.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/readme-preview.html))*
+*([Live-demo and source](https://robertpainsi.github.io/filtering.js/examples.html#number-of-results-for-each-filter))*
 
 
 ### Table of contents
