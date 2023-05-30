@@ -1,4 +1,4 @@
-## Single select filter example
+### Single select filter example
 
 A simple example that demonstrates ads.
 

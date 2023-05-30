@@ -1,4 +1,4 @@
-## Example
+### A simple example of filtering.js in action
 
 A simple example of filtering.js in action.
 

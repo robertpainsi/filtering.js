@@ -1,4 +1,4 @@
-## Enable all filters example
+### Enable all filters example
 
 An simple example that demonstrates a button enabling all filter.
 

@@ -1,8 +1,7 @@
 root: /
 baseurl: /filtering.js
 
-name: true
-title: false
+theme: minima
 
 plugins:
   - github-pages

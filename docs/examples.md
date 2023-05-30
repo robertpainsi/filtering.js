@@ -1,10 +1,10 @@
 # [Examples]({{site.baseurl}}{{page.url}})
 
-{% include examples/example/preview-example.md %}
+{% include examples/example/example.md %}
 
 ---
 
-{% include examples/example/example.md %}
+{% include examples/example/preview-example.md %}
 
 ---
 
