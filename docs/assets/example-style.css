@@ -1,17 +1,4 @@
-.flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
 
-.gap {
-    gap: 24px;
-}
-
-.stretch {
-    align-items: stretch;
-}
 
 .filtering-group {
     display: flex;
@@ -37,6 +24,14 @@
 
 .filtering-group[data-group-name="size"]:before {
     content: 'Size';
+}
+
+.filtering-group[data-group-name="border"]:before {
+    content: 'Border';
+}
+
+.filtering-group[data-group-name="text"]:before {
+    content: 'Text';
 }
 
 .filtering-filter {
@@ -104,8 +99,8 @@
 }
 
 .filtering-item[data-filter-size="xs"] {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
 }
 
 .filtering-item[data-filter-size="small"] {

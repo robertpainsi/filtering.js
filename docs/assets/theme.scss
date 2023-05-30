@@ -30,6 +30,26 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
 }
 
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mx-2 {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.gap {
+  gap: 24px;
+}
+
+.stretch {
+  align-items: stretch;
+}
+
 .hidden {
   display: none;
 }

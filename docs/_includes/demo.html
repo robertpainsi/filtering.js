@@ -1,0 +1,148 @@
+<div id="huge-number-of-items"></div>
+
+<script>
+    (function () {
+        const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
+        const getTextColor = (backgroundColor) => {
+            const rgb = backgroundColor.match(/\d+/g);
+            const brightness = Math.round(((parseInt(rgb[0]) * 299) +
+                (parseInt(rgb[1]) * 587) +
+                (parseInt(rgb[2]) * 114)) / 1000);
+            return (brightness > 125) ? 'black' : 'white';
+        };
+
+        // Create a function that returns the hex color of following css colors: red, blue, green, yellow, orange, purple, pink, brown, gray, black, cyan, magenta, lime
+        const getHexColor = (color) => {
+            const tempElement = document.createElement('div');
+            tempElement.style.color = color;
+            document.body.appendChild(tempElement);
+            const hex = window.getComputedStyle(tempElement).color;
+            document.body.removeChild(tempElement);
+            return hex;
+        }
+
+
+        const groups = {
+            text: [
+                'hot',
+                'far',
+                'six',
+                'one',
+                'bad',
+                'icy',
+                'cut',
+                // 'big',
+                // 'wry',
+                // 'two',
+                // 'dry',
+                // 'old',
+            ],
+            color: [
+                'red',
+                'blue',
+                'green',
+                'yellow',
+                'orange',
+                'purple',
+                'pink',
+                'brown',
+                // 'lightgray',
+                // 'black',
+                // 'cyan',
+                // 'magenta',
+                // 'lime',
+            ],
+            size: [
+                'xs',
+                'small',
+                'medium',
+                'large',
+                'xl',
+            ],
+            border: [
+                'all-sides',
+                'top-left',
+                'top-right',
+                'bottom-left',
+                'bottom-right',
+            ],
+        };
+
+        const container = document.getElementById('huge-number-of-items');
+        const root = document.createElement('div');
+        const groupsElement = document.createElement('div');
+        groupsElement.classList.add('flex', 'stretch');
+        for (let [groupName, filterNames] of Object.entries(groups)) {
+            const groupElement = document.createElement('div');
+            groupElement.classList.add('filtering-group', 'mx-2');
+            groupElement.dataset.groupName = groupName;
+
+            for (let filterName of filterNames) {
+                const filterElement = document.createElement('div');
+                filterElement.classList.add('filtering-filter');
+                filterElement.dataset.filterName = filterName;
+                filterElement.innerText = filterName;
+
+                const totalElement = document.createElement('span');
+                totalElement.classList.add('total');
+
+                filterElement.appendChild(totalElement);
+                groupElement.appendChild(filterElement);
+            }
+            groupsElement.appendChild(groupElement);
+        }
+        root.appendChild(groupsElement);
+
+        const itemsElement = document.createElement('div');
+        itemsElement.classList.add('filtering-items', 'flex');
+        for (let i = 0; i < 256; i++) {
+            const itemElement = document.createElement('div');
+            itemElement.classList.add('filtering-item');
+
+            const color = randomElement(groups.color);
+            const size = randomElement(groups.size);
+            const border = randomElement(groups.border);
+            const text = randomElement(groups.text);
+
+            itemElement.dataset.filterColor = color;
+            itemElement.dataset.filterSize = size;
+            itemElement.dataset.filterBorder = border;
+            itemElement.dataset.filterText = text;
+
+            itemElement.style.color = getTextColor(getHexColor(color));
+            itemElement.style.backgroundColor = color;
+            itemElement.style.width = size;
+            itemElement.style.height = size;
+
+            itemElement.innerHTML = `<small><b>${text}</b></small>`;
+
+            if (border === 'all-sides') {
+                itemElement.style.borderRadius = '12px';
+            } else {
+                itemElement.style[`border-${border}-radius`] = '24px';
+            }
+
+            itemsElement.appendChild(itemElement);
+        }
+        root.appendChild(itemsElement);
+        container.appendChild(root);
+
+        const {FilteringFlow} = filteringjs;
+
+        class MyFlow extends FilteringFlow {
+            handleFilterResult(result) {
+                super.handleFilterResult(result);
+                for (const group of result.groups) {
+                    for (const filter of group.filters) {
+                        const filterElement = filter.schemaFilter.data.element;
+                        // Update the number next to the filter to indicate how many items are or would be filtered
+                        filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
+                    }
+                }
+            }
+        }
+
+        new MyFlow(root);
+
+    })();
+</script>
