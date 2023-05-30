@@ -113,7 +113,7 @@ Following tables illustrate the performance of the library measured on Desktop. 
 
 ### API, Documentation and Examples
 
-[API](https://robertpainsi.github.io/filtering.js/api/), [documentation](https://robertpainsi.github.io/filtering.js/documentation/) and [examples](https://robertpainsi.github.io/filtering.js/examples/) can be found [here](https://robertpainsi.github.io/filtering.js/). 
+[API](https://robertpainsi.github.io/filtering.js/api), [documentation](https://robertpainsi.github.io/filtering.js/documentation) and [examples](https://robertpainsi.github.io/filtering.js/examples) can be found [here](https://robertpainsi.github.io/filtering.js).
 
 <details class="hidden">
   <summary>API</summary>
