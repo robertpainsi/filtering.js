@@ -3,6 +3,8 @@ baseurl: /filtering.js
 
 theme: minima
 
+google_analytics: G-NY309E0RVD
+
 plugins:
   - github-pages
   - jemoji
