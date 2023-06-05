@@ -2,11 +2,12 @@
 
 ### What is Filtering.js
 
-With Filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in Node and Browser environments.
+With Filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.
 
 ![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
-*([Live-demo and source](https://robertpainsi.github.io/filtering.js/examples.html#number-of-results-for-each-filter))*
+<sup>*([Live-demo and source]({{site.baseurl}}/examples.html#number-of-results-for-each-filter))*</sup>
 
+Also check out a [large demo]({{site.baseurl}}/demo.html) and [other examples]({{site.baseurl}}/examples.html).
 
 ### Table of contents
 
@@ -36,6 +37,7 @@ With Filtering.js you can easily add filtering functionality to your project. It
 The preferred way to add filtering functionality to your project is by using the [`FilteringFlow`](https://github.com/robertpainsi/filtering.js/blob/main/src/helper.ts) helper class. It handles adding and removing of `checked`/`disabled` classes for filters and `filtered` classes for items. All classes can be adapted to easily suite existing projects too.
 
 A simple, out of the box example:
+
 ```html
 <div id="root">
     <div id="filtering">
@@ -72,14 +74,14 @@ Check out more [examples](https://github.com/robertpainsi/filtering.js/blob/main
 The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example, [example.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/example.html), [initialize-from-html.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/initialize-from-html.html) or other [examples](https://github.com/robertpainsi/filtering.js/tree/main/examples).
 
 - Group element
-  - `.filtering-group`
-  - `data-group-name="color"`
-  - Filter element
-    - `.filtering-filter`
-    - `data-filter-name="red"`
+    - `.filtering-group`
+    - `data-group-name="color"`
+    - Filter element
+        - `.filtering-filter`
+        - `data-filter-name="red"`
 - Item element
-  - `.filtering-item`
-  - `data-filter-color="red"`<br>(the attribute name ends with the group name and is assigned the filter name)
+    - `.filtering-item`
+    - `data-filter-color="red"`<br>(the attribute name ends with the group name and is assigned the filter name)
 
 ---
 
@@ -113,7 +115,7 @@ Following tables illustrate the performance of the library measured on Desktop. 
 
 ### API, Documentation and Examples
 
-[API](https://robertpainsi.github.io/filtering.js/api), [documentation](https://robertpainsi.github.io/filtering.js/documentation) and [examples](https://robertpainsi.github.io/filtering.js/examples) can be found [here](https://robertpainsi.github.io/filtering.js).
+[API]({{site.baseurl}}/api), [documentation]({{site.baseurl}}/documentation) and [examples]({{site.baseurl}}/examples) can be found [here]({{site.baseurl}}/).
 
 <details class="hidden">
   <summary>API</summary>
