@@ -1,5 +1,5 @@
 import {describe, expect, jest, test} from "@jest/globals";
-import {FilteringFlow} from './helper';
+import {FilteringFlow} from './filteringflow';
 import {jsxToHtml} from '../test/test-utils';
 import {Schema} from './schema';
 import {Parser, ParserOptions} from './parser';
