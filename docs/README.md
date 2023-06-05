@@ -1,13 +1,13 @@
-# [filtering.js](https://github.com/robertpainsi/filtering.js)
+# [filtering.js](https://github.com/filteringjs/filtering.js)
 
 ### What is Filtering.js
 
 With Filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.
 
-![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
-<sup>*([Live-demo and source](https://robertpainsi.github.io/filtering.js/examples.html#number-of-results-for-each-filter))*</sup>
+![Preview](https://github.com/filteringjs/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
+<sup>*([Live-demo and source](https://filteringjs.github.io/filtering.js/examples.html#number-of-results-for-each-filter))*</sup>
 
-Also check out a [large demo](https://robertpainsi.github.io/filtering.js/demo.html) and [other examples](https://robertpainsi.github.io/filtering.js/examples.html).
+Also check out a [large demo](https://filteringjs.github.io/filtering.js/demo.html) and [other examples](https://filteringjs.github.io/filtering.js/examples.html).
 
 ### Table of contents
 
@@ -34,7 +34,7 @@ Also check out a [large demo](https://robertpainsi.github.io/filtering.js/demo.h
 
 ### How to use?
 
-The preferred way to add filtering functionality to your project is by using the [`FilteringFlow`](https://github.com/robertpainsi/filtering.js/blob/main/src/helper.ts) helper class. It handles adding and removing of `checked`/`disabled` classes for filters and `filtered` classes for items. All classes can be adapted to easily suite existing projects too.
+The preferred way to add filtering functionality to your project is by using the [`FilteringFlow`](https://github.com/filteringjs/filtering.js/blob/main/src/helper.ts) helper class. It handles adding and removing of `checked`/`disabled` classes for filters and `filtered` classes for items. All classes can be adapted to easily suite existing projects too.
 
 A simple, out of the box example:
 
@@ -65,13 +65,13 @@ A simple, out of the box example:
 
 *That's it!*
 
-Check out more [examples](https://github.com/robertpainsi/filtering.js/blob/main/examples/).
+Check out more [examples](https://github.com/filteringjs/filtering.js/blob/main/examples/).
 
 ---
 
 ### Parser
 
-The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example, [example.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/example.html), [initialize-from-html.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/initialize-from-html.html) or other [examples](https://github.com/robertpainsi/filtering.js/tree/main/examples).
+The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example, [example.html](https://github.com/filteringjs/filtering.js/blob/main/examples/example.html), [initialize-from-html.html](https://github.com/filteringjs/filtering.js/blob/main/examples/initialize-from-html.html) or other [examples](https://github.com/filteringjs/filtering.js/tree/main/examples).
 
 - Group element
     - `.filtering-group`
@@ -115,7 +115,7 @@ Following tables illustrate the performance of the library measured on Desktop. 
 
 ### API, Documentation and Examples
 
-[API](https://robertpainsi.github.io/filtering.js/api), [documentation](https://robertpainsi.github.io/filtering.js/documentation) and [examples](https://robertpainsi.github.io/filtering.js/examples) can be found [here](https://robertpainsi.github.io/filtering.js/).
+[API](https://filteringjs.github.io/filtering.js/api), [documentation](https://filteringjs.github.io/filtering.js/documentation) and [examples](https://filteringjs.github.io/filtering.js/examples) can be found [here](https://filteringjs.github.io/filtering.js/).
 
 <details class="hidden">
   <summary>API</summary>
