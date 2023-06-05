@@ -64,18 +64,21 @@ export class FilteringFlow {
     }
 
     initializeFilterListener() {
-        for (const filterElement of this.root.getElementsByClassName(this.parser.options.filterClass) as HTMLCollectionOf<HTMLElement>) {
-            filterElement.addEventListener('click', (event) => {
-                event.preventDefault();
-                if (filterElement.classList.contains(this.options.disabledFilterClass)) {
-                    // Ignore click if the filter would give 0 results
-                    return;
-                }
-                if (this.beforeFilter(filterElement)) {
-                    filterElement.classList.toggle(this.parser.options.filterCheckedClass); // Check or uncheck filter
-                    this.filter();
-                }
-            });
+        for (const group of this.schema.groups) {
+            for (const filter of group.filters) {
+                const filterElement = filter.data.element as HTMLElement;
+                filterElement.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    if (filterElement.classList.contains(this.options.disabledFilterClass)) {
+                        // Ignore click if the filter would give 0 results
+                        return;
+                    }
+                    if (this.beforeFilter(filterElement)) {
+                        filterElement.classList.toggle(this.parser.options.filterCheckedClass); // Check or uncheck filter
+                        this.filter();
+                    }
+                })
+            }
         }
     }
 
