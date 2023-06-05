@@ -5,9 +5,9 @@
 With Filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.
 
 ![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
-<sup>*([Live-demo and source]({{site.baseurl}}/examples.html#number-of-results-for-each-filter))*</sup>
+<sup>*([Live-demo and source](https://robertpainsi.github.io/filtering.js/examples.html#number-of-results-for-each-filter))*</sup>
 
-Also check out a [large demo]({{site.baseurl}}/demo.html) and [other examples]({{site.baseurl}}/examples.html).
+Also check out a [large demo](https://robertpainsi.github.io/filtering.js/demo.html) and [other examples](https://robertpainsi.github.io/filtering.js/examples.html).
 
 ### Table of contents
 
@@ -115,7 +115,7 @@ Following tables illustrate the performance of the library measured on Desktop. 
 
 ### API, Documentation and Examples
 
-[API]({{site.baseurl}}/api), [documentation]({{site.baseurl}}/documentation) and [examples]({{site.baseurl}}/examples) can be found [here]({{site.baseurl}}/).
+[API](https://robertpainsi.github.io/filtering.js/api), [documentation](https://robertpainsi.github.io/filtering.js/documentation) and [examples](https://robertpainsi.github.io/filtering.js/examples) can be found [here](https://robertpainsi.github.io/filtering.js/).
 
 <details class="hidden">
   <summary>API</summary>
