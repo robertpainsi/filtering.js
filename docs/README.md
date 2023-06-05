@@ -22,7 +22,7 @@ Also check out a [large demo](https://robertpainsi.github.io/filtering.js/demo.h
 ### Difference to other libraries?
 
 - :zap: fast
-- :ant: <10kB small
+- :ant: 7.9 small
 - :trophy: Supported by modern browsers using ES6 features.
   <sup>[1](https://caniuse.com/mdn-javascript_builtins_set),[2](https://caniuse.com/mdn-javascript_builtins_map),[3](https://caniuse.com/mdn-api_htmlelement_dataset),[4](https://caniuse.com/mdn-api_domtokenlist_contains)</sup>
 - :weight_lifting_man: Lifting complex logic from the developer.
