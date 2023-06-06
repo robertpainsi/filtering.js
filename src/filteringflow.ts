@@ -106,6 +106,11 @@ export class FilteringFlow {
             // Show or hide items
             item.data.element.classList.toggle(this.options.filteredItemClass, !result.filteredItems.includes(item));
         }
+        for (const item of this.schema.items) {
+            item.data.element.classList.toggle(this.options.filteredItemClass,
+                !result.filteredItems.includes(item) || !result.allItems.includes(item),
+            );
+        }
     }
 }
 
