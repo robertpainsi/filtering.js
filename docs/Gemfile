@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
 group :jekyll_plugins do
-  gem "minima"
-  gem 'github-pages'
-  gem 'jemoji'
   gem 'jekyll-commonmark-ghpages'
+  gem 'github-pages'
+  gem "minima"
+  gem 'jemoji'
+  gem "webrick"
 end
-
-gem "webrick", "~> 1.8"

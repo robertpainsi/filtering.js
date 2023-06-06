@@ -2,14 +2,13 @@
 
 With Filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.
 
-In a browser environment, you can use helper functions like `Parser` and `FilteringFlow` to [create a schema including filters, groups and items from HTML](TODO). Alternatively or in a node environment, you can use the provided classes to [create a schema including filters, groups and items from JavaScript](TODO).
+In a browser environment, you can use helper functions like `Parser` and `FilteringFlow` to [create a schema including filters, groups and items from HTML](#initialize-filteringjs-from-html). To do so use the [UI version](https://github.com/filteringjs/filtering.js/blob/main/dist/index.ui.js) of filtering.js. Alternatively or in a node environment use the [core version](https://github.com/filteringjs/filtering.js/blob/main/dist/index.core.js) and the provided classes to [create a schema including filters, groups and items from JavaScript](#initialize-filteringjs-from-javascript).
 
 Start using the library by checking out the [examples]({{site.baseurl}}/examples.html). If you need more information, use the [API]({{site.baseurl}}/api/index.html) and [Documentation]({{site.baseurl}}/documentation.html) pages.
 
 ### Initialize filtering.js from HTML
 
 ```html
-
 <div id="root">
     <div>
         <div class="filtering-group" data-group-name="color">
@@ -29,7 +28,14 @@ Start using the library by checking out the [examples]({{site.baseurl}}/examples
 </div>
 
 <script>
-    // Parsing and initializing filters, groups and items from HTML
+    // Either use FilteringFlow to parse and initialize filters, groups
+    // and items from HTML and also handle other logic automatically.
+    // For more information, see chapter FilteringFlow.
+    const {FilteringFlow} = filteringjs;
+    const filteringFlow = new FilteringFlow(document.querySelector('#root'));
+    // ...
+
+    // Or parse and initialize filters, groups and items from HTML
     const {Filtering, Parser} = filteringjs;
     const parser = new Parser();
     const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));

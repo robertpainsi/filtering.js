@@ -12,7 +12,8 @@ export default {
     target: 'web',
     devtool: 'source-map',
     entry: {
-        index: './src/index.ts',
+        'index.ui': './src/index.ui.ts',
+        'index.core': './src/index.core.ts',
     },
     output: {
         path: path.resolve(__dirname, './dist'),
