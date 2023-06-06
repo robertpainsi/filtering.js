@@ -1,8 +1,8 @@
 {
-  "name": "filtering.js",
+  "name": "@filtering.js/filtering.js",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/index.js",
+  "main": "./dist/index.core.js",
   "type": "module",
   "scripts": {
     "build": "webpack --env mode=production",
