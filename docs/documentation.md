@@ -1,6 +1,6 @@
 # [Documentation]({{site.baseurl}}{{page.url}})
 
-With Filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.
+With filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.
 
 In a browser environment, you can use helper functions like `Parser` and `FilteringFlow` to [create a schema including filters, groups and items from HTML](#initialize-filteringjs-from-html). To do so use the [UI version](https://github.com/filteringjs/filtering.js/blob/main/dist/index.ui.js) of filtering.js. Alternatively or in a node environment use the [core version](https://github.com/filteringjs/filtering.js/blob/main/dist/index.core.js) and the provided classes to [create a schema including filters, groups and items from JavaScript](#initialize-filteringjs-from-javascript).
 

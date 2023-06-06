@@ -1,8 +1,8 @@
 # [filtering.js](https://github.com/filteringjs/filtering.js)
 
-### What is Filtering.js
+### What is filtering.js
 
-With Filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.
+With filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.
 
 ![Preview](https://github.com/filteringjs/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
 <sup>*([Live-demo and source](https://filteringjs.github.io/filtering.js/examples.html#number-of-results-for-each-filter))*</sup>
