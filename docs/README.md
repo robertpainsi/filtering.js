@@ -22,7 +22,7 @@ Also check out a [large demo](https://filteringjs.github.io/filtering.js/demo.ht
 ### Difference to other libraries?
 
 - :zap: fast
-- :ant: [4.8kB (core)](https://github.com/filteringjs/filtering.js/blob/main/dist/index.core.js) or [7.9kB (with UI helpers)](https://github.com/filteringjs/filtering.js/blob/main/dist/index.ui.js) small
+- :ant: [4.8kB (core)](https://github.com/filteringjs/filtering.js/blob/main/dist/index.core.js) or [7.9kB (with UI helpers)](https://github.com/filteringjs/filtering.js/blob/main/dist/index.ui.js)
 - :trophy: Supported by modern browsers using ES6 features.
   <sup>[1](https://caniuse.com/mdn-javascript_builtins_set),[2](https://caniuse.com/mdn-javascript_builtins_map),[3](https://caniuse.com/mdn-api_htmlelement_dataset),[4](https://caniuse.com/mdn-api_domtokenlist_contains)</sup>
 - :weight_lifting_man: Lifting complex logic from the developer.
