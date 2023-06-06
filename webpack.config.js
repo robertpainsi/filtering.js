@@ -2,7 +2,7 @@
 import path from 'path';
 import {fileURLToPath} from 'url';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import CopyPlugin from "copy-webpack-plugin";
+import FileManagerPlugin from "filemanager-webpack-plugin";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,12 +39,15 @@ export default {
         new MiniCssExtractPlugin({
             filename: '[name].css',
         }),
-        new CopyPlugin({
-                patterns: [
-                    {from: 'dist/index.js', to: 'docs/assets/'},
-                    {from: 'dist/index.js.map', to: 'docs/assets/'},
-                ]
-            }
-        ),
+        new FileManagerPlugin({
+            events: {
+                onEnd: {
+                    copy: [
+                        // {source: 'dist/index.ui.js', destination: 'docs/assets/'},
+                        {source: 'dist/index.ui.js*', destination: 'docs/assets/'},
+                    ],
+                },
+            },
+        })
     ],
 };
