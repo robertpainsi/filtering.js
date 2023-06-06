@@ -1,17 +1,30 @@
 {
   "name": "@filtering.js/filtering.js",
+  "title": "filtering.js",
   "version": "1.0.2",
-  "description": "",
-  "main": "./dist/index.core.js",
+  "description": "With filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.",
+  "keywords": [
+    "filter",
+    "items",
+    "ui"
+  ],
+  "homepage": "https://filteringjs.github.io/filtering.js/",
+  "bugs": {
+    "url": "https://github.com/filteringjs/filtering.js/issues"
+  },
+  "author": "Robert Painsi",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/filteringjs/filtering.js.git"
+  },
+  "main": "dist/index.core.js",
   "type": "module",
   "scripts": {
     "build": "webpack --env mode=production",
     "watch": "webpack --watch --env mode=development",
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^29.5.0",
     "@types/react": "^18.0.37",
