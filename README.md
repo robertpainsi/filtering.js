@@ -34,12 +34,35 @@ Also check out a [large demo](https://filteringjs.github.io/filtering.js/demo.ht
 
 ### How to use?
 
-The preferred way to add filtering functionality to your project is by using the [`FilteringFlow`](https://github.com/filteringjs/filtering.js/blob/main/src/helper.ts) helper class. It handles adding and removing of `checked`/`disabled` classes for filters and `filtered` classes for items. All classes can be adapted to easily suite existing projects too.
+```
+npm i @filtering.js/filtering.js
+```
+Depending on the environment, there are builds for CommonJS, ESM and UMD located in the `dist` folder.
+
+- Browser
+```html
+<script src="/dist/umd/index.ui.js"></script>
+<script>
+    const {Filtering} = filteringjs;
+</script>
+```
+- Webpack
+```js
+import {Filtering} from "@filtering.js/filtering.js/ui";
+```
+- Node (module)
+```js
+import filteringjs from "@filtering.js/filtering.js/core";
+const {Filtering} = filteringjs;
+```
+
+If you don't need UI helpers like `Parser` or `FilteringFlow`, you can use the smaller core builds located at `"/dist/umd/index.core.js"` or `"@filtering.js/filtering.js/core"`.
+
+The preferred way to add filtering functionality to your project is by using the [`FilteringFlow`](https://github.com/filteringjs/filtering.js/blob/main/src/filteringflow.ts) helper class. It handles adding and removing of `checked`/`disabled` classes for filters and `filtered` classes for items. All classes can be adapted to easily suite existing projects too.
 
 A simple, out of the box example:
 
 ```html
-
 <div id="root">
     <div id="filtering">
         <div class="filtering-group" data-group-name="color">

@@ -1,10 +1,4 @@
 node_modules
-/dist
-
-!/dist/index.core.js
-!/dist/index.core.js.map
-!/dist/index.ui.js
-!/dist/index.ui.js.map
 
 docs/Gemfile.lock
 docs/_site/
