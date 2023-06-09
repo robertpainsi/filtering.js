@@ -1,6 +1,6 @@
 import {Schema} from './schema';
 import {Parser, ParserOptions} from './parser';
-import {Filtering} from './filtering';
+import {FilterData, Filtering} from './filtering';
 import {Result} from './result';
 
 export class FilteringFlow {
@@ -51,8 +51,12 @@ export class FilteringFlow {
         return this.#filtering;
     }
 
-    initializeParser(parserOptions?: ParserOptions): Parser {
-        return new Parser(parserOptions);
+    initializeParser(): Parser {
+        return new Parser(this.parserOptions);
+    }
+
+    get parserOptions() {
+        return undefined;
     }
 
     initializeSchema(): Schema {
@@ -60,11 +64,16 @@ export class FilteringFlow {
     }
 
     initializeFiltering(): Filtering {
-        return new Filtering(this.schema);
+        return new Filtering(this.schema, this.filteringOptions);
+    }
+
+    get filteringOptions() {
+        return undefined;
     }
 
     initializeFilterListener() {
         for (const group of this.schema.groups) {
+            const groupElement = group.data.element as HTMLElement;
             for (const filter of group.filters) {
                 const filterElement = filter.data.element as HTMLElement;
                 filterElement.addEventListener('click', (event) => {
@@ -74,6 +83,12 @@ export class FilteringFlow {
                         return;
                     }
                     if (this.beforeFilter(filterElement)) {
+                        if (groupElement.dataset.selectType === 'single' && !filterElement.classList.contains(this.parser.options.filterCheckedClass)) {
+                            for (const filter of group.filters) {
+                                const fe = filter.data.element;
+                                fe.classList.remove(this.parser.options.filterCheckedClass);
+                            }
+                        }
                         filterElement.classList.toggle(this.parser.options.filterCheckedClass); // Check or uncheck filter
                         this.filter();
                     }

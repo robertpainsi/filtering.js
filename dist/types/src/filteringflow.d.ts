@@ -1,5 +1,5 @@
 import { Schema } from './schema';
-import { Parser, ParserOptions } from './parser';
+import { Parser } from './parser';
 import { Filtering } from './filtering';
 import { Result } from './result';
 export declare class FilteringFlow {
@@ -11,9 +11,11 @@ export declare class FilteringFlow {
     get schema(): Schema;
     get parser(): Parser;
     get filtering(): Filtering;
-    initializeParser(parserOptions?: ParserOptions): Parser;
+    initializeParser(): Parser;
+    get parserOptions(): any;
     initializeSchema(): Schema;
     initializeFiltering(): Filtering;
+    get filteringOptions(): any;
     initializeFilterListener(): void;
     beforeFilter(filterElement: HTMLElement): boolean;
     filter(): void;

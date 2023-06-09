@@ -15,7 +15,7 @@ A simple example that demonstrates ads.
 ```html
 <div id="filteringjs-single-select-filter-example">
     <div class="flex gap stretch">
-        <div class="filtering-group" data-group-name="color">
+        <div class="filtering-group" data-group-name="color" data-select-type="single">
             <div class="filtering-filter" data-filter-name="red">Red</div>
             <div class="filtering-filter" data-filter-name="green">Green</div>
             <div class="filtering-filter" data-filter-name="blue">Blue</div>
@@ -38,19 +38,7 @@ A simple example that demonstrates ads.
 
 ```js
 const {FilteringFlow} = filteringjs;
-
-class MyFlow extends FilteringFlow {
-    beforeFilter(filterElement) {
-        if (!filterElement.classList.contains('checked')) {
-            for (const fe of filterElement.closest('.filtering-group').getElementsByClassName('filtering-filter')) {
-                fe.classList.remove('checked');
-            }
-        }
-        return true;
-    }
-}
-
-new MyFlow(document.querySelector('#filteringjs-single-select-filter-example'));
+new FilteringFlow(document.querySelector('#filteringjs-single-select-filter-example'));
 ```
 
 <div class="tab-title"></div>

@@ -40,17 +40,24 @@ class FilteringFlow {
     get filtering() {
         return this.#filtering;
     }
-    initializeParser(parserOptions) {
-        return new parser_1.Parser(parserOptions);
+    initializeParser() {
+        return new parser_1.Parser(this.parserOptions);
+    }
+    get parserOptions() {
+        return undefined;
     }
     initializeSchema() {
         return this.parser.parseSchemaFromHtml(this.root);
     }
     initializeFiltering() {
-        return new filtering_1.Filtering(this.schema);
+        return new filtering_1.Filtering(this.schema, this.filteringOptions);
+    }
+    get filteringOptions() {
+        return undefined;
     }
     initializeFilterListener() {
         for (const group of this.schema.groups) {
+            const groupElement = group.data.element;
             for (const filter of group.filters) {
                 const filterElement = filter.data.element;
                 filterElement.addEventListener('click', (event) => {
@@ -60,6 +67,12 @@ class FilteringFlow {
                         return;
                     }
                     if (this.beforeFilter(filterElement)) {
+                        if (groupElement.dataset.selectType === 'single' && !filterElement.classList.contains(this.parser.options.filterCheckedClass)) {
+                            for (const filter of group.filters) {
+                                const fe = filter.data.element;
+                                fe.classList.remove(this.parser.options.filterCheckedClass);
+                            }
+                        }
                         filterElement.classList.toggle(this.parser.options.filterCheckedClass); // Check or uncheck filter
                         this.filter();
                     }
