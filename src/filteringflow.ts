@@ -1,6 +1,6 @@
-import {Schema} from "./schema";
-import {Parser, ParserOptions} from "./parser";
-import {Filtering} from "./filtering";
+import {Schema} from './schema';
+import {Parser, ParserOptions} from './parser';
+import {Filtering} from './filtering';
 import {Result} from './result';
 
 export class FilteringFlow {

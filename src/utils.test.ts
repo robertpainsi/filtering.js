@@ -1,5 +1,5 @@
-import {describe, expect, test} from "@jest/globals";
-import {findOne, getProperty} from "./utils";
+import {describe, expect, test} from '@jest/globals';
+import {findOne, getProperty} from './utils';
 
 describe('Utils.findOne', function () {
     test('Empty lists', () => {

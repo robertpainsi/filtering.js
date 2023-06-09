@@ -1,4 +1,4 @@
-import {Pojo} from "./utils";
+import {Pojo} from './utils';
 
 export class Schema {
     #groups: Map<string, Group> = new Map();

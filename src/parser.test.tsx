@@ -1,8 +1,8 @@
-import {describe, expect, test} from "@jest/globals";
-import {Parser} from "./parser";
-import {jsxToHtml, testFilterData, testSchema, testSchemaGroups, testSchemaItems} from "../test/test-utils";
-import {blue, large, red, small} from "../test/test-data";
-import {TestDataParserWithHtml} from "../test/test-data-types";
+import {describe, expect, test} from '@jest/globals';
+import {Parser} from './parser';
+import {jsxToHtml, testFilterData, testSchema, testSchemaGroups, testSchemaItems} from '../test/test-utils';
+import {blue, large, red, small} from '../test/test-data';
+import {TestDataParserWithHtml} from '../test/test-data-types';
 import {Schema} from './schema';
 
 describe('Parser', function () {

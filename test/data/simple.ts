@@ -16,13 +16,13 @@ export const simpleTestItems = [{
     groups: {
         color: [red],
         size: [large],
-    }
+    },
 }, {
     name: 'item-3',
     groups: {
         color: [blue],
         size: [large],
-    }
+    },
 }];
 export const simpleTestSchema = {
     groups: simpleTestGroups,

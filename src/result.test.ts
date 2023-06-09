@@ -1,8 +1,8 @@
-import {describe, expect, test} from "@jest/globals";
-import {Result} from "./result";
-import {getSortedNames, jsToSchema} from "../test/test-utils";
-import {Item} from "./schema";
-import {simpleTestGroups, simpleTestSchema} from "../test/data/simple";
+import {describe, expect, test} from '@jest/globals';
+import {Result} from './result';
+import {getSortedNames, jsToSchema} from '../test/test-utils';
+import {Item} from './schema';
+import {simpleTestGroups, simpleTestSchema} from '../test/data/simple';
 
 describe('Result', () => {
     test('Result structure should be the same as Schema', () => {

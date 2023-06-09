@@ -1,6 +1,6 @@
-import {Item, Schema} from "./schema";
-import {Result} from "./result";
-import {findOne} from "./utils";
+import {Item, Schema} from './schema';
+import {Result} from './result';
+import {findOne} from './utils';
 
 export class Filtering {
 

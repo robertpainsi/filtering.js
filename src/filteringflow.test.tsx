@@ -1,11 +1,11 @@
-import {describe, expect, jest, test} from "@jest/globals";
+import {describe, expect, jest, test} from '@jest/globals';
 import {FilteringFlow} from './filteringflow';
 import {jsxToHtml} from '../test/test-utils';
 import {Schema} from './schema';
 import {Parser, ParserOptions} from './parser';
 import {Filtering, FilteringOptions} from './filtering';
 
-describe('helper.FilteringFlow', () => {
+describe('FilteringFlow', () => {
     test('FilteringFlow calls initialize methods', () => {
         const initializeParserSpy = jest.spyOn(FilteringFlow.prototype, 'initializeParser');
         const initializeSchemaSpy = jest.spyOn(FilteringFlow.prototype, 'initializeSchema');
@@ -23,6 +23,8 @@ describe('helper.FilteringFlow', () => {
 
     test('FilteringFlow triggerFilterAfterInitializing', () => {
         const filterListenerSpyDisabled = jest.spyOn(FilteringFlow.prototype, 'filter');
+        filterListenerSpyDisabled.mockClear();
+
         new FilteringFlow(jsxToHtml(<div></div>), {
             triggerFilterAfterInitializing: false,
         });

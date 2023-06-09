@@ -1,9 +1,9 @@
-import {blue, expensive, large, medium, red, small} from "../test/test-data";
-import {describe, test} from "@jest/globals";
-import {TestDataFiltering} from "../test/test-data-types";
-import {jsToSchema, testFiltering} from "../test/test-utils";
-import {simpleTestSchema} from "../test/data/simple";
-import {mediumTestSchema} from "../test/data/medium";
+import {blue, expensive, large, medium, red, small} from '../test/test-data';
+import {describe, test} from '@jest/globals';
+import {TestDataFiltering} from '../test/test-data-types';
+import {jsToSchema, testFiltering} from '../test/test-utils';
+import {simpleTestSchema} from '../test/data/simple';
+import {mediumTestSchema} from '../test/data/medium';
 import {Item, Schema} from './schema';
 import {FilterData} from './filtering';
 

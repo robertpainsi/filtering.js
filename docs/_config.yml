@@ -13,8 +13,8 @@ header_pages:
 
 markdown: CommonMarkGhPages
 commonmark:
-  options: ["UNSAFE", "SMART", "FOOTNOTES"]
-  extensions: ["strikethrough", "autolink", "table"]
+  options: [ "UNSAFE", "SMART", "FOOTNOTES" ]
+  extensions: [ "strikethrough", "autolink", "table" ]
 
 google_analytics: G-NY309E0RVD
 

@@ -1,4 +1,4 @@
-import {Filter, Group, Item, Schema} from "./schema";
+import {Filter, Group, Item, Schema} from './schema';
 
 export class Result {
     readonly #schema: Schema;
