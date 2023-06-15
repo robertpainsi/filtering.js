@@ -1,6 +1,6 @@
 import { Schema } from './schema';
 import { Parser } from './parser';
-import { Filtering } from './filtering';
+import { FilterData, Filtering } from './filtering';
 import { Result } from './result';
 export declare class FilteringFlow {
     #private;
@@ -11,14 +11,16 @@ export declare class FilteringFlow {
     get schema(): Schema;
     get parser(): Parser;
     get filtering(): Filtering;
+    beforeInitializing(): void;
     initializeParser(): Parser;
     get parserOptions(): any;
     initializeSchema(): Schema;
     initializeFiltering(): Filtering;
     get filteringOptions(): any;
     initializeFilterListener(): void;
+    afterInitializing(): void;
     beforeFilter(filterElement: HTMLElement): boolean;
-    filter(): void;
+    filter(filterData?: FilterData): Result;
     handleFilterResult(result: Result): void;
 }
 interface FilteringFlowOptions {

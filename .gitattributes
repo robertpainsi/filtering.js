@@ -19,8 +19,8 @@
 # Manually declare special files
 *.map             binary
 
-/dist/index.js          binary
-/dist/example-style.css binary
-package-lock.json       binary
+/dist/**/*               binary
+/docs/assets/index.ui.js binary
+package-lock.json        binary
 
 # For more info see https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings

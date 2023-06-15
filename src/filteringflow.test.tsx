@@ -3,7 +3,8 @@ import {FilteringFlow} from './filteringflow';
 import {jsxToHtml} from '../test/test-utils';
 import {Schema} from './schema';
 import {Parser, ParserOptions} from './parser';
-import {Filtering, FilteringOptions} from './filtering';
+import {FilterData, Filtering, FilteringOptions} from './filtering';
+import {jsxColors, jsxColorsSingleSelect, jsxColorsWithTypeAll} from '../test/data/colors';
 
 describe('FilteringFlow', () => {
     test('FilteringFlow calls initialize methods', () => {
@@ -65,29 +66,54 @@ describe('FilteringFlow', () => {
         expect(myFilteringFlow.filtering).toBe(filtering);
     });
 
-    /*
-    test('FilteringFlow initializeFilterListener', () => {
-        const jsx = (
-            <div>
-                <div id="filtering">
-                    <div className="filtering-group" data-group-name="color">
-                        <div className="filtering-filter" data-filter-name="red"></div>
-                        <div className="filtering-filter" data-filter-name="blue"></div>
-                    </div>
-                </div>
-                <div id="items">
-                    <div id="item-1" className="filtering-item" data-filter-color="red"></div>
-                    <div id="item-2" className="filtering-item" data-filter-color="blue"></div>
-                </div>
-            </div>
-        );
-        const html = jsxToHtml(jsx);
-        const filteringFlow = new FilteringFlow(html);
+    test('FilteringFlow filter with parameter', () => {
+        const filteringFlow = new FilteringFlow(jsxColors);
 
-        expect(html.querySelector('*[data-filter-name="red"]').classList.contains('checked')).toBe(true);
-        expect(html.querySelector('*[data-filter-name="blue"]').classList.contains('checked')).toBe(false);
-        expect(html.querySelector('#item-1').classList.contains('filtered')).toBe(true);
-        expect(html.querySelector('#item-2').classList.contains('filtered')).toBe(false);
+        expect(filteringFlow.filter().filteredItems.length).toBe(3);
+
+        const filterData = new FilterData();
+        filterData.checkFilter('color', 'red');
+        const result = filteringFlow.filter(filterData);
+
+        expect(result.filteredItems.length).toBe(1);
+        expect(result.filteredItems[0].data.element.dataset.filterColor).toBe('red');
+
+        expect(result.getGroup('color').getFilter('red').schemaFilter.data.element.classList.contains('checked')).toBeTruthy();
+        expect(result.getGroup('color').getFilter('green').schemaFilter.data.element.classList.contains('checked')).toBeFalsy();
+        expect(result.getGroup('color').getFilter('blue').schemaFilter.data.element.classList.contains('checked')).toBeFalsy();
     });
-     */
+
+    test('FilteringFlow single select filter', () => {
+        const filteringFlow = new FilteringFlow(jsxColorsSingleSelect);
+        const schema = filteringFlow.schema;
+
+        schema.getGroup('color').getFilter('red').data.element.click();
+
+        expect(schema.getGroup('color').getFilter('red').data.element.classList.contains('checked')).toBeTruthy();
+        expect(schema.getGroup('color').getFilter('green').data.element.classList.contains('checked')).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('blue').data.element.classList.contains('checked')).toBeFalsy();
+
+        schema.getGroup('color').getFilter('blue').data.element.click();
+
+        expect(schema.getGroup('color').getFilter('red').data.element.classList.contains('checked')).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('green').data.element.classList.contains('checked')).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('blue').data.element.classList.contains('checked')).toBeTruthy();
+    });
+
+    test('FilteringFlow select all filters', () => {
+        const filteringFlow = new FilteringFlow(jsxColorsWithTypeAll);
+        const schema = filteringFlow.schema;
+        schema.getGroup('color').getFilter('red').data.element.click();
+        schema.getGroup('color').getFilter('green').data.element.click();
+
+        expect(schema.getGroup('color').getFilter('red').data.element.classList.contains('checked')).toBeTruthy();
+        expect(schema.getGroup('color').getFilter('green').data.element.classList.contains('checked')).toBeTruthy();
+        expect(schema.getGroup('color').getFilter('blue').data.element.classList.contains('checked')).toBeFalsy();
+
+        schema.getGroup('color').getFilter('all').data.element.click();
+
+        expect(schema.getGroup('color').getFilter('red').data.element.classList.contains('checked')).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('green').data.element.classList.contains('checked')).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('blue').data.element.classList.contains('checked')).toBeFalsy();
+    });
 })

@@ -53,7 +53,7 @@ export class Parser {
 
             for (const filterElement of groupElement.getElementsByClassName(this.#options.filterClass) as HTMLCollectionOf<HTMLElement>) {
                 const filterName = filterElement.dataset.filterName;
-                if (filterName === undefined) {
+                if (filterElement.dataset.filterType !== 'all' && filterName === undefined) {
                     continue;
                 }
                 const filter = new Filter(filterName, {

@@ -39,33 +39,7 @@ An simple example that demonstrates a button enabling all filter.
 
 ```js
 const {FilteringFlow} = filteringjs;
-
-class MyFlow extends FilteringFlow {
-    initializeFilterListener() {
-        for (const filterElement of this.root.getElementsByClassName('filtering-filter')) {
-            filterElement.addEventListener('click', (event) => {
-                event.preventDefault();
-                if (filterElement.classList.contains('disabled')) {
-                    // Ignore click if the filter would give 0 results
-                    return;
-                }
-                if (filterElement.dataset.filterType === 'all') {
-                    // Remove all checked classes in group if all is clicked
-                    if (!filterElement.classList.contains('checked')) {
-                        for (const fe of filterElement.closest('.filtering-group').getElementsByClassName('filtering-filter')) {
-                            fe.classList.remove('checked');
-                        }
-                    }
-                } else {
-                    filterElement.classList.toggle('checked'); // Check or uncheck filter
-                }
-                this.filter();
-            });
-        }
-    }
-}
-
-new MyFlow(document.querySelector('#filteringjs-enable-all-filters-example'));
+new FilteringFlow(document.querySelector('#filteringjs-enable-all-filters-example'));
 ```
 
 <div class="tab-title"></div>

@@ -1,4 +1,4 @@
-import {Schema} from './schema';
+import {Group, Schema} from './schema';
 import {Parser, ParserOptions} from './parser';
 import {FilterData, Filtering} from './filtering';
 import {Result} from './result';
@@ -21,10 +21,12 @@ export class FilteringFlow {
         this.#root = root;
         this.#options = {...FilteringFlow.defaultOptions, ...options};
 
+        this.beforeInitializing();
         this.#parser = this.initializeParser();
         this.#schema = this.initializeSchema();
         this.#filtering = this.initializeFiltering();
         this.initializeFilterListener();
+        this.afterInitializing();
 
         if (this.options.triggerFilterAfterInitializing) {
             this.filter();
@@ -49,6 +51,9 @@ export class FilteringFlow {
 
     get filtering(): Filtering {
         return this.#filtering;
+    }
+
+    beforeInitializing() {
     }
 
     initializeParser(): Parser {
@@ -83,13 +88,14 @@ export class FilteringFlow {
                         return;
                     }
                     if (this.beforeFilter(filterElement)) {
-                        if (groupElement.dataset.selectType === 'single' && !filterElement.classList.contains(this.parser.options.filterCheckedClass)) {
-                            for (const filter of group.filters) {
-                                const fe = filter.data.element;
-                                fe.classList.remove(this.parser.options.filterCheckedClass);
+                        if (filterElement.dataset.filterType === 'all') {
+                            this.#uncheckAllFiltersInGroup(group);
+                        } else {
+                            if (groupElement.dataset.selectType === 'single' && !filterElement.classList.contains(this.parser.options.filterCheckedClass)) {
+                                this.#uncheckAllFiltersInGroup(group);
                             }
+                            filterElement.classList.toggle(this.parser.options.filterCheckedClass); // Check or uncheck filter
                         }
-                        filterElement.classList.toggle(this.parser.options.filterCheckedClass); // Check or uncheck filter
                         this.filter();
                     }
                 })
@@ -97,22 +103,47 @@ export class FilteringFlow {
         }
     }
 
+    #uncheckAllFiltersInGroup(group: Group) {
+        for (const filter of group.filters) {
+            const filterElement = filter.data.element;
+            filterElement.classList.remove(this.parser.options.filterCheckedClass);
+        }
+    }
+
+    afterInitializing() {
+    }
+
     beforeFilter(filterElement: HTMLElement) {
         return true;
     }
 
-    filter() {
-        // Parse checked filter from HTML
-        const filterData = this.parser.parseCheckedFilterDataFromHtml(this.root);
+    filter(filterData?: FilterData) {
+        if (!filterData) {
+            // Parse checked filter from HTML
+            filterData = this.parser.parseCheckedFilterDataFromHtml(this.root);
+        } else {
+            // Check/uncheck filters using passed argument filterData
+            for (const group of this.schema.groups) {
+                for (const filter of group.filters) {
+                    const filterElement = filter.data.element;
+                    filterElement.classList.toggle(this.parser.options.filterCheckedClass, filterData.checkedFilters.get(group.name)?.has(filter.name));
+                }
+            }
+        }
         const result = this.filtering.filter(filterData);
-
         this.handleFilterResult(result);
+        return result;
     }
 
     handleFilterResult(result: Result) {
         for (const group of result.groups) {
             for (const filter of group.filters) {
                 const filterElement = filter.schemaFilter.data.element;
+
+                if (filterElement.dataset.filterType === 'all') {
+                    continue;
+                }
+
                 // Disable filter if it would give 0 results
                 filterElement.classList.toggle(this.options.disabledFilterClass, filter.possibleItems.length === 0);
             }
