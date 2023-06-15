@@ -13,8 +13,8 @@ export class Schema {
         return [...this.#groups.values()];
     }
 
-    get items(): Item[] {
-        return this.#items;
+    getGroup(name: string): Group {
+        return this.#groups.get(name);
     }
 
     addGroup(group: Group) {
@@ -22,6 +22,11 @@ export class Schema {
             throw new Error(`Group with name ${group.name} already added to schema. Group names have to be unique.`);
         }
         this.#groups.set(group.name, group);
+        group.schema = this;
+    }
+
+    get items(): Item[] {
+        return this.#items;
     }
 
     addItem(item: Item) {
@@ -41,6 +46,7 @@ export class Schema {
 
 export class Group {
     #name: string;
+    #schema: Schema;
     #filters: Map<string, Filter> = new Map();
     #data?: Pojo;
 
@@ -53,8 +59,20 @@ export class Group {
         return this.#name;
     }
 
+    get schema(): Schema {
+        return this.#schema;
+    }
+
+    set schema(schema) {
+        this.#schema = schema;
+    }
+
     get filters(): Filter[] {
         return [...this.#filters.values()];
+    }
+
+    getFilter(name: string) {
+        return this.#filters.get(name);
     }
 
     addFilter(filter: Filter) {
@@ -62,6 +80,7 @@ export class Group {
             throw new Error(`Filter with name ${filter.name} already in group ${this.name}. Filter names have to be unique in a Group.`);
         }
         this.#filters.set(filter.name, filter);
+        filter.group = this;
     }
 
     getFilterNames(): string[] {
@@ -75,6 +94,7 @@ export class Group {
 
 export class Filter {
     #name: string;
+    #group: Group;
     #data?: Pojo;
 
     constructor(name: string, data?: Pojo) {
@@ -85,6 +105,14 @@ export class Filter {
 
     get name(): string {
         return this.#name;
+    }
+
+    get group(): Group {
+        return this.#group;
+    }
+
+    set group(group) {
+        this.#group = group;
     }
 
     get data(): Pojo {
