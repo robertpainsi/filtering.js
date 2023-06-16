@@ -1,7 +1,7 @@
 {
   "name": "@filtering.js/filtering.js",
   "title": "filtering.js",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "With filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.",
   "keywords": [
     "filter",
