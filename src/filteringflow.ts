@@ -90,6 +90,7 @@ export class FilteringFlow {
                     if (this.beforeFilter(filterElement)) {
                         if (filterElement.dataset.filterType === 'all') {
                             this.#uncheckAllFiltersInGroup(group);
+                            filterElement.classList.toggle(this.parser.options.filterCheckedClass); // Check or uncheck filter
                         } else {
                             if (groupElement.dataset.selectType === 'single' && !filterElement.classList.contains(this.parser.options.filterCheckedClass)) {
                                 this.#uncheckAllFiltersInGroup(group);

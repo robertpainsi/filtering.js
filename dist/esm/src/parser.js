@@ -85,7 +85,12 @@ export class Parser {
             for (const filterElement of groupElement.getElementsByClassName(this.#options.filterClass)) {
                 const filterName = filterElement.dataset.filterName;
                 if (filterElement.classList.contains(this.#options.filterCheckedClass)) {
-                    filterData.checkFilter(groupName, filterName);
+                    if (filterElement.dataset.filterType === 'all') {
+                        filterData.disableGroup(groupName);
+                    }
+                    else {
+                        filterData.checkFilter(groupName, filterName);
+                    }
                 }
             }
         }
