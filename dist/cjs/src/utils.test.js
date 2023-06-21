@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const globals_1 = require("@jest/globals");
 const utils_1 = require("./utils");
+const test_utils_1 = require("../test/test-utils");
 (0, globals_1.describe)('Utils.findOne', function () {
     (0, globals_1.test)('Empty lists', () => {
         (0, globals_1.expect)((0, utils_1.findOne)(new Set([]), new Set([]))).toBe(false);
@@ -50,7 +51,7 @@ const utils_1 = require("./utils");
         }];
     for (const { testName, object, propertyName, expectedResult } of scenarios) {
         (0, globals_1.test)(testName, () => {
-            const result = (0, utils_1.getProperty)(object, propertyName);
+            const result = (0, test_utils_1.getProperty)(object, propertyName);
             (0, globals_1.expect)(result).toEqual(expectedResult);
         });
     }

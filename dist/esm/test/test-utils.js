@@ -4,7 +4,6 @@ import { Filter, Group, Item, Schema } from "../src/schema";
 import { FilterData, Filtering } from "../src/filtering";
 import { JSDOM } from "jsdom";
 import { renderToStaticMarkup } from "react-dom/server";
-import { getProperty } from "../src/utils";
 import { orderBy } from 'natural-orderby';
 export function testFiltering(schema, test) {
     const filterData = createFilterData(test.checked);
@@ -118,6 +117,17 @@ export function testFilterData(filterData, expectedChecked) {
         const expectedCheckedFilters = orderBy(expectedChecked.groups[groupName]);
         expect(filterDataFilters).toEqual(expectedCheckedFilters);
     }
+}
+export function getProperty(object, propertyName) {
+    const parts = propertyName.split('.');
+    let result = object;
+    for (const part of parts) {
+        if (result === undefined) {
+            return undefined;
+        }
+        result = result[part];
+    }
+    return result;
 }
 export function getSortedNames(items, propertyName = 'name') {
     return orderBy(items.map((item) => getProperty(item, propertyName)));

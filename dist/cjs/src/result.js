@@ -94,8 +94,7 @@ class GroupResult {
     }
     addFilteredItem(item) {
         for (const filterName of item.getFilterNames(this.schemaGroup.name)) {
-            const filterResult = this.#filters.get(filterName);
-            filterResult.addFilteredItem(item);
+            this.#filters.get(filterName)?.addFilteredItem(item);
         }
     }
     get allItems() {
@@ -109,8 +108,7 @@ class GroupResult {
     }
     addAllItem(item) {
         for (const filterName of item.getFilterNames(this.schemaGroup.name)) {
-            const filterResult = this.#filters.get(filterName);
-            filterResult.addAllItem(item);
+            this.#filters.get(filterName)?.addAllItem(item);
         }
     }
 }

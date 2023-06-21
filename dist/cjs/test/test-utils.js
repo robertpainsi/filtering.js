@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createTestDataPossibleItems = exports.getSortedNames = exports.testFilterData = exports.jsToSchema = exports.jsxToHtml = exports.testSchemaItems = exports.testSchemaFilters = exports.testSchemaGroups = exports.testSchema = exports.checkFilters = exports.createFilterData = exports.createExpectedPossibleItems = exports.testFiltering = void 0;
+exports.createTestDataPossibleItems = exports.getSortedNames = exports.getProperty = exports.testFilterData = exports.jsToSchema = exports.jsxToHtml = exports.testSchemaItems = exports.testSchemaFilters = exports.testSchemaGroups = exports.testSchema = exports.checkFilters = exports.createFilterData = exports.createExpectedPossibleItems = exports.testFiltering = void 0;
 const globals_1 = require("@jest/globals");
 require("./initialize-test-utils");
 const schema_1 = require("../src/schema");
 const filtering_1 = require("../src/filtering");
 const jsdom_1 = require("jsdom");
 const server_1 = require("react-dom/server");
-const utils_1 = require("../src/utils");
 const natural_orderby_1 = require("natural-orderby");
 function testFiltering(schema, test) {
     const filterData = createFilterData(test.checked);
@@ -133,8 +132,20 @@ function testFilterData(filterData, expectedChecked) {
     }
 }
 exports.testFilterData = testFilterData;
+function getProperty(object, propertyName) {
+    const parts = propertyName.split('.');
+    let result = object;
+    for (const part of parts) {
+        if (result === undefined) {
+            return undefined;
+        }
+        result = result[part];
+    }
+    return result;
+}
+exports.getProperty = getProperty;
 function getSortedNames(items, propertyName = 'name') {
-    return (0, natural_orderby_1.orderBy)(items.map((item) => (0, utils_1.getProperty)(item, propertyName)));
+    return (0, natural_orderby_1.orderBy)(items.map((item) => getProperty(item, propertyName)));
 }
 exports.getSortedNames = getSortedNames;
 function createTestDataPossibleItems(result) {

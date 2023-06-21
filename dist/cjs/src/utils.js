@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProperty = exports.findOne = void 0;
+exports.findOne = void 0;
 function findOne(haystack, values) {
     for (const v of values) {
         if (haystack.has(v)) {
@@ -10,15 +10,3 @@ function findOne(haystack, values) {
     return false;
 }
 exports.findOne = findOne;
-function getProperty(object, propertyName) {
-    const parts = propertyName.split('.');
-    let result = object;
-    for (const part of parts) {
-        if (result === undefined) {
-            return undefined;
-        }
-        result = result[part];
-    }
-    return result;
-}
-exports.getProperty = getProperty;

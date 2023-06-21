@@ -113,8 +113,7 @@ export class GroupResult {
 
     addFilteredItem(item: Item) {
         for (const filterName of item.getFilterNames(this.schemaGroup.name)) {
-            const filterResult = this.#filters.get(filterName);
-            filterResult.addFilteredItem(item);
+            this.#filters.get(filterName)?.addFilteredItem(item);
         }
     }
 
@@ -130,8 +129,7 @@ export class GroupResult {
 
     addAllItem(item: Item) {
         for (const filterName of item.getFilterNames(this.schemaGroup.name)) {
-            const filterResult = this.#filters.get(filterName);
-            filterResult.addAllItem(item);
+            this.#filters.get(filterName)?.addAllItem(item);
         }
     }
 }

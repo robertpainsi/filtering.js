@@ -45,7 +45,7 @@ class Filtering {
             const filteredItems = this.#getFilterItems(items, possibleFilterData);
             for (const filteredItem of filteredItems) {
                 for (const filteredItemFilterName of filteredItem.getFilterNames(groupName)) {
-                    result.getGroup(groupName).getFilter(filteredItemFilterName).addPossibleItem(filteredItem);
+                    result.getGroup(groupName)?.getFilter(filteredItemFilterName)?.addPossibleItem(filteredItem);
                 }
             }
         }
