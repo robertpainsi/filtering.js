@@ -8,7 +8,6 @@ import {FilterData, Filtering} from "../src/filtering";
 import {JSDOM} from "jsdom";
 import {renderToStaticMarkup} from "react-dom/server";
 import {TestDataFiltering, TestDataGroups, TestDataItem, TestDataPossibleItems, TestDataSchema} from "./test-data-types";
-import {getProperty} from "../src/utils";
 import {Result} from "../src/result";
 import {orderBy} from 'natural-orderby';
 
@@ -143,6 +142,18 @@ export function testFilterData(filterData: FilterData, expectedChecked: TestData
 
         expect(filterDataFilters).toEqual(expectedCheckedFilters);
     }
+}
+
+export function getProperty(object: any, propertyName: string): any {
+    const parts = propertyName.split('.');
+    let result = object;
+    for (const part of parts) {
+        if (result === undefined) {
+            return undefined;
+        }
+        result = result[part];
+    }
+    return result;
 }
 
 export function getSortedNames(items: any[], propertyName: string = 'name'): string[] {
