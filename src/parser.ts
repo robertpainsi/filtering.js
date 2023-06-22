@@ -1,5 +1,6 @@
 import {Filter, Group, Item, Schema} from './schema';
 import {FilterData} from './filtering';
+import {getTagName} from './utils';
 
 export interface ParserOptions {
     groupClass?: string,
@@ -109,7 +110,8 @@ export class Parser {
             for (const filterElement of groupElement.getElementsByClassName(this.#options.filterClass) as HTMLCollectionOf<HTMLElement>) {
                 const filterName = filterElement.dataset.filterName;
 
-                if (filterElement.classList.contains(this.#options.filterCheckedClass)) {
+                if (getTagName(filterElement) === 'input' && (filterElement as HTMLInputElement).checked
+                    || getTagName(filterElement) !== 'input' && filterElement.classList.contains(this.#options.filterCheckedClass)) {
                     if (filterElement.dataset.filterType === 'all') {
                         filterData.disableGroup(groupName);
                     } else {

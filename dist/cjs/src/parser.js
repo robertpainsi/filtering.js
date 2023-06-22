@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Parser = void 0;
 const schema_1 = require("./schema");
 const filtering_1 = require("./filtering");
+const utils_1 = require("./utils");
 class Parser {
     static #defaultOptions = {
         groupClass: 'filtering-group',
@@ -87,7 +88,8 @@ class Parser {
             const groupName = groupElement.dataset.groupName;
             for (const filterElement of groupElement.getElementsByClassName(this.#options.filterClass)) {
                 const filterName = filterElement.dataset.filterName;
-                if (filterElement.classList.contains(this.#options.filterCheckedClass)) {
+                if ((0, utils_1.getTagName)(filterElement) === 'input' && filterElement.checked
+                    || (0, utils_1.getTagName)(filterElement) !== 'input' && filterElement.classList.contains(this.#options.filterCheckedClass)) {
                     if (filterElement.dataset.filterType === 'all') {
                         filterData.disableGroup(groupName);
                     }

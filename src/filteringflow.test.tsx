@@ -4,7 +4,13 @@ import {jsxToHtml} from '../test/test-utils';
 import {Schema} from './schema';
 import {Parser, ParserOptions} from './parser';
 import {FilterData, Filtering, FilteringOptions} from './filtering';
-import {jsxColors, jsxColorsSingleSelect, jsxColorsWithTypeAll} from '../test/data/colors';
+import {
+    jsxColors,
+    jsxColorsSingleSelect,
+    jsxColorsSingleSelectInput,
+    jsxColorsWithTypeAll,
+    jsxColorsWithTypeAllInput,
+} from '../test/data/colors';
 
 describe('FilteringFlow', () => {
     test('FilteringFlow calls initialize methods', () => {
@@ -115,5 +121,39 @@ describe('FilteringFlow', () => {
         expect(schema.getGroup('color').getFilter('red').data.element.classList.contains('checked')).toBeFalsy();
         expect(schema.getGroup('color').getFilter('green').data.element.classList.contains('checked')).toBeFalsy();
         expect(schema.getGroup('color').getFilter('blue').data.element.classList.contains('checked')).toBeFalsy();
+    });
+
+    test('FilteringFlow single select filter with input', () => {
+        const filteringFlow = new FilteringFlow(jsxColorsSingleSelectInput);
+        const schema = filteringFlow.schema;
+
+        schema.getGroup('color').getFilter('red').data.element.click();
+
+        expect(schema.getGroup('color').getFilter('red').data.element.checked).toBeTruthy();
+        expect(schema.getGroup('color').getFilter('green').data.element.checked).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('blue').data.element.checked).toBeFalsy();
+
+        schema.getGroup('color').getFilter('blue').data.element.click();
+
+        expect(schema.getGroup('color').getFilter('red').data.element.checked).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('green').data.element.checked).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('blue').data.element.checked).toBeTruthy();
+    });
+
+    test('FilteringFlow select all filters with input', () => {
+        const filteringFlow = new FilteringFlow(jsxColorsWithTypeAllInput);
+        const schema = filteringFlow.schema;
+        schema.getGroup('color').getFilter('red').data.element.click();
+        schema.getGroup('color').getFilter('green').data.element.click();
+
+        expect(schema.getGroup('color').getFilter('red').data.element.checked).toBeTruthy();
+        expect(schema.getGroup('color').getFilter('green').data.element.checked).toBeTruthy();
+        expect(schema.getGroup('color').getFilter('blue').data.element.checked).toBeFalsy();
+
+        schema.getGroup('color').getFilter('all').data.element.click();
+
+        expect(schema.getGroup('color').getFilter('red').data.element.checked).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('green').data.element.checked).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('blue').data.element.checked).toBeFalsy();
     });
 })

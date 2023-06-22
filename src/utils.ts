@@ -10,3 +10,7 @@ export function findOne<Type>(haystack: Set<Type>, values: Set<Type>) {
     }
     return false;
 }
+
+export function getTagName(element: HTMLElement): string {
+    return element.tagName.toLowerCase();
+}

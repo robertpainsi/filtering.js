@@ -6,3 +6,6 @@ export function findOne(haystack, values) {
     }
     return false;
 }
+export function getTagName(element) {
+    return element.tagName.toLowerCase();
+}
