@@ -4,7 +4,7 @@ import {TestDataFiltering} from '../test/test-data-types';
 import {jsToSchema, testFiltering} from '../test/test-utils';
 import {simpleTestSchema} from '../test/data/simple';
 import {mediumTestSchema} from '../test/data/medium';
-import {Item, Schema} from './schema';
+import {Filter, Group, Item, Schema} from './schema';
 import {FilterData} from './filtering';
 
 describe('Test Tiltering', function () {
@@ -140,5 +140,26 @@ describe('Test Tiltering', function () {
         };
         const schema = jsToSchema(testData.schema);
         testFiltering(schema, testData);
+    });
+
+    test('FilterData checkFilter with object', () => {
+        const filterData = new FilterData();
+        const group = new Group('group');
+        const filter = new Filter('filter');
+        group.addFilter(filter);
+        filterData.checkFilter(filter);
+
+        expect(filterData.checkedFilters).toEqual(new Map([
+            ['group', new Set(['filter'])],
+        ]));
+    });
+
+    test('FilterData checkFilter with string group and filter', () => {
+        const filterData = new FilterData();
+        filterData.checkFilter('group', 'filter');
+
+        expect(filterData.checkedFilters).toEqual(new Map([
+            ['group', new Set(['filter'])],
+        ]));
     });
 });

@@ -136,9 +136,17 @@ export class Item {
         return new Set(this.#groups.keys());
     }
 
-    addFilter(groupName: string, filterName: string) {
-        const filters = this.#getFiltersFromGroup(groupName);
-        filters.add(filterName);
+    addFilter(filter: Filter): void;
+    addFilter(groupName: string | Filter, filterName: string): void;
+
+    addFilter(groupName: unknown, filterName?: unknown) {
+        if (groupName instanceof Filter) {
+            const filters = this.#getFiltersFromGroup(groupName.group.name);
+            filters.add(groupName.name);
+        } else if (typeof groupName === 'string' && typeof filterName === 'string') {
+            const filters = this.#getFiltersFromGroup(groupName);
+            filters.add(filterName);
+        }
     }
 
     #getFiltersFromGroup(groupName: string) {

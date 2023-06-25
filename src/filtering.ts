@@ -1,4 +1,4 @@
-import {Item, Schema} from './schema';
+import {Filter, Item, Schema} from './schema';
 import {Result} from './result';
 import {findOne} from './utils';
 
@@ -92,12 +92,23 @@ export class FilterData {
         return this.#checkedFilters;
     }
 
-    checkFilter(groupName: string, filterName: string): void {
-        if (this.#disabledGroups.has(groupName)) {
-            return;
+    checkFilter(filter: Filter): void;
+    checkFilter(groupName: string, filterName?: string): void;
+
+    checkFilter(groupName: unknown, filterName?: unknown): void {
+        if (groupName instanceof Filter) {
+            if (this.#disabledGroups.has(groupName.group.name)) {
+                return;
+            }
+            const filters = this.#getFiltersFromGroup(groupName.group.name);
+            filters.add(groupName.name);
+        } else if (typeof groupName === 'string' && typeof filterName === 'string') {
+            if (this.#disabledGroups.has(groupName)) {
+                return;
+            }
+            const filters = this.#getFiltersFromGroup(groupName);
+            filters.add(filterName);
         }
-        const filters = this.#getFiltersFromGroup(groupName);
-        filters.add(filterName);
     }
 
     #getFiltersFromGroup(groupName: string): Set<string> {
