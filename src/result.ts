@@ -4,6 +4,9 @@ export class Result {
     readonly #schema: Schema;
     readonly #groups = new Map<string, GroupResult>();
 
+    readonly #filteredItems = new Set<Item>();
+    readonly #allItems = new Set<Item>();
+
     constructor(schema: Schema) {
         this.#schema = schema;
 
@@ -48,10 +51,14 @@ export class Result {
                 result.add(item);
             }
         }
+        for (const item of this.#filteredItems) {
+            result.add(item);
+        }
         return [...result];
     }
 
     addFilteredItem(item: Item) {
+        this.#filteredItems.add(item);
         for (const groupName of item.getGroupNames()) {
             const groupResult = this.#groups.get(groupName);
             groupResult.addFilteredItem(item);
@@ -65,10 +72,14 @@ export class Result {
                 result.add(item);
             }
         }
+        for (const item of this.#allItems) {
+            result.add(item);
+        }
         return [...result];
     }
 
     addAllItem(item: Item) {
+        this.#allItems.add(item);
         for (const groupName of item.getGroupNames()) {
             const groupResult = this.#groups.get(groupName);
             groupResult.addAllItem(item);
@@ -78,6 +89,9 @@ export class Result {
 
 export class GroupResult {
     readonly #schemaGroup: Group;
+
+    readonly #filteredItems = new Set<Item>();
+    readonly #allItems = new Set<Item>();
 
     readonly #filters = new Map<string, FilterResult>();
 
@@ -108,10 +122,14 @@ export class GroupResult {
                 result.add(item);
             }
         }
+        for (const item of this.#filteredItems) {
+            result.add(item);
+        }
         return [...result];
     }
 
     addFilteredItem(item: Item) {
+        this.#filteredItems.add(item);
         for (const filterName of item.getFilterNames(this.schemaGroup.name)) {
             this.#filters.get(filterName)?.addFilteredItem(item);
         }
@@ -124,10 +142,14 @@ export class GroupResult {
                 result.add(item);
             }
         }
+        for (const item of this.#allItems) {
+            result.add(item);
+        }
         return [...result];
     }
 
     addAllItem(item: Item) {
+        this.#allItems.add(item);
         for (const filterName of item.getFilterNames(this.schemaGroup.name)) {
             this.#filters.get(filterName)?.addAllItem(item);
         }

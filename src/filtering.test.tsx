@@ -1,11 +1,13 @@
 import {blue, expensive, large, medium, red, small} from '../test/test-data';
 import {describe, test} from '@jest/globals';
 import {TestDataFiltering} from '../test/test-data-types';
-import {jsToSchema, testFiltering} from '../test/test-utils';
+import {createFilterData, jsToSchema, jsxToHtml, testFiltering} from '../test/test-utils';
 import {simpleTestSchema} from '../test/data/simple';
 import {mediumTestSchema} from '../test/data/medium';
 import {Filter, Group, Item, Schema} from './schema';
-import {FilterData} from './filtering';
+import {FilterData, Filtering} from './filtering';
+import {Parser} from './parser';
+import {FilteringFlow} from './filteringflow';
 
 describe('Test Tiltering', function () {
     const testData: TestDataFiltering[] = [{
@@ -161,5 +163,56 @@ describe('Test Tiltering', function () {
         expect(filterData.checkedFilters).toEqual(new Map([
             ['group', new Set(['filter'])],
         ]));
+    });
+
+    test('Filtering with unavailable filter no checked', () => {
+        const schema = new Parser().parseSchemaFromHtml(jsxToHtml(
+            <>
+                <div className="filtering-group" data-group-name="available">
+                    <div className="filtering-filter" data-filter-name="true">Available?</div>
+                </div>
+
+                <div id="item-1" className="filtering-item" data-filter-available="true">1</div>
+                <div id="item-2" className="filtering-item" data-filter-available="">2</div>
+            </>,
+        ));
+        const filtering = new Filtering(schema);
+
+        let result = filtering.filter(new FilterData());
+        expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1', 'item-2']);
+    });
+
+    test('Filtering with missing filter no checked', () => {
+        const filtering = new Filtering(new Parser().parseSchemaFromHtml(jsxToHtml(
+            <>
+                <div className="filtering-group" data-group-name="available">
+                    <div className="filtering-filter" data-filter-name="true">Available?</div>
+                </div>
+
+                <div id="item-1" className="filtering-item" data-filter-available="true">1</div>
+                <div id="item-2" className="filtering-item">2</div>
+            </>,
+        )));
+
+        let result = filtering.filter(new FilterData());
+        expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1', 'item-2']);
+    });
+
+    test('Filtering with unavailable filter checked', () => {
+        const filtering = new Filtering(new Parser().parseSchemaFromHtml(jsxToHtml(
+            <>
+                <div className="filtering-group" data-group-name="available">
+                    <div className="filtering-filter" data-filter-name="true">Available?</div>
+                </div>
+
+                <div id="item-1" className="filtering-item" data-filter-available="true">1</div>
+                <div id="item-2" className="filtering-item" data-filter-available="">2</div>
+            </>,
+        )));
+
+        let result = filtering.filter(createFilterData({
+            'available': ['true']
+        }));
+        expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1']);
     });
 });
