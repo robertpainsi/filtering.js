@@ -37,22 +37,29 @@ Also check out a [large demo](https://filteringjs.github.io/filtering.js/demo.ht
 ```
 npm i @filtering.js/filtering.js
 ```
+
 Depending on the environment, there are builds for CommonJS, ESM and UMD located in the `dist` folder.
 
 - Browser
+
 ```html
 <script src="/dist/umd/index.ui.js"></script>
 <script>
     const {Filtering} = filteringjs;
 </script>
 ```
+
 - Webpack
+
 ```js
 import {Filtering} from "@filtering.js/filtering.js/ui";
 ```
+
 - Node (module)
+
 ```js
 import filteringjs from "@filtering.js/filtering.js/core";
+
 const {Filtering} = filteringjs;
 ```
 
@@ -129,9 +136,9 @@ Following tables illustrate the performance of the library measured on Desktop. 
 
 | <sub>filters</sub> \ <sup>groups</sup> | **2** | **4** | **8** |
 |---------------------------------------:|:-----:|:-----:|:-----:|
-|                                  **8** | 2 ms  | 3 ms  | 10 ms |
-|                                 **24** | 2 ms  | 3 ms  | 6 ms  |
-|                                 **64** | 2 ms  | 3 ms  | 5 ms  |
+|                                  **8** | <1 ms | 2 ms  | 5 ms  |
+|                                 **24** | <1 ms | 2 ms  | 3 ms  |
+|                                 **64** | <1 ms | 2 ms  | 3 ms  |
 
 </details>
 

@@ -158,7 +158,7 @@ export class Item {
 
     getFilterNames(groupName: string): Set<string> {
         if (this.#groups.has(groupName)) {
-            return new Set(this.#groups.get(groupName));
+            return this.#groups.get(groupName);
         } else {
             return new Set();
         }
