@@ -1,10 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const jsx_runtime_1 = require("react/jsx-runtime");
 const test_data_1 = require("../test/test-data");
 const globals_1 = require("@jest/globals");
 const test_utils_1 = require("../test/test-utils");
 const simple_1 = require("../test/data/simple");
 const medium_1 = require("../test/data/medium");
+const schema_1 = require("./schema");
+const filtering_1 = require("./filtering");
+const parser_1 = require("./parser");
 (0, globals_1.describe)('Test Tiltering', function () {
     const testData = [{
             name: 'Select one filter in one group',
@@ -136,5 +140,40 @@ const medium_1 = require("../test/data/medium");
         };
         const schema = (0, test_utils_1.jsToSchema)(testData.schema);
         (0, test_utils_1.testFiltering)(schema, testData);
+    });
+    (0, globals_1.test)('FilterData checkFilter with object', () => {
+        const filterData = new filtering_1.FilterData();
+        const group = new schema_1.Group('group');
+        const filter = new schema_1.Filter('filter');
+        group.addFilter(filter);
+        filterData.checkFilter(filter);
+        expect(filterData.checkedFilters).toEqual(new Map([
+            ['group', new Set(['filter'])],
+        ]));
+    });
+    (0, globals_1.test)('FilterData checkFilter with string group and filter', () => {
+        const filterData = new filtering_1.FilterData();
+        filterData.checkFilter('group', 'filter');
+        expect(filterData.checkedFilters).toEqual(new Map([
+            ['group', new Set(['filter'])],
+        ]));
+    });
+    (0, globals_1.test)('Filtering with unavailable filter no checked', () => {
+        const schema = new parser_1.Parser().parseSchemaFromHtml((0, test_utils_1.jsxToHtml)((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { className: "filtering-group", "data-group-name": "available", children: (0, jsx_runtime_1.jsx)("div", { className: "filtering-filter", "data-filter-name": "true", children: "Available?" }) }), (0, jsx_runtime_1.jsx)("div", { id: "item-1", className: "filtering-item", "data-filter-available": "true", children: "1" }), (0, jsx_runtime_1.jsx)("div", { id: "item-2", className: "filtering-item", "data-filter-available": "", children: "2" })] })));
+        const filtering = new filtering_1.Filtering(schema);
+        let result = filtering.filter(new filtering_1.FilterData());
+        expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1', 'item-2']);
+    });
+    (0, globals_1.test)('Filtering with missing filter no checked', () => {
+        const filtering = new filtering_1.Filtering(new parser_1.Parser().parseSchemaFromHtml((0, test_utils_1.jsxToHtml)((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { className: "filtering-group", "data-group-name": "available", children: (0, jsx_runtime_1.jsx)("div", { className: "filtering-filter", "data-filter-name": "true", children: "Available?" }) }), (0, jsx_runtime_1.jsx)("div", { id: "item-1", className: "filtering-item", "data-filter-available": "true", children: "1" }), (0, jsx_runtime_1.jsx)("div", { id: "item-2", className: "filtering-item", children: "2" })] }))));
+        let result = filtering.filter(new filtering_1.FilterData());
+        expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1', 'item-2']);
+    });
+    (0, globals_1.test)('Filtering with unavailable filter checked', () => {
+        const filtering = new filtering_1.Filtering(new parser_1.Parser().parseSchemaFromHtml((0, test_utils_1.jsxToHtml)((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { className: "filtering-group", "data-group-name": "available", children: (0, jsx_runtime_1.jsx)("div", { className: "filtering-filter", "data-filter-name": "true", children: "Available?" }) }), (0, jsx_runtime_1.jsx)("div", { id: "item-1", className: "filtering-item", "data-filter-available": "true", children: "1" }), (0, jsx_runtime_1.jsx)("div", { id: "item-2", className: "filtering-item", "data-filter-available": "", children: "2" })] }))));
+        let result = filtering.filter((0, test_utils_1.createFilterData)({
+            'available': ['true']
+        }));
+        expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1']);
     });
 });

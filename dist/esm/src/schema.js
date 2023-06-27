@@ -105,8 +105,14 @@ export class Item {
         return new Set(this.#groups.keys());
     }
     addFilter(groupName, filterName) {
-        const filters = this.#getFiltersFromGroup(groupName);
-        filters.add(filterName);
+        if (groupName instanceof Filter) {
+            const filters = this.#getFiltersFromGroup(groupName.group.name);
+            filters.add(groupName.name);
+        }
+        else if (typeof groupName === 'string' && typeof filterName === 'string') {
+            const filters = this.#getFiltersFromGroup(groupName);
+            filters.add(filterName);
+        }
     }
     #getFiltersFromGroup(groupName) {
         if (!this.#groups.has(groupName)) {
@@ -116,7 +122,7 @@ export class Item {
     }
     getFilterNames(groupName) {
         if (this.#groups.has(groupName)) {
-            return new Set(this.#groups.get(groupName));
+            return this.#groups.get(groupName);
         }
         else {
             return new Set();

@@ -42,13 +42,22 @@ describe('Schema', () => {
         group.addFilter(filter1);
         expect(() => group.addFilter(filter2)).toThrow();
     });
-    test('Item.addFilter', () => {
+    test('Item.addFilter with string group and filter', () => {
         const item = new Item({ name: 'item' });
         item.addFilter('group-1', 'filter-1');
         item.addFilter('group-2', 'filter-2');
         expect([...item.getGroupNames()].sort()).toEqual(['group-1', 'group-2'].sort());
         expect([...item.getFilterNames('group-1')]).toEqual(['filter-1']);
         expect([...item.getFilterNames('group-2')]).toEqual(['filter-2']);
+    });
+    test('Item.addFilter with Filter object', () => {
+        const item = new Item({ name: 'item' });
+        const group = new Group('group');
+        const filter = new Filter('filter');
+        group.addFilter(filter);
+        item.addFilter(filter);
+        expect([...item.getGroupNames()].sort()).toEqual(['group'].sort());
+        expect([...item.getFilterNames('group')]).toEqual(['filter']);
     });
     test('FilterData.checkFilter', () => {
         const filterData = new FilterData();

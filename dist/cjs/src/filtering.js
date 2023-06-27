@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FilterData = exports.Filtering = void 0;
+const schema_1 = require("./schema");
 const result_1 = require("./result");
 const utils_1 = require("./utils");
 class Filtering {
@@ -75,11 +76,20 @@ class FilterData {
         return this.#checkedFilters;
     }
     checkFilter(groupName, filterName) {
-        if (this.#disabledGroups.has(groupName)) {
-            return;
+        if (groupName instanceof schema_1.Filter) {
+            if (this.#disabledGroups.has(groupName.group.name)) {
+                return;
+            }
+            const filters = this.#getFiltersFromGroup(groupName.group.name);
+            filters.add(groupName.name);
         }
-        const filters = this.#getFiltersFromGroup(groupName);
-        filters.add(filterName);
+        else if (typeof groupName === 'string' && typeof filterName === 'string') {
+            if (this.#disabledGroups.has(groupName)) {
+                return;
+            }
+            const filters = this.#getFiltersFromGroup(groupName);
+            filters.add(filterName);
+        }
     }
     #getFiltersFromGroup(groupName) {
         if (!this.#checkedFilters.has(groupName)) {

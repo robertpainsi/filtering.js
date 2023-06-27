@@ -1,3 +1,4 @@
+import { Filter } from './schema';
 import { Result } from './result';
 import { findOne } from './utils';
 export class Filtering {
@@ -71,11 +72,20 @@ export class FilterData {
         return this.#checkedFilters;
     }
     checkFilter(groupName, filterName) {
-        if (this.#disabledGroups.has(groupName)) {
-            return;
+        if (groupName instanceof Filter) {
+            if (this.#disabledGroups.has(groupName.group.name)) {
+                return;
+            }
+            const filters = this.#getFiltersFromGroup(groupName.group.name);
+            filters.add(groupName.name);
         }
-        const filters = this.#getFiltersFromGroup(groupName);
-        filters.add(filterName);
+        else if (typeof groupName === 'string' && typeof filterName === 'string') {
+            if (this.#disabledGroups.has(groupName)) {
+                return;
+            }
+            const filters = this.#getFiltersFromGroup(groupName);
+            filters.add(filterName);
+        }
     }
     #getFiltersFromGroup(groupName) {
         if (!this.#checkedFilters.has(groupName)) {

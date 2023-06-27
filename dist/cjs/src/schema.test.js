@@ -44,13 +44,22 @@ const filtering_1 = require("./filtering");
         group.addFilter(filter1);
         (0, globals_1.expect)(() => group.addFilter(filter2)).toThrow();
     });
-    (0, globals_1.test)('Item.addFilter', () => {
+    (0, globals_1.test)('Item.addFilter with string group and filter', () => {
         const item = new schema_1.Item({ name: 'item' });
         item.addFilter('group-1', 'filter-1');
         item.addFilter('group-2', 'filter-2');
         (0, globals_1.expect)([...item.getGroupNames()].sort()).toEqual(['group-1', 'group-2'].sort());
         (0, globals_1.expect)([...item.getFilterNames('group-1')]).toEqual(['filter-1']);
         (0, globals_1.expect)([...item.getFilterNames('group-2')]).toEqual(['filter-2']);
+    });
+    (0, globals_1.test)('Item.addFilter with Filter object', () => {
+        const item = new schema_1.Item({ name: 'item' });
+        const group = new schema_1.Group('group');
+        const filter = new schema_1.Filter('filter');
+        group.addFilter(filter);
+        item.addFilter(filter);
+        (0, globals_1.expect)([...item.getGroupNames()].sort()).toEqual(['group'].sort());
+        (0, globals_1.expect)([...item.getFilterNames('group')]).toEqual(['filter']);
     });
     (0, globals_1.test)('FilterData.checkFilter', () => {
         const filterData = new filtering_1.FilterData();

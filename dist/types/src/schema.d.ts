@@ -35,6 +35,7 @@ export declare class Item {
     constructor(data?: Pojo);
     get data(): Pojo;
     getGroupNames(): Set<string>;
-    addFilter(groupName: string, filterName: string): void;
+    addFilter(filter: Filter): void;
+    addFilter(groupName: string | Filter, filterName: string): void;
     getFilterNames(groupName: string): Set<string>;
 }
