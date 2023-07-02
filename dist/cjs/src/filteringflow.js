@@ -72,6 +72,9 @@ class FilteringFlow {
                                 this.#uncheckAllFiltersInGroup(group);
                                 filterElement.checked = true;
                             }
+                            else {
+                                this.#uncheckAllFilterInGroup(group);
+                            }
                             this.filter();
                         }
                     });
@@ -92,6 +95,9 @@ class FilteringFlow {
                                 if (groupElement.dataset.selectType === 'single' && !filterElement.classList.contains(this.parser.options.filterCheckedClass)) {
                                     this.#uncheckAllFiltersInGroup(group);
                                 }
+                                else if (filterElement.dataset.filterType !== 'all') {
+                                    this.#uncheckAllFilterInGroup(group);
+                                }
                                 filterElement.classList.toggle(this.parser.options.filterCheckedClass);
                             }
                             this.filter();
@@ -109,6 +115,19 @@ class FilteringFlow {
             }
             else {
                 filterElement.classList.remove(this.parser.options.filterCheckedClass);
+            }
+        }
+    }
+    #uncheckAllFilterInGroup(group) {
+        for (const filter of group.filters) {
+            const filterElement = filter.data.element;
+            if (filterElement.dataset.filterType === 'all') {
+                if ((0, utils_1.getTagName)(filterElement) === 'input') {
+                    filterElement.checked = false;
+                }
+                else {
+                    filterElement.classList.remove(this.parser.options.filterCheckedClass);
+                }
             }
         }
     }
