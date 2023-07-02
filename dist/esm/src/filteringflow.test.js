@@ -89,6 +89,10 @@ describe('FilteringFlow', () => {
         expect(schema.getGroup('color').getFilter('red').data.element.classList.contains('checked')).toBeFalsy();
         expect(schema.getGroup('color').getFilter('green').data.element.classList.contains('checked')).toBeFalsy();
         expect(schema.getGroup('color').getFilter('blue').data.element.classList.contains('checked')).toBeFalsy();
+        schema.getGroup('color').getFilter('red').data.element.click();
+        expect(schema.getGroup('color').getFilter('red').data.element.classList.contains('checked')).toBeTruthy();
+        expect(schema.getGroup('color').getFilter('green').data.element.classList.contains('checked')).toBeFalsy();
+        expect(schema.getGroup('color').getFilter('blue').data.element.classList.contains('checked')).toBeFalsy();
     });
     test('FilteringFlow single select filter with input', () => {
         const filteringFlow = new FilteringFlow(jsxColorsSingleSelectInput);
