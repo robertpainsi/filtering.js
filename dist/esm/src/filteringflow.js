@@ -147,7 +147,7 @@ export class FilteringFlow {
                         filterElement.checked = !!filterData.checkedFilters.get(group.name)?.has(filter.name);
                     }
                     else {
-                        filterElement.classList.toggle(this.parser.options.filterCheckedClass, filterData.checkedFilters.get(group.name)?.has(filter.name));
+                        filterElement.classList.toggle(this.parser.options.filterCheckedClass, !!filterData.checkedFilters.get(group.name)?.has(filter.name));
                     }
                 }
             }
