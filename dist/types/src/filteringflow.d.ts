@@ -21,7 +21,7 @@ export declare class FilteringFlow {
     afterInitializing(): void;
     beforeFilter(filterElement: HTMLElement): boolean;
     filter(filterData?: FilterData): Result;
-    handleFilterResult(result: Result): void;
+    handleFilterResult(result: Result, filterData?: FilterData): void;
 }
 interface FilteringFlowOptions {
     disabledFilterClass?: string;

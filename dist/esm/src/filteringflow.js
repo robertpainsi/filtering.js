@@ -153,10 +153,10 @@ export class FilteringFlow {
             }
         }
         const result = this.filtering.filter(filterData);
-        this.handleFilterResult(result);
+        this.handleFilterResult(result, filterData);
         return result;
     }
-    handleFilterResult(result) {
+    handleFilterResult(result, filterData) {
         for (const group of result.groups) {
             for (const filter of group.filters) {
                 const filterElement = filter.schemaFilter.data.element;
