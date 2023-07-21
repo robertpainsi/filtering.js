@@ -22,7 +22,7 @@ Also check out a [large demo](https://robertpainsi.github.io/filtering.js/demo.h
 ### Difference to other libraries?
 
 - :zap: fast
-- :ant: [6.4kB (core)](https://github.com/robertpainsi/filtering.js/blob/main/dist/index.core.js) or [11.7kB (with UI helpers)](https://github.com/robertpainsi/filtering.js/blob/main/dist/index.ui.js)
+- :ant: [6.4kB (core)](https://github.com/robertpainsi/filtering.js/blob/main/dist/umd/index.core.js) or [11.7kB (with UI helpers)](https://github.com/robertpainsi/filtering.js/blob/main/dist/umd/index.ui.js)
 - :trophy: Supported by modern browsers using ES6 features.
   <sup>[1](https://caniuse.com/mdn-javascript_builtins_set),[2](https://caniuse.com/mdn-javascript_builtins_map),[3](https://caniuse.com/mdn-api_htmlelement_dataset),[4](https://caniuse.com/mdn-api_domtokenlist_contains)</sup>
 - :weight_lifting_man: Lifting complex logic from the developer.
@@ -96,13 +96,13 @@ A simple, out of the box example:
 
 *That's it!*
 
-Check out more [examples](https://github.com/robertpainsi/filtering.js/blob/main/examples/).
+Check out more [examples](https://robertpainsi.github.io/filtering.js/examples).
 
 ---
 
 ### Parser
 
-The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example, [example.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/example.html), [initialize-from-html.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/initialize-from-html.html) or other [examples](https://github.com/robertpainsi/filtering.js/tree/main/examples).
+The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example or other [examples](https://robertpainsi.github.io/filtering.js/examples).
 
 - Group element
     - `.filtering-group`
