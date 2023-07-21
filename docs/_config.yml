@@ -4,7 +4,7 @@ baseurl: /filtering.js
 theme: minima
 minima:
   social_links:
-    - { platform: github,  user_url: "https://github.com/filteringjs/filtering.js" }
+    - { platform: github,  user_url: "https://github.com/robertpainsi/filtering.js" }
 header_pages:
   - README.md
   - documentation.md

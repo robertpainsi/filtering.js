@@ -1,13 +1,13 @@
-# [filtering.js](https://github.com/filteringjs/filtering.js)
+# [filtering.js](https://github.com/robertpainsi/filtering.js)
 
 ### What is filtering.js
 
 With filtering.js you can easily add filtering functionality to your project. It is a small, fast, and modern library without dependencies that can be used in node and browser environments.
 
-![Preview](https://github.com/filteringjs/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
-<sup>*([Live-demo and source](https://filteringjs.github.io/filtering.js/examples.html#number-of-results-for-each-filter))*</sup>
+![Preview](https://github.com/robertpainsi/filtering.js/raw/main/assets/preview.gif?raw=true)<br>
+<sup>*([Live-demo and source](https://robertpainsi.github.io/filtering.js/examples.html#number-of-results-for-each-filter))*</sup>
 
-Also check out a [large demo](https://filteringjs.github.io/filtering.js/demo.html) and [other examples](https://filteringjs.github.io/filtering.js/examples.html).
+Also check out a [large demo](https://robertpainsi.github.io/filtering.js/demo.html) and [other examples](https://robertpainsi.github.io/filtering.js/examples.html).
 
 ### Table of contents
 
@@ -22,7 +22,7 @@ Also check out a [large demo](https://filteringjs.github.io/filtering.js/demo.ht
 ### Difference to other libraries?
 
 - :zap: fast
-- :ant: [5.8kB (core)](https://github.com/filteringjs/filtering.js/blob/main/dist/index.core.js) or [9.5kB (with UI helpers)](https://github.com/filteringjs/filtering.js/blob/main/dist/index.ui.js)
+- :ant: [5.8kB (core)](https://github.com/robertpainsi/filtering.js/blob/main/dist/index.core.js) or [9.5kB (with UI helpers)](https://github.com/robertpainsi/filtering.js/blob/main/dist/index.ui.js)
 - :trophy: Supported by modern browsers using ES6 features.
   <sup>[1](https://caniuse.com/mdn-javascript_builtins_set),[2](https://caniuse.com/mdn-javascript_builtins_map),[3](https://caniuse.com/mdn-api_htmlelement_dataset),[4](https://caniuse.com/mdn-api_domtokenlist_contains)</sup>
 - :weight_lifting_man: Lifting complex logic from the developer.
@@ -65,7 +65,7 @@ const {Filtering} = filteringjs;
 
 If you don't need UI helpers like `Parser` or `FilteringFlow`, you can use the smaller core builds located at `"/dist/umd/index.core.js"` or `"@filtering.js/filtering.js/core"`.
 
-The preferred way to add filtering functionality to your project is by using the [`FilteringFlow`](https://github.com/filteringjs/filtering.js/blob/main/src/filteringflow.ts) helper class. It handles adding and removing of `checked`/`disabled` classes for filters and `filtered` classes for items. All classes can be adapted to easily suite existing projects too.
+The preferred way to add filtering functionality to your project is by using the [`FilteringFlow`](https://github.com/robertpainsi/filtering.js/blob/main/src/filteringflow.ts) helper class. It handles adding and removing of `checked`/`disabled` classes for filters and `filtered` classes for items. All classes can be adapted to easily suite existing projects too.
 
 A simple, out of the box example:
 
@@ -96,13 +96,13 @@ A simple, out of the box example:
 
 *That's it!*
 
-Check out more [examples](https://github.com/filteringjs/filtering.js/blob/main/examples/).
+Check out more [examples](https://github.com/robertpainsi/filtering.js/blob/main/examples/).
 
 ---
 
 ### Parser
 
-The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example, [example.html](https://github.com/filteringjs/filtering.js/blob/main/examples/example.html), [initialize-from-html.html](https://github.com/filteringjs/filtering.js/blob/main/examples/initialize-from-html.html) or other [examples](https://github.com/filteringjs/filtering.js/tree/main/examples).
+The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example, [example.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/example.html), [initialize-from-html.html](https://github.com/robertpainsi/filtering.js/blob/main/examples/initialize-from-html.html) or other [examples](https://github.com/robertpainsi/filtering.js/tree/main/examples).
 
 - Group element
     - `.filtering-group`
@@ -140,8 +140,8 @@ Following tables illustrate the performance of the library measured on Desktop. 
 
 ### API, Documentation and Examples
 
-https://filteringjs.github.io/filtering.js
+https://robertpainsi.github.io/filtering.js
 
-- [API](https://filteringjs.github.io/filtering.js/api)
-- [Documentation](https://filteringjs.github.io/filtering.js/documentation)
-- [Examples](https://filteringjs.github.io/filtering.js/examples)
+- [API](https://robertpainsi.github.io/filtering.js/api)
+- [Documentation](https://robertpainsi.github.io/filtering.js/documentation)
+- [Examples](https://robertpainsi.github.io/filtering.js/examples)

@@ -8,15 +8,15 @@
     "items",
     "ui"
   ],
-  "homepage": "https://filteringjs.github.io/filtering.js/",
+  "homepage": "https://robertpainsi.github.io/filtering.js/",
   "bugs": {
-    "url": "https://github.com/filteringjs/filtering.js/issues"
+    "url": "https://github.com/robertpainsi/filtering.js/issues"
   },
   "author": "Robert Painsi",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/filteringjs/filtering.js.git"
+    "url": "https://github.com/robertpainsi/filtering.js.git"
   },
   "exports": {
     ".": {
