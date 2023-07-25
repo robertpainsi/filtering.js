@@ -113,9 +113,9 @@ const parser_1 = require("./parser");
         const schema = (0, test_utils_1.jsToSchema)(singleTest.schema);
         (0, globals_1.test)(singleTest.name, () => (0, test_utils_1.testFiltering)(schema, singleTest));
     }
-    (0, globals_1.test)('Test Filltering callback prefiltering items', () => {
+    (0, globals_1.test)('Test Filtering callback prefiltering items', () => {
         const testData = {
-            name: 'Test Filltering callback prefiltering items',
+            name: 'Test Filtering callback prefiltering items',
             schema: simple_1.simpleTestSchema,
             options: {
                 filterItem: (item, schema, filterData) => {
@@ -158,6 +158,21 @@ const parser_1 = require("./parser");
             ['group', new Set(['filter'])],
         ]));
     });
+    (0, globals_1.test)('items in result should have same order as in schema.items', () => {
+        const schema = (0, test_utils_1.jsToSchema)(medium_1.mediumTestSchema);
+        const filtering = new filtering_1.Filtering(schema);
+        const result = filtering.filter(new filtering_1.FilterData());
+        expect((0, test_utils_1.getNames)(result.filteredItems, 'data.name')).toStrictEqual((0, test_utils_1.getNames)(schema.items, 'data.name'));
+        expect((0, test_utils_1.getNames)(result.allItems, 'data.name')).toStrictEqual((0, test_utils_1.getNames)(schema.items, 'data.name'));
+        const colorGroup = result.getGroup('color');
+        expect((0, test_utils_1.getNames)(colorGroup.filteredItems, 'data.name')).toStrictEqual((0, test_utils_1.getNames)(schema.items, 'data.name'));
+        expect((0, test_utils_1.getNames)(colorGroup.allItems, 'data.name')).toStrictEqual((0, test_utils_1.getNames)(schema.items, 'data.name'));
+        const filterItemNames = ['item-5', 'item-8', 'item-12', 'item-13'];
+        const redColorFilter = colorGroup.getFilter('red');
+        expect((0, test_utils_1.getNames)(redColorFilter.filteredItems, 'data.name')).toStrictEqual(filterItemNames);
+        expect((0, test_utils_1.getNames)(redColorFilter.possibleItems, 'data.name')).toStrictEqual(filterItemNames);
+        expect((0, test_utils_1.getNames)(redColorFilter.allItems, 'data.name')).toStrictEqual(filterItemNames);
+    });
     (0, globals_1.test)('Filtering with unavailable filter no checked', () => {
         const schema = new parser_1.Parser().parseSchemaFromHtml((0, test_utils_1.jsxToHtml)((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { className: "filtering-group", "data-group-name": "available", children: (0, jsx_runtime_1.jsx)("div", { className: "filtering-filter", "data-filter-name": "true", children: "Available?" }) }), (0, jsx_runtime_1.jsx)("div", { id: "item-1", className: "filtering-item", "data-filter-available": "true", children: "1" }), (0, jsx_runtime_1.jsx)("div", { id: "item-2", className: "filtering-item", "data-filter-available": "", children: "2" })] })));
         const filtering = new filtering_1.Filtering(schema);
@@ -172,7 +187,7 @@ const parser_1 = require("./parser");
     (0, globals_1.test)('Filtering with unavailable filter checked', () => {
         const filtering = new filtering_1.Filtering(new parser_1.Parser().parseSchemaFromHtml((0, test_utils_1.jsxToHtml)((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("div", { className: "filtering-group", "data-group-name": "available", children: (0, jsx_runtime_1.jsx)("div", { className: "filtering-filter", "data-filter-name": "true", children: "Available?" }) }), (0, jsx_runtime_1.jsx)("div", { id: "item-1", className: "filtering-item", "data-filter-available": "true", children: "1" }), (0, jsx_runtime_1.jsx)("div", { id: "item-2", className: "filtering-item", "data-filter-available": "", children: "2" })] }))));
         let result = filtering.filter((0, test_utils_1.createFilterData)({
-            'available': ['true']
+            'available': ['true'],
         }));
         expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1']);
     });

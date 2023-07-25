@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FilterResult = exports.GroupResult = exports.Result = void 0;
+const utils_1 = require("./utils");
 class Result {
     #schema;
     #groups = new Map();
@@ -45,7 +46,7 @@ class Result {
         for (const item of this.#filteredItems) {
             result.add(item);
         }
-        return [...result];
+        return (0, utils_1.reorder)(result, this.schema.items);
     }
     addFilteredItem(item) {
         this.#filteredItems.add(item);
@@ -64,7 +65,7 @@ class Result {
         for (const item of this.#allItems) {
             result.add(item);
         }
-        return [...result];
+        return (0, utils_1.reorder)(result, this.schema.items);
     }
     addAllItem(item) {
         this.#allItems.add(item);
@@ -105,7 +106,7 @@ class GroupResult {
         for (const item of this.#filteredItems) {
             result.add(item);
         }
-        return [...result];
+        return (0, utils_1.reorder)(result, this.schemaGroup.schema.items);
     }
     addFilteredItem(item) {
         this.#filteredItems.add(item);
@@ -123,7 +124,7 @@ class GroupResult {
         for (const item of this.#allItems) {
             result.add(item);
         }
-        return [...result];
+        return (0, utils_1.reorder)(result, this.schemaGroup.schema.items);
     }
     addAllItem(item) {
         this.#allItems.add(item);

@@ -1,7 +1,7 @@
 import {blue, expensive, large, medium, red, small} from '../test/test-data';
 import {describe, test} from '@jest/globals';
 import {TestDataFiltering} from '../test/test-data-types';
-import {createFilterData, jsToSchema, jsxToHtml, testFiltering} from '../test/test-utils';
+import {createFilterData, getNames, jsToSchema, jsxToHtml, testFiltering} from '../test/test-utils';
 import {simpleTestSchema} from '../test/data/simple';
 import {mediumTestSchema} from '../test/data/medium';
 import {Filter, Group, Item, Schema} from './schema';
@@ -162,6 +162,26 @@ describe('Test Tiltering', function () {
         expect(filterData.checkedFilters).toEqual(new Map([
             ['group', new Set(['filter'])],
         ]));
+    });
+
+    test('items in result should have same order as in schema.items', () => {
+        const schema = jsToSchema(mediumTestSchema);
+        const filtering = new Filtering(schema);
+
+        const result = filtering.filter(new FilterData());
+
+        expect(getNames(result.filteredItems, 'data.name')).toStrictEqual(getNames(schema.items, 'data.name'));
+        expect(getNames(result.allItems, 'data.name')).toStrictEqual(getNames(schema.items, 'data.name'));
+
+        const colorGroup = result.getGroup('color');
+        expect(getNames(colorGroup.filteredItems, 'data.name')).toStrictEqual(getNames(schema.items, 'data.name'));
+        expect(getNames(colorGroup.allItems, 'data.name')).toStrictEqual(getNames(schema.items, 'data.name'));
+
+        const filterItemNames = ['item-5', 'item-8', 'item-12', 'item-13'];
+        const redColorFilter = colorGroup.getFilter('red');
+        expect(getNames(redColorFilter.filteredItems, 'data.name')).toStrictEqual(filterItemNames);
+        expect(getNames(redColorFilter.possibleItems, 'data.name')).toStrictEqual(filterItemNames);
+        expect(getNames(redColorFilter.allItems, 'data.name')).toStrictEqual(filterItemNames);
     });
 
     test('Filtering with unavailable filter no checked', () => {

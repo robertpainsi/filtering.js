@@ -1,7 +1,7 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import { blue, expensive, large, medium, red, small } from '../test/test-data';
 import { describe, test } from '@jest/globals';
-import { createFilterData, jsToSchema, jsxToHtml, testFiltering } from '../test/test-utils';
+import { createFilterData, getNames, jsToSchema, jsxToHtml, testFiltering } from '../test/test-utils';
 import { simpleTestSchema } from '../test/data/simple';
 import { mediumTestSchema } from '../test/data/medium';
 import { Filter, Group } from './schema';
@@ -111,9 +111,9 @@ describe('Test Tiltering', function () {
         const schema = jsToSchema(singleTest.schema);
         test(singleTest.name, () => testFiltering(schema, singleTest));
     }
-    test('Test Filltering callback prefiltering items', () => {
+    test('Test Filtering callback prefiltering items', () => {
         const testData = {
-            name: 'Test Filltering callback prefiltering items',
+            name: 'Test Filtering callback prefiltering items',
             schema: simpleTestSchema,
             options: {
                 filterItem: (item, schema, filterData) => {
@@ -156,6 +156,21 @@ describe('Test Tiltering', function () {
             ['group', new Set(['filter'])],
         ]));
     });
+    test('items in result should have same order as in schema.items', () => {
+        const schema = jsToSchema(mediumTestSchema);
+        const filtering = new Filtering(schema);
+        const result = filtering.filter(new FilterData());
+        expect(getNames(result.filteredItems, 'data.name')).toStrictEqual(getNames(schema.items, 'data.name'));
+        expect(getNames(result.allItems, 'data.name')).toStrictEqual(getNames(schema.items, 'data.name'));
+        const colorGroup = result.getGroup('color');
+        expect(getNames(colorGroup.filteredItems, 'data.name')).toStrictEqual(getNames(schema.items, 'data.name'));
+        expect(getNames(colorGroup.allItems, 'data.name')).toStrictEqual(getNames(schema.items, 'data.name'));
+        const filterItemNames = ['item-5', 'item-8', 'item-12', 'item-13'];
+        const redColorFilter = colorGroup.getFilter('red');
+        expect(getNames(redColorFilter.filteredItems, 'data.name')).toStrictEqual(filterItemNames);
+        expect(getNames(redColorFilter.possibleItems, 'data.name')).toStrictEqual(filterItemNames);
+        expect(getNames(redColorFilter.allItems, 'data.name')).toStrictEqual(filterItemNames);
+    });
     test('Filtering with unavailable filter no checked', () => {
         const schema = new Parser().parseSchemaFromHtml(jsxToHtml(_jsxs(_Fragment, { children: [_jsx("div", { className: "filtering-group", "data-group-name": "available", children: _jsx("div", { className: "filtering-filter", "data-filter-name": "true", children: "Available?" }) }), _jsx("div", { id: "item-1", className: "filtering-item", "data-filter-available": "true", children: "1" }), _jsx("div", { id: "item-2", className: "filtering-item", "data-filter-available": "", children: "2" })] })));
         const filtering = new Filtering(schema);
@@ -170,7 +185,7 @@ describe('Test Tiltering', function () {
     test('Filtering with unavailable filter checked', () => {
         const filtering = new Filtering(new Parser().parseSchemaFromHtml(jsxToHtml(_jsxs(_Fragment, { children: [_jsx("div", { className: "filtering-group", "data-group-name": "available", children: _jsx("div", { className: "filtering-filter", "data-filter-name": "true", children: "Available?" }) }), _jsx("div", { id: "item-1", className: "filtering-item", "data-filter-available": "true", children: "1" }), _jsx("div", { id: "item-2", className: "filtering-item", "data-filter-available": "", children: "2" })] }))));
         let result = filtering.filter(createFilterData({
-            'available': ['true']
+            'available': ['true'],
         }));
         expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1']);
     });

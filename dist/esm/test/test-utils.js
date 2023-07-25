@@ -129,6 +129,9 @@ export function getProperty(object, propertyName) {
     }
     return result;
 }
+export function getNames(items, propertyName = 'name') {
+    return items.map((item) => getProperty(item, propertyName));
+}
 export function getSortedNames(items, propertyName = 'name') {
     return orderBy(items.map((item) => getProperty(item, propertyName)));
 }

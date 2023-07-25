@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createTestDataPossibleItems = exports.getSortedNames = exports.getProperty = exports.testFilterData = exports.jsToSchema = exports.jsxToHtml = exports.testSchemaItems = exports.testSchemaFilters = exports.testSchemaGroups = exports.testSchema = exports.checkFilters = exports.createFilterData = exports.createExpectedPossibleItems = exports.testFiltering = void 0;
+exports.createTestDataPossibleItems = exports.getSortedNames = exports.getNames = exports.getProperty = exports.testFilterData = exports.jsToSchema = exports.jsxToHtml = exports.testSchemaItems = exports.testSchemaFilters = exports.testSchemaGroups = exports.testSchema = exports.checkFilters = exports.createFilterData = exports.createExpectedPossibleItems = exports.testFiltering = void 0;
 const globals_1 = require("@jest/globals");
 require("./initialize-test-utils");
 const schema_1 = require("../src/schema");
@@ -144,6 +144,10 @@ function getProperty(object, propertyName) {
     return result;
 }
 exports.getProperty = getProperty;
+function getNames(items, propertyName = 'name') {
+    return items.map((item) => getProperty(item, propertyName));
+}
+exports.getNames = getNames;
 function getSortedNames(items, propertyName = 'name') {
     return (0, natural_orderby_1.orderBy)(items.map((item) => getProperty(item, propertyName)));
 }

@@ -16,5 +16,6 @@ export declare function jsxToHtml(jsx: ReactElement): HTMLElement;
 export declare function jsToSchema(o: TestDataSchema): Schema;
 export declare function testFilterData(filterData: FilterData, expectedChecked: TestDataSchema): void;
 export declare function getProperty(object: any, propertyName: string): any;
+export declare function getNames(items: any[], propertyName?: string): string[];
 export declare function getSortedNames(items: any[], propertyName?: string): string[];
 export declare function createTestDataPossibleItems(result: Result): TestDataPossibleItems;

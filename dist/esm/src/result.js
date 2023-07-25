@@ -1,3 +1,4 @@
+import { reorder } from './utils';
 export class Result {
     #schema;
     #groups = new Map();
@@ -42,7 +43,7 @@ export class Result {
         for (const item of this.#filteredItems) {
             result.add(item);
         }
-        return [...result];
+        return reorder(result, this.schema.items);
     }
     addFilteredItem(item) {
         this.#filteredItems.add(item);
@@ -61,7 +62,7 @@ export class Result {
         for (const item of this.#allItems) {
             result.add(item);
         }
-        return [...result];
+        return reorder(result, this.schema.items);
     }
     addAllItem(item) {
         this.#allItems.add(item);
@@ -101,7 +102,7 @@ export class GroupResult {
         for (const item of this.#filteredItems) {
             result.add(item);
         }
-        return [...result];
+        return reorder(result, this.schemaGroup.schema.items);
     }
     addFilteredItem(item) {
         this.#filteredItems.add(item);
@@ -119,7 +120,7 @@ export class GroupResult {
         for (const item of this.#allItems) {
             result.add(item);
         }
-        return [...result];
+        return reorder(result, this.schemaGroup.schema.items);
     }
     addAllItem(item) {
         this.#allItems.add(item);
