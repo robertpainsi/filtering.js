@@ -22,8 +22,8 @@ Start using the library by checking out the [examples]({{site.baseurl}}/examples
     </div>
 
     <div>
-        <div id="item-1" class="filtering-item" data-filter-color="red" data-filter-size="small"></div>
-        <div id="item-2" class="filtering-item" data-filter-color="blue" data-filter-size="large"></div>
+        <div class="filtering-item" data-filter-color="red" data-filter-size="small"></div>
+        <div class="filtering-item" data-filter-color="blue" data-filter-size="large"></div>
     </div>
 </div>
 
