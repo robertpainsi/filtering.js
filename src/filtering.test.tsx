@@ -7,7 +7,6 @@ import {mediumTestSchema} from '../test/data/medium';
 import {Filter, Group, Item, Schema} from './schema';
 import {FilterData, Filtering} from './filtering';
 import {Parser} from './parser';
-import {FilteringFlow} from './filteringflow';
 
 describe('Test Tiltering', function () {
     const testData: TestDataFiltering[] = [{
@@ -115,9 +114,9 @@ describe('Test Tiltering', function () {
         test(singleTest.name, () => testFiltering(schema, singleTest));
     }
 
-    test('Test Filltering callback prefiltering items', () => {
+    test('Test Filtering callback prefiltering items', () => {
         const testData: TestDataFiltering = {
-            name: 'Test Filltering callback prefiltering items',
+            name: 'Test Filtering callback prefiltering items',
             schema: simpleTestSchema,
             options: {
                 filterItem: (item: Item, schema: Schema, filterData: FilterData) => {
@@ -211,7 +210,7 @@ describe('Test Tiltering', function () {
         )));
 
         let result = filtering.filter(createFilterData({
-            'available': ['true']
+            'available': ['true'],
         }));
         expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1']);
     });

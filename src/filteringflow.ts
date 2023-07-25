@@ -1,5 +1,5 @@
 import {Group, Schema} from './schema';
-import {Parser, ParserOptions} from './parser';
+import {Parser} from './parser';
 import {FilterData, Filtering} from './filtering';
 import {Result} from './result';
 import {getTagName} from './utils';
