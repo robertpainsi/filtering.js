@@ -3,8 +3,9 @@ export interface Pojo {
 }
 
 export function findOne<Type>(haystack: Set<Type>, values: Set<Type>) {
-    for (const v of values) {
-        if (haystack.has(v)) {
+    const [smallerSet, largerSet] = haystack.size <= values.size ? [haystack, values] : [values, haystack];
+    for (const v of smallerSet) {
+        if (largerSet.has(v)) {
             return true;
         }
     }
@@ -16,11 +17,5 @@ export function getTagName(element: HTMLElement): string {
 }
 
 export function reorder<T>(items: Set<T>, orderBy: T[]): T[] {
-    const intersection: T[] = [];
-    for (const item of orderBy) {
-        if (items.has(item)) {
-            intersection.push(item);
-        }
-    }
-    return intersection;
+    return orderBy.filter((by) => items.has(by));
 }
