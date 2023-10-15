@@ -47,8 +47,6 @@ new FilteringFlow(document.querySelector('#root'));
 
 <div class="tab-content"></div>
 
->
-
 ```css
 /* Note: CSS is simplified and only shows
 styles that are relevant to the example. */
