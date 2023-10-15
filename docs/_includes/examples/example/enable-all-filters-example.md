@@ -13,8 +13,8 @@ An simple example that demonstrates a button enabling all filter.
 <div class="tab-content"></div>
 
 ```html
-<div id="filteringjs-enable-all-filters-example">
-    <div class="flex gap stretch">
+<div id="root">
+    <div>
         <div class="filtering-group" data-group-name="color">
             <div class="filtering-filter" data-filter-name="red">Red</div>
             <div class="filtering-filter" data-filter-name="green">Green</div>
@@ -23,7 +23,7 @@ An simple example that demonstrates a button enabling all filter.
         </div>
     </div>
 
-    <div class="flex">
+    <div>
         <div class="filtering-item" data-filter-color="red"></div>
         <div class="filtering-item" data-filter-color="green"></div>
         <div class="filtering-item" data-filter-color="blue"></div>
@@ -39,7 +39,7 @@ An simple example that demonstrates a button enabling all filter.
 
 ```js
 const {FilteringFlow} = filteringjs;
-new FilteringFlow(document.querySelector('#filteringjs-enable-all-filters-example'));
+new FilteringFlow(document.querySelector('#root'));
 ```
 
 <div class="tab-title"></div>

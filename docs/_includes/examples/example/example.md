@@ -13,8 +13,8 @@ A simple example of filtering.js in action.
 <div class="tab-content"></div>
 
 ```html
-<div id="filteringjs-example">
-    <div class="flex gap stretch">
+<div id="root">
+    <div>
         <div class="filtering-group" data-group-name="color">
             <div class="filtering-filter" data-filter-name="red">Red</div>
             <div class="filtering-filter" data-filter-name="blue">Blue</div>
@@ -25,7 +25,7 @@ A simple example of filtering.js in action.
         </div>
     </div>
 
-    <div class="flex">
+    <div>
         <div class="filtering-item" data-filter-color="red" data-filter-size="small"></div>
         <div class="filtering-item" data-filter-color="blue" data-filter-size="large"></div>
     </div>
@@ -40,7 +40,7 @@ A simple example of filtering.js in action.
 
 ```js
 const {FilteringFlow} = filteringjs;
-new FilteringFlow(document.querySelector('#filteringjs-example'));
+new FilteringFlow(document.querySelector('#root'));
 ```
 
 <div class="tab-title"></div>

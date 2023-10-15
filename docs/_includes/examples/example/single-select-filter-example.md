@@ -13,8 +13,8 @@ A simple example that demonstrates ads.
 <div class="tab-content"></div>
 
 ```html
-<div id="filteringjs-single-select-filter-example">
-    <div class="flex gap stretch">
+<div id="root">
+    <div>
         <div class="filtering-group" data-group-name="color" data-select-type="single">
             <div class="filtering-filter" data-filter-name="red">Red</div>
             <div class="filtering-filter" data-filter-name="green">Green</div>
@@ -22,7 +22,7 @@ A simple example that demonstrates ads.
         </div>
     </div>
 
-    <div class="flex">
+    <div>
         <div class="filtering-item" data-filter-color="red"></div>
         <div class="filtering-item" data-filter-color="green"></div>
         <div class="filtering-item" data-filter-color="blue"></div>
@@ -38,7 +38,7 @@ A simple example that demonstrates ads.
 
 ```js
 const {FilteringFlow} = filteringjs;
-new FilteringFlow(document.querySelector('#filteringjs-single-select-filter-example'));
+new FilteringFlow(document.querySelector('#root'));
 ```
 
 <div class="tab-title"></div>

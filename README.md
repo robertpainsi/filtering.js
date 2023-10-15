@@ -71,7 +71,7 @@ A simple, out of the box example:
 
 ```html
 <div id="root">
-    <div id="filtering">
+    <div>
         <div class="filtering-group" data-group-name="color">
             <div class="filtering-filter" data-filter-name="red">Red</div>
             <div class="filtering-filter" data-filter-name="blue">Blue</div>
@@ -82,7 +82,7 @@ A simple, out of the box example:
         </div>
     </div>
 
-    <div id="items">
+    <div>
         <div id="item-1" class="filtering-item" data-filter-color="red" data-filter-size="small"></div>
         <div id="item-2" class="filtering-item" data-filter-color="blue" data-filter-size="large"></div>
     </div>

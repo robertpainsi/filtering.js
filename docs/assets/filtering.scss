@@ -1,138 +1,181 @@
----
----
-
 $base-color: #c6538c;
 $font-color: #212121;
 $link-color: #0969da;
 
-.filtering-group {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  flex-basis: 0;
-  min-width: 132px;
-  max-width: 132px;
-  margin-bottom: 8px;
-  border: 1px solid lightgrey;
-  border-radius: 6px;
-
-  &[data-group-name]:before {
-    align-self: flex-start;
-    margin-top: -10px;
-    margin-left: 8px;
-    background-color: white;
-    color: lightgrey;
-    font-size: 15px;
-  }
-
-  &[data-group-name="color"]:before {
-    content: 'Color';
-  }
-
-  &[data-group-name="icon"]:before {
-    content: 'Icon';
-  }
-
-  &[data-group-name="size"]:before {
-    content: 'Size';
-  }
-
-  &[data-group-name="border-width"]:before {
-    content: 'Border width';
-  }
-
-  .filtering-filter {
+.example {
+  .filtering-group {
     display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 3px 12px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 132px;
+    max-width: 132px;
+    margin-bottom: 8px;
+    border: 1px solid lightgrey;
+    border-radius: 6px;
 
-    &:hover {
-      background-color: #eeeeee;
+    &[data-group-name]:before {
+      align-self: flex-start;
+      margin-top: -10px;
+      margin-left: 8px;
+      background-color: white;
+      color: lightgrey;
+      font-size: 15px;
     }
 
-    &.checked {
-      background-color: #ccf9ff;
-      transform: scale(1.1);
+    &[data-group-name="color"]:before {
+      content: 'Color';
     }
 
-    &.disabled {
-      color: #a4a4a4;
+    &[data-group-name="icon"]:before {
+      content: 'Icon';
     }
 
-    &.disabled:hover {
-      background-color: transparent;
+    &[data-group-name="size"]:before {
+      content: 'Size';
     }
 
-    &[data-filter-type="all"] {
-      border-top: 1px solid lightgrey;
+    &[data-group-name="border-width"]:before {
+      content: 'Border width';
+    }
+
+    .filtering-filter {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 3px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #eeeeee;
+      }
+
+      &.checked {
+        background-color: #ccf9ff;
+        transform: scale(1.1);
+      }
+
+      &.disabled {
+        color: #a4a4a4;
+      }
+
+      &.disabled:hover {
+        background-color: transparent;
+      }
+
+      &[data-filter-type="all"] {
+        border-top: 1px solid lightgrey;
+      }
     }
   }
-}
 
-.filtering-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 6px;
-  text-align: center;
-  border: 1px solid rgba(0, 0, 0, 0.32);
-  border-radius: 20%;
-  color: white;
-  transition: all 0.5s ease-in-out;
-  width: 48px;
-  height: 48px;
-
-  &.filtering-item.filtered {
-    width: 0;
-    margin-left: 0;
-    margin-right: 0;
-    border-width: 0 !important;
-    opacity: 0;
-  }
-
-  &[data-filter-color="red"] {
-    background-color: #db4437;
-  }
-
-  &[data-filter-color="green"] {
-    background-color: #0f9d58;
-  }
-
-  &[data-filter-color="blue"] {
-    background-color: #4285f4;
-  }
-
-  &[data-filter-size="xs"] {
-    width: 32px;
-    height: 32px;
-  }
-
-  &[data-filter-size="small"] {
+  .filtering-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 6px;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.32);
+    border-radius: 20%;
+    color: white;
+    transition: all 0.5s ease-in-out;
     width: 48px;
     height: 48px;
-  }
 
-  &[data-filter-size="medium"] {
-    width: 64px;
-    height: 64px;
-  }
+    &.filtering-item.filtered {
+      width: 0;
+      margin-left: 0;
+      margin-right: 0;
+      border-width: 0 !important;
+      opacity: 0;
+    }
 
-  &[data-filter-size="large"] {
-    width: 80px;
-    height: 80px;
-  }
+    &[data-filter-color="red"] {
+      background-color: #db4437;
+    }
 
-  &[data-filter-size="huge"] {
-    width: 96px;
-    height: 96px;
+    &[data-filter-color="green"] {
+      background-color: #0f9d58;
+    }
+
+    &[data-filter-color="blue"] {
+      background-color: #4285f4;
+    }
+
+    &[data-filter-size="xs"] {
+      width: 32px;
+      height: 32px;
+    }
+
+    &[data-filter-size="small"] {
+      width: 48px;
+      height: 48px;
+    }
+
+    &[data-filter-size="medium"] {
+      width: 64px;
+      height: 64px;
+    }
+
+    &[data-filter-size="large"] {
+      width: 80px;
+      height: 80px;
+    }
+
+    &[data-filter-size="huge"] {
+      width: 96px;
+      height: 96px;
+    }
   }
 }
 
 .demo {
   .filtering-item {
     transition-duration: 0.15s;
+  }
+}
+
+.guide {
+  margin-bottom: 15px;
+  background: #eef;
+  padding: 8px 12px;
+  overflow-x: auto;
+
+  * {
+    --color-alpha: 0.4;
+  }
+
+  .element {
+    color: rgba(0, 0, 128, var(--color-alpha));
+  }
+
+  .attribute {
+    color: rgba(0, 128, 128, var(--color-alpha));
+  }
+
+  .attribute-value {
+    color: rgba(221, 17, 68, var(--color-alpha));
+  }
+
+  .text {
+    color: rgba(17, 17, 17, var(--color-alpha));
+  }
+
+  .comment {
+    color: rgba(153, 153, 136, var(--color-alpha));
+    font-style: italic;
+  }
+
+  b {
+    //color: rgba(0, 128, 128, 1);
+    color: inherit;
+  }
+  b,
+  .\! {
+    --color-alpha: 1;
+    * {
+      --color-alpha: 1;
+    }
   }
 }

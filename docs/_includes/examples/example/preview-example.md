@@ -13,8 +13,8 @@ The number of items that would pass filtering is added to each filter.
 <div class="tab-content"></div>
 
 ```html
-<div id="filteringjs-preview-example">
-    <div class="flex gap stretch">
+<div id="root">
+    <div>
         <div class="filtering-group" data-group-name="color">
             <div class="filtering-filter" data-filter-name="red">Red <span class="total"></span></div>
             <div class="filtering-filter" data-filter-name="green">Green <span class="total"></span></div>
@@ -26,7 +26,7 @@ The number of items that would pass filtering is added to each filter.
         </div>
     </div>
 
-    <div class="flex">
+    <div>
         <div class="filtering-item" data-filter-color="red" data-filter-size="small"></div>
         <div class="filtering-item" data-filter-color="blue" data-filter-size="large"></div>
         <div class="filtering-item" data-filter-color="red" data-filter-size="large"></div>
@@ -57,7 +57,7 @@ class MyFlow extends FilteringFlow {
         }
     }
 }
-new MyFlow(document.querySelector('#filteringjs-preview-example'));
+new MyFlow(document.querySelector('#root'));
 
 ```
 
