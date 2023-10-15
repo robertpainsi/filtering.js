@@ -1,6 +1,6 @@
 ### Single select filter example
 
-A simple example that demonstrates ads.
+A simple example that demonstrates single-select for filters. Add `data-select-type="single"` to the `filtering-group` element.
 
 {% include examples/example/single-select-filter-example.html %}
 

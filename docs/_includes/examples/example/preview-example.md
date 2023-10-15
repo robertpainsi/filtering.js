@@ -1,4 +1,4 @@
-### Number of results for each filter
+### Show number of results for each filter
 
 The number of items that would pass filtering is added to each filter.
 

@@ -1,6 +1,6 @@
 ### Enable all filters example
 
-An simple example that demonstrates a button enabling all filter.
+A simple example that demonstrates a button to enable all filter. Add `data-filter-type="all"` to the `filtering-filter` element.
 
 {% include examples/example/enable-all-filters-example.html %}
 

@@ -67,7 +67,7 @@ If you don't need UI helpers like `Parser` or `FilteringFlow`, you can use the s
 
 The preferred way to add filtering functionality to your project is by using the [`FilteringFlow`](https://github.com/robertpainsi/filtering.js/blob/main/src/filteringflow.ts) helper class. It handles adding and removing of `checked`/`disabled` classes for filters and `filtered` classes for items. All classes can be adapted to easily suite existing projects too.
 
-A simple, out of the box example:
+#### A simple, out of the box example:
 
 ```html
 <div id="root">
