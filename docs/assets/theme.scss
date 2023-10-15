@@ -114,3 +114,15 @@ h1 {
     max-width: 1024px;
   }
 }
+
+.js-tabs__title-active {
+  border-radius: 0;
+}
+
+.js-tabs__content {
+  padding: 0;
+}
+
+.highlight {
+  margin-bottom: 0;
+}
