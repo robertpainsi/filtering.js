@@ -91,3 +91,26 @@ h1 {
 .post-header {
   display: none;
 }
+
+.wrapper {
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .wrapper {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrapper {
+    max-width: 1024px;
+  }
+}
