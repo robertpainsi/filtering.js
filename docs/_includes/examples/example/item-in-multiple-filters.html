@@ -1,0 +1,20 @@
+<div id="filteringjs-item-in-multiple-filters-example" class="example">
+    <div class="flex gap stretch">
+        <div class="filtering-group" data-group-name="color">
+            <div class="filtering-filter" data-filter-name="red">Red</div>
+            <div class="filtering-filter" data-filter-name="blue">Blue</div>
+        </div>
+    </div>
+    <div class="flex">
+        <div class="filtering-item" data-filter-color="red"></div>
+        <div class="filtering-item" data-filter-color="blue"></div>
+        <div class="filtering-item" data-filter-color="red,blue"></div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const {FilteringFlow} = filteringjs;
+        new FilteringFlow(document.querySelector('#filteringjs-item-in-multiple-filters-example'));
+    }())
+</script>
