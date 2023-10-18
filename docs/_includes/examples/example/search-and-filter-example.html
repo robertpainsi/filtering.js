@@ -1,0 +1,62 @@
+<div id="filteringjs-search-and-filter-example" class="example flex gap stretch flex-col">
+    <div class="flex gap">
+        <label for="filteringjs-search-and-filter-example-input">Search: </label>
+        <input type="text" id="filteringjs-search-and-filter-example-input">
+    </div>
+    <div class="flex gap stretch">
+        <div class="filtering-group" data-group-name="color">
+            <div class="filtering-filter" data-filter-name="red">Red <span class="total"></span></div>
+            <div class="filtering-filter" data-filter-name="blue">Blue <span class="total"></span></div>
+        </div>
+        <div class="filtering-group" data-group-name="size">
+            <div class="filtering-filter" data-filter-name="small">Small <span class="total"></span></div>
+            <div class="filtering-filter" data-filter-name="large">Large <span class="total"></span></div>
+        </div>
+    </div>
+    <div class="flex">
+        <div class="filtering-item" data-filter-color="red" data-filter-size="small"></div>
+        <div class="filtering-item" data-filter-color="blue" data-filter-size="large"></div>
+        <div class="filtering-item" data-filter-color="red" data-filter-size="large"></div>
+        <div class="filtering-item" data-filter-color="red" data-filter-size="small"></div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const {FilteringFlow} = filteringjs;
+
+        const searchElement = document.querySelector('#filteringjs-search-and-filter-example-input');
+        searchElement.addEventListener('input', (event) => {
+            flow.filter();
+        });
+
+        class MyFlow extends FilteringFlow {
+
+            getAllFilterNames(item) {
+                const result = [];
+                for (const groupName of item.getGroupNames()) {
+                    for (const filterName of item.getFilterNames(groupName)) {
+                        result.push(filterName);
+                    }
+                }
+                return result;
+            }
+
+            get filteringOptions() {
+                return {
+                    filterItem: (item, schema, filterData) => {
+                        for (const filterName of this.getAllFilterNames(item)) {
+                            if (filterName.toLowerCase().includes(searchElement.value.toLowerCase())) {
+                                // Return true if the item should be currently considered for filtering
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                };
+            }
+        }
+
+        const flow = new MyFlow(document.querySelector('#filteringjs-search-and-filter-example'));
+    }())
+</script>
