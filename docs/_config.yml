@@ -7,6 +7,7 @@ minima:
     - { platform: github,  user_url: "https://github.com/robertpainsi/filtering.js" }
 header_pages:
   - README.md
+  - guide.md
   - documentation.md
   - api.md
   - examples.md
