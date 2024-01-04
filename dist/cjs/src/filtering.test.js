@@ -191,4 +191,44 @@ const parser_1 = require("./parser");
         }));
         expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1']);
     });
+    (0, globals_1.test)('Filtering Item with a non existing group.', function () {
+        const schema = (0, test_utils_1.jsToSchema)({
+            groups: {
+                color: ['red', 'blue'],
+            },
+            items: [{
+                    name: 'item-1',
+                    groups: {
+                        color: [test_data_1.red],
+                        size: [test_data_1.small],
+                    },
+                }],
+        });
+        const filtering = new filtering_1.Filtering(schema);
+        expect(filtering.filter(new filtering_1.FilterData()).filteredItems.length).toBe(1);
+        expect(filtering.filter((0, test_utils_1.createFilterData)({
+            'color': ['red'],
+        })).filteredItems.length).toBe(1);
+        expect(filtering.filter((0, test_utils_1.createFilterData)({
+            'color': ['blue'],
+        })).filteredItems.length).toBe(0);
+    });
+    (0, globals_1.test)('Filtering Item with filter not in any group.', function () {
+        const schema = (0, test_utils_1.jsToSchema)({
+            groups: {
+                color: ['red', 'blue'],
+            },
+            items: [{
+                    name: 'item-1',
+                    groups: {
+                        color: [test_data_1.green],
+                    },
+                }],
+        });
+        const filtering = new filtering_1.Filtering(schema);
+        expect(filtering.filter(new filtering_1.FilterData()).filteredItems.length).toBe(1);
+        expect(filtering.filter((0, test_utils_1.createFilterData)({
+            'color': ['red'],
+        })).filteredItems.length).toBe(0);
+    });
 });

@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reorder = exports.getTagName = exports.findOne = void 0;
 function findOne(haystack, values) {
-    for (const v of values) {
-        if (haystack.has(v)) {
+    const [smallerSet, largerSet] = haystack.size <= values.size ? [haystack, values] : [values, haystack];
+    for (const v of smallerSet) {
+        if (largerSet.has(v)) {
             return true;
         }
     }
@@ -15,12 +16,6 @@ function getTagName(element) {
 }
 exports.getTagName = getTagName;
 function reorder(items, orderBy) {
-    const intersection = [];
-    for (const item of orderBy) {
-        if (items.has(item)) {
-            intersection.push(item);
-        }
-    }
-    return intersection;
+    return orderBy.filter((by) => items.has(by));
 }
 exports.reorder = reorder;

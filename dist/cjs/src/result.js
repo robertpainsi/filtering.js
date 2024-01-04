@@ -52,7 +52,7 @@ class Result {
         this.#filteredItems.add(item);
         for (const groupName of item.getGroupNames()) {
             const groupResult = this.#groups.get(groupName);
-            groupResult.addFilteredItem(item);
+            groupResult?.addFilteredItem(item);
         }
     }
     get allItems() {
@@ -71,7 +71,7 @@ class Result {
         this.#allItems.add(item);
         for (const groupName of item.getGroupNames()) {
             const groupResult = this.#groups.get(groupName);
-            groupResult.addAllItem(item);
+            groupResult?.addAllItem(item);
         }
     }
 }

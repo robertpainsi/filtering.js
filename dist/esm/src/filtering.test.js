@@ -1,5 +1,5 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
-import { blue, expensive, large, medium, red, small } from '../test/test-data';
+import { blue, expensive, green, large, medium, red, small } from '../test/test-data';
 import { describe, test } from '@jest/globals';
 import { createFilterData, getNames, jsToSchema, jsxToHtml, testFiltering } from '../test/test-utils';
 import { simpleTestSchema } from '../test/data/simple';
@@ -188,5 +188,45 @@ describe('Test Tiltering', function () {
             'available': ['true'],
         }));
         expect(result.filteredItems.map((item) => item.data.element.id)).toEqual(['item-1']);
+    });
+    test('Filtering Item with a non existing group.', function () {
+        const schema = jsToSchema({
+            groups: {
+                color: ['red', 'blue'],
+            },
+            items: [{
+                    name: 'item-1',
+                    groups: {
+                        color: [red],
+                        size: [small],
+                    },
+                }],
+        });
+        const filtering = new Filtering(schema);
+        expect(filtering.filter(new FilterData()).filteredItems.length).toBe(1);
+        expect(filtering.filter(createFilterData({
+            'color': ['red'],
+        })).filteredItems.length).toBe(1);
+        expect(filtering.filter(createFilterData({
+            'color': ['blue'],
+        })).filteredItems.length).toBe(0);
+    });
+    test('Filtering Item with filter not in any group.', function () {
+        const schema = jsToSchema({
+            groups: {
+                color: ['red', 'blue'],
+            },
+            items: [{
+                    name: 'item-1',
+                    groups: {
+                        color: [green],
+                    },
+                }],
+        });
+        const filtering = new Filtering(schema);
+        expect(filtering.filter(new FilterData()).filteredItems.length).toBe(1);
+        expect(filtering.filter(createFilterData({
+            'color': ['red'],
+        })).filteredItems.length).toBe(0);
     });
 });
