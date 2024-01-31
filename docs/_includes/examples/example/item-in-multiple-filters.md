@@ -1,6 +1,6 @@
 ### Item in multiple filters
 
-To add an item to multiple filters, just separate the filter names in the `filtering-item`'s data attribute value. e.g. the color purple is a mix of red and blue. So to put it into both filters, set `data-filter-color="red,blue"`.
+To add an item to multiple filters, just separate the filter names in the `filtering-item`'s data attribute value by comma. e.g. the color purple is a mix of red and blue. To put it into both filters, use `data-filter-color="red,blue"`.
 
 {% include examples/example/item-in-multiple-filters.html %}
 
