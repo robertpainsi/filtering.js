@@ -1,6 +1,6 @@
 ### A simple example of filtering.js in action
 
-A simple example of filtering.js in action.
+A simple example of filtering.js in action. Test it out by clicking on the color and size filters. 
 
 {% include examples/example/example.html %}
 
