@@ -1,6 +1,6 @@
-# [Examples]({{site.baseurl}}{{page.url}})
+# [Examples (interactive)]({{site.baseurl}}{{page.url}})
 
-##### Table of content
+##### Table of contents
 
 - [A simple example of filtering.js in action]({{site.baseurl}}{{page.url}}#a-simple-example-of-filteringjs-in-action)
 - [Enable all filters example]({{site.baseurl}}{{page.url}}#enable-all-filters-example)
