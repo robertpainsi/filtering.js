@@ -6,17 +6,19 @@ import {getTagName} from './utils';
 
 export class FilteringFlow {
 
-    readonly #options: FilteringFlowOptions;
+    #options: FilteringFlowOptions;
     static readonly defaultOptions: FilteringFlowOptions = {
         triggerFilterAfterInitializing: true,
         disabledFilterClass: 'disabled',
         filteredItemClass: 'filtered',
     }
 
-    readonly #root: HTMLElement;
-    readonly #schema: Schema;
-    readonly #parser: Parser;
-    readonly #filtering: Filtering;
+    #root: HTMLElement;
+    #schema: Schema;
+    #parser: Parser;
+    #filtering: Filtering;
+
+    #listeners = [];
 
     constructor(root: HTMLElement, options: FilteringFlowOptions = {}) {
         this.#root = root;
@@ -82,8 +84,12 @@ export class FilteringFlow {
             const groupElement = group.data.element as HTMLElement;
             for (const filter of group.filters) {
                 const filterElement = filter.data.element as HTMLElement;
+
+                let eventListener;
+                let eventType;
                 if (getTagName(filterElement) === 'input') {
-                    filterElement.addEventListener('change', (event) => {
+                    eventType = 'change';
+                    eventListener = (event) => {
                         if (this.beforeFilter(filterElement)) {
                             if (filterElement.dataset.filterType === 'all') {
                                 this.#uncheckAllFiltersInGroup(group);
@@ -93,9 +99,10 @@ export class FilteringFlow {
                             }
                             this.filter();
                         }
-                    })
+                    };
                 } else {
-                    filterElement.addEventListener('click', (event) => {
+                    eventType = 'click';
+                    eventListener = (event) => {
                         event.preventDefault();
                         if (filterElement.classList.contains(this.options.disabledFilterClass)) {
                             // Ignore click if the filter would give 0 results
@@ -115,8 +122,14 @@ export class FilteringFlow {
                             }
                             this.filter();
                         }
-                    });
+                    }
                 }
+                filterElement.addEventListener(eventType, eventListener);
+                this.#listeners.push({
+                    element: filterElement,
+                    type: eventType,
+                    listener: eventListener,
+                });
             }
         }
     }
@@ -200,6 +213,19 @@ export class FilteringFlow {
                 !result.filteredItems.includes(item) || !result.allItems.includes(item),
             );
         }
+    }
+
+    destroy() {
+        for (const {element, type, listener} of this.#listeners) {
+            element.removeEventListener(type, listener);
+        }
+
+        this.#options = null;
+        this.#root = null;
+        this.#schema = null;
+        this.#parser = null;
+        this.#filtering = null;
+        this.#listeners = null;
     }
 }
 
