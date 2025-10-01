@@ -14,26 +14,11 @@ const colors_1 = require("../test/data/colors");
         const initializeSchemaSpy = globals_1.jest.spyOn(filteringflow_1.FilteringFlow.prototype, 'initializeSchema');
         const initializeFilteringSpy = globals_1.jest.spyOn(filteringflow_1.FilteringFlow.prototype, 'initializeFiltering');
         const initializeFilterListenerSpy = globals_1.jest.spyOn(filteringflow_1.FilteringFlow.prototype, 'initializeFilterListener');
-        const filterListenerSpy = globals_1.jest.spyOn(filteringflow_1.FilteringFlow.prototype, 'filter');
         new filteringflow_1.FilteringFlow((0, test_utils_1.jsxToHtml)((0, jsx_runtime_1.jsx)("div", {})));
         (0, globals_1.expect)(initializeParserSpy).toBeCalledTimes(1);
         (0, globals_1.expect)(initializeSchemaSpy).toBeCalledTimes(1);
         (0, globals_1.expect)(initializeFilteringSpy).toBeCalledTimes(1);
         (0, globals_1.expect)(initializeFilterListenerSpy).toBeCalledTimes(1);
-        (0, globals_1.expect)(filterListenerSpy).toBeCalledTimes(1);
-    });
-    (0, globals_1.test)('FilteringFlow triggerFilterAfterInitializing', () => {
-        const filterListenerSpyDisabled = globals_1.jest.spyOn(filteringflow_1.FilteringFlow.prototype, 'filter');
-        filterListenerSpyDisabled.mockClear();
-        new filteringflow_1.FilteringFlow((0, test_utils_1.jsxToHtml)((0, jsx_runtime_1.jsx)("div", {})), {
-            triggerFilterAfterInitializing: false,
-        });
-        (0, globals_1.expect)(filterListenerSpyDisabled).toBeCalledTimes(0);
-        const filterListenerSpyEnabled = globals_1.jest.spyOn(filteringflow_1.FilteringFlow.prototype, 'filter');
-        new filteringflow_1.FilteringFlow((0, test_utils_1.jsxToHtml)((0, jsx_runtime_1.jsx)("div", {})), {
-            triggerFilterAfterInitializing: true,
-        });
-        (0, globals_1.expect)(filterListenerSpyEnabled).toBeCalledTimes(1);
     });
     (0, globals_1.test)('FilteringFlow filter', () => {
         const parser = new parser_1.Parser();
@@ -46,7 +31,7 @@ const colors_1 = require("../test/data/colors");
             initializeSchema() {
                 return schema;
             }
-            initializeFiltering(filteringOptions) {
+            initializeFiltering() {
                 return filtering;
             }
         }
@@ -123,4 +108,5 @@ const colors_1 = require("../test/data/colors");
         (0, globals_1.expect)(schema.getGroup('color').getFilter('green').data.element.checked).toBeFalsy();
         (0, globals_1.expect)(schema.getGroup('color').getFilter('blue').data.element.checked).toBeFalsy();
     });
+    // TODO: Test destroy
 });

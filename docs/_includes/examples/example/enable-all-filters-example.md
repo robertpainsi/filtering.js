@@ -39,7 +39,7 @@ A simple example that demonstrates a button to enable all filter. Add `data-filt
 
 ```js
 const {FilteringFlow} = filteringjs;
-new FilteringFlow(document.querySelector('#root'));
+new FilteringFlow(document.querySelector('#root')).filter();
 ```
 
 <div class="tab-title"></div>

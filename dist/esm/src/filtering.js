@@ -1,32 +1,22 @@
 import { Filter } from './schema';
 import { Result } from './result';
-import { findOne } from './utils';
+import { findOne, toBooly } from './utils';
+import { EventEmitter } from './eventemitter';
 export class Filtering {
     #schema;
-    #options;
-    constructor(data, options = {}) {
+    #eventEmitter = new EventEmitter();
+    constructor(data) {
         this.#schema = data;
-        this.#options = options;
     }
     get schema() {
         return this.#schema;
     }
-    get options() {
-        return this.#options;
-    }
     filter(filterData) {
         const result = new Result(this.#schema);
-        let relevantItems = [];
-        if (this.#options.filterItem) {
-            for (const item of this.#schema.items) {
-                if (this.#options.filterItem(item, this.#schema, filterData)) {
-                    relevantItems.push(item);
-                }
-            }
-        }
-        else {
-            relevantItems = [...this.#schema.items];
-        }
+        const relevantItems = this.#schema.items.filter((item) => {
+            const results = this.#eventEmitter.emit('filter-item', { source: this, data: { item, filterData, schema: this.#schema } });
+            return results.length === 0 || results.every(toBooly);
+        });
         for (const item of relevantItems) {
             result.addAllItem(item);
         }
@@ -63,6 +53,9 @@ export class Filtering {
             }
         }
         return result;
+    }
+    addEventListener(eventName, callback, priority) {
+        return this.#eventEmitter.addEventListener(eventName, callback, priority);
     }
 }
 export class FilterData {

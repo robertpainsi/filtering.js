@@ -1,4 +1,4 @@
-# [Examples (interactive)]({{site.baseurl}}{{page.url}})
+# [Examples]({{site.baseurl}}{{page.url}})
 
 ##### Table of contents
 

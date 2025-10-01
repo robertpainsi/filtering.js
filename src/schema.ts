@@ -83,10 +83,6 @@ export class Group {
         filter.group = this;
     }
 
-    getFilterNames(): string[] {
-        return [...this.#filters.keys()];
-    }
-
     get data(): Pojo {
         return this.#data;
     }

@@ -45,42 +45,32 @@ You can totally customize which items to pre-filter. In this example we're just 
 ```js
 const {FilteringFlow} = filteringjs;
 
+const filteringRootElement = document.querySelector('#root');
 const searchElement = document.querySelector('#search-input');
+
+const flow = new FilteringFlow(filteringRootElement);
+
+// Register a 'filter-item' listener which works similar to Array.filter
+flow.filtering.addEventListener('filter-item', (event) => {
+    const item = event.data.item;
+    const element = item.data.element;
+
+    for (const [name, value] of Object.entries(element.dataset)) {
+        if (name.startsWith('filter')
+            && value.toLowerCase().includes(searchElement.value.toLowerCase())) {
+            // only check data-filter attributes and return true if any value includes the search query
+            return true;
+        }
+    }
+
+    return false;
+});
+
 searchElement.addEventListener('input', (event) => {
     flow.filter();
 });
 
-class MyFlow extends FilteringFlow {
-
-    getAllFilterNames(item) {
-        // Since we want to filter the entered search text by filftered name,
-        // this is the helper method used for the example only.
-        const result = [];
-        for (const groupName of item.getGroupNames()) {
-            for (const filterName of item.getFilterNames(groupName)) {
-                result.push(filterName);
-            }
-        }
-        return result;
-    }
-
-    get filteringOptions() {
-        return {
-            // The callback to prefilter items before actually filtering
-            filterItem: (item, schema, filterData) => {
-                for (const filterName of this.getAllFilterNames(item)) {
-                    if (filterName.toLowerCase().includes(searchElement.value.toLowerCase())) {
-                        // Return true if the item should be currently considered for filtering
-                        return true;
-                    }
-                }
-                return false;
-            }
-        };
-    }
-}
-
-const flow = new MyFlow(document.querySelector('#root'));
+flow.filter(); // Always trigger filter after all plug-ins and listeners have been registered
 ```
 
 <div class="tab-title"></div>

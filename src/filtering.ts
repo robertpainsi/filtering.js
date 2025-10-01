@@ -1,38 +1,28 @@
 import {Filter, Item, Schema} from './schema';
 import {Result} from './result';
-import {findOne} from './utils';
+import {findOne, toBooly} from './utils';
+import {EventCallback, EventEmitter, EventSubscribable} from './eventemitter';
 
-export class Filtering {
+export class Filtering implements EventSubscribable {
 
     readonly #schema: Schema;
-    readonly #options: FilteringOptions;
+    readonly #eventEmitter = new EventEmitter();
 
-    constructor(data: Schema, options: FilteringOptions = {}) {
+    constructor(data: Schema) {
         this.#schema = data;
-        this.#options = options;
     }
 
     get schema(): Schema {
         return this.#schema;
     }
 
-    get options(): FilteringOptions {
-        return this.#options;
-    }
-
     filter(filterData: FilterData): Result {
         const result = new Result(this.#schema);
 
-        let relevantItems: Item[] = [];
-        if (this.#options.filterItem) {
-            for (const item of this.#schema.items) {
-                if (this.#options.filterItem(item, this.#schema, filterData)) {
-                    relevantItems.push(item);
-                }
-            }
-        } else {
-            relevantItems = [...this.#schema.items];
-        }
+        const relevantItems: Item[] = this.#schema.items.filter((item) => {
+            const results = this.#eventEmitter.emit('filter-item', {source: this, data: {item, filterData, schema: this.#schema}});
+            return results.length === 0 || results.every(toBooly);
+        });
         for (const item of relevantItems) {
             result.addAllItem(item);
         }
@@ -78,10 +68,10 @@ export class Filtering {
 
         return result;
     }
-}
 
-export interface FilteringOptions {
-    filterItem?(item: Item, schema: Schema, filterData: FilterData): boolean,
+    addEventListener(eventName: string, callback: EventCallback, priority?: number): () => void {
+        return this.#eventEmitter.addEventListener(eventName, callback, priority);
+    }
 }
 
 export class FilterData {

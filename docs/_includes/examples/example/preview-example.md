@@ -43,22 +43,20 @@ The number of items that would pass filtering is added to each filter.
 <div class="tab-content"></div>
 
 ```js
-const {FilteringFlow} = filteringjs;
+const flow = new FilteringFlow(document.querySelector('#root'));
 
-class MyFlow extends FilteringFlow {
-    handleFilterResult(result) {
-        super.handleFilterResult(result);
-        for (const group of result.groups) {
-            for (const filter of group.filters) {
-                const filterElement = filter.schemaFilter.data.element;
-                // Update the number next to the filter to indicate how many items are or would be filtered
-                filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
-            }
+// Register a 'filter' listener to set the number of possibly filtered items
+flow.addEventListener('filter', (event) => {
+    const result = event.data.result;
+    for (const group of result.groups) {
+        for (const filter of group.filters) {
+            const filterElement = filter.schemaFilter.data.element;
+            // Update the number next to the filter to indicate how many items are or would be filtered
+            filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
         }
     }
-}
-new MyFlow(document.querySelector('#root'));
-
+})
+flow.filter(); // Always trigger filter after all plug-ins and listeners have been registered
 ```
 
 <div class="tab-title"></div>

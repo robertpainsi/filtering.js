@@ -64,9 +64,6 @@ export class Group {
         this.#filters.set(filter.name, filter);
         filter.group = this;
     }
-    getFilterNames() {
-        return [...this.#filters.keys()];
-    }
     get data() {
         return this.#data;
     }

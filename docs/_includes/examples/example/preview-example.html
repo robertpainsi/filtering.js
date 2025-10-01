@@ -23,19 +23,17 @@
     (function () {
         const {FilteringFlow} = filteringjs;
 
-        class MyFlow extends FilteringFlow {
-            handleFilterResult(result) {
-                super.handleFilterResult(result);
-                for (const group of result.groups) {
-                    for (const filter of group.filters) {
-                        const filterElement = filter.schemaFilter.data.element;
-                        // Update the number next to the filter to indicate how many items are or would be filtered
-                        filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
-                    }
+        const flow = new FilteringFlow(document.querySelector('#filteringjs-preview-example'));
+        flow.addEventListener('filter', (event) => {
+            const result = event.data.result;
+            for (const group of result.groups) {
+                for (const filter of group.filters) {
+                    const filterElement = filter.schemaFilter.data.element;
+                    // Update the number next to the filter to indicate how many items are or would be filtered
+                    filterElement.querySelector('.total').innerText = `(${filter.possibleItems.length})`;
                 }
             }
-        }
-
-        new MyFlow(document.querySelector('#filteringjs-preview-example'));
+        })
+        flow.filter(); // Always trigger filter after all plug-ins and listeners have been registered
     }())
 </script>

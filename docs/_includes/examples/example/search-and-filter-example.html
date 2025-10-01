@@ -25,38 +25,28 @@
     (function () {
         const {FilteringFlow} = filteringjs;
 
+        const filteringRootElement = document.querySelector('#filteringjs-search-and-filter-example');
         const searchElement = document.querySelector('#filteringjs-search-and-filter-example-input');
+
+        const flow = new FilteringFlow(filteringRootElement);
+
+        flow.filtering.addEventListener('filter-item', (event) => {
+            const item = event.data.item;
+            const element = item.data.element;
+
+            for (const [name, value] of Object.entries(element.dataset)) {
+                if (name.startsWith('filter') && value.toLowerCase().includes(searchElement.value.toLowerCase())) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+
         searchElement.addEventListener('input', (event) => {
             flow.filter();
         });
 
-        class MyFlow extends FilteringFlow {
-
-            getAllFilterNames(item) {
-                const result = [];
-                for (const groupName of item.getGroupNames()) {
-                    for (const filterName of item.getFilterNames(groupName)) {
-                        result.push(filterName);
-                    }
-                }
-                return result;
-            }
-
-            get filteringOptions() {
-                return {
-                    filterItem: (item, schema, filterData) => {
-                        for (const filterName of this.getAllFilterNames(item)) {
-                            if (filterName.toLowerCase().includes(searchElement.value.toLowerCase())) {
-                                // Return true if the item should be currently considered for filtering
-                                return true;
-                            }
-                        }
-                        return false;
-                    }
-                };
-            }
-        }
-
-        const flow = new MyFlow(document.querySelector('#filteringjs-search-and-filter-example'));
+        flow.filter();
     }())
 </script>

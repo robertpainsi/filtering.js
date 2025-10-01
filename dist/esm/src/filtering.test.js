@@ -115,11 +115,13 @@ describe('Test Tiltering', function () {
         const testData = {
             name: 'Test Filtering callback prefiltering items',
             schema: simpleTestSchema,
-            options: {
-                filterItem: (item, schema, filterData) => {
-                    return item.getFilterNames('size').has('large'); // Only use large items
-                },
-            },
+            eventListeners: [{
+                    eventName: 'filter-item',
+                    callback: (event) => {
+                        const item = event.data.item;
+                        return item.getFilterNames('size').has('large'); // Only use large items
+                    }
+                }],
             checked: {
                 color: [red],
             },

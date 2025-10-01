@@ -7,6 +7,9 @@ export function findOne(haystack, values) {
     }
     return false;
 }
+export function toBooly(o) {
+    return !!o;
+}
 export function getTagName(element) {
     return element.tagName.toLowerCase();
 }

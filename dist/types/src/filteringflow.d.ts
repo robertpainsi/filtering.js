@@ -1,8 +1,9 @@
+import { EventCallback, EventSubscribable } from './eventemitter';
 import { Schema } from './schema';
 import { Parser } from './parser';
 import { FilterData, Filtering } from './filtering';
 import { Result } from './result';
-export declare class FilteringFlow {
+export declare class FilteringFlow implements EventSubscribable {
     #private;
     static readonly defaultOptions: FilteringFlowOptions;
     constructor(root: HTMLElement, options?: FilteringFlowOptions);
@@ -11,22 +12,17 @@ export declare class FilteringFlow {
     get schema(): Schema;
     get parser(): Parser;
     get filtering(): Filtering;
-    beforeInitializing(): void;
     initializeParser(): Parser;
     get parserOptions(): any;
     initializeSchema(): Schema;
     initializeFiltering(): Filtering;
-    get filteringOptions(): any;
     initializeFilterListener(): void;
-    afterInitializing(): void;
-    beforeFilter(filterElement: HTMLElement): boolean;
     filter(filterData?: FilterData): Result;
-    handleFilterResult(result: Result, filterData?: FilterData): void;
     destroy(): void;
+    addEventListener(eventName: string, callback: EventCallback, priority?: number): () => void;
 }
 interface FilteringFlowOptions {
     disabledFilterClass?: string;
     filteredItemClass?: string;
-    triggerFilterAfterInitializing?: boolean;
 }
 export {};

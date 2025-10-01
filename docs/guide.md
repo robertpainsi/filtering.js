@@ -39,7 +39,7 @@ Just one line of JavaScript code and _"It's Alive!"_. Here is the final code:
 
 {% include guides/guide-step-06.html %}
 ```javascript
-new filteringjs.FilteringFlow(document.querySelector('#root'));
+new filteringjs.FilteringFlow(document.querySelector('#root')).filter();
 ```
 <br>
 
@@ -50,3 +50,18 @@ Done! Hop to the [examples]({{site.baseurl}}/examples.html) to check out what fe
 - Add a search input to prefilter items.
 - Add items into multiple filters of the same group.
 - Show number of results for each filter if it would be selected in advance.
+
+### Events and Listeners
+
+If you implement the code only using event listeners, you will be able to reuse the logic in other projects too. See the [hash plugin](https://gist.github.com/robertpainsi/2fa433d90ae0136573f155af705f4ee7#file-index-html-L50-L100) that uses the browser's hash to store the active filters in the current url. Mainly you'll need following events, for others you can check out the [API]({{site.baseurl}}/api.html).
+
+- `filter`
+    - Usage ```filteringFlow.addEventListener('filter', (event) => {/* your code here */})```
+    - Called after filtering. This will be the most registered event because here you can react right after the filtering happened, check the filter result and filter states.
+- `filter-item`
+    - Usage ```filteringFlow.filtering.addEventListener('filter-item', (event) => {/* your code here */})```
+    - Called before `Filtering.filter` for each item. Returning `true` will consider the item for filtering, similar to JavaScript's
+      `Array.filter`. If you register multiple event listeners, every one has to return `true`.
+- `should-filter`
+    - Usage: ```filteringFlow.addEventListener('should-filter', (event) => {/* your code here */})```
+    - Called when a filter element is clicked. If any listener returns `false`, the filtering magic will be aborted.

@@ -19,7 +19,6 @@ export declare class Group {
     get filters(): Filter[];
     getFilter(name: string): Filter;
     addFilter(filter: Filter): void;
-    getFilterNames(): string[];
     get data(): Pojo;
 }
 export declare class Filter {

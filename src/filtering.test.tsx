@@ -4,9 +4,10 @@ import {TestDataFiltering} from '../test/test-data-types';
 import {createFilterData, getNames, jsToSchema, jsxToHtml, testFiltering} from '../test/test-utils';
 import {simpleTestSchema} from '../test/data/simple';
 import {mediumTestSchema} from '../test/data/medium';
-import {Filter, Group, Item, Schema} from './schema';
+import {Filter, Group} from './schema';
 import {FilterData, Filtering} from './filtering';
 import {Parser} from './parser';
+import {Event} from './eventemitter';
 
 describe('Test Tiltering', function () {
     const testData: TestDataFiltering[] = [{
@@ -118,11 +119,14 @@ describe('Test Tiltering', function () {
         const testData: TestDataFiltering = {
             name: 'Test Filtering callback prefiltering items',
             schema: simpleTestSchema,
-            options: {
-                filterItem: (item: Item, schema: Schema, filterData: FilterData) => {
+            eventListeners: [{
+                eventName: 'filter-item',
+                callback: (event: Event) => {
+                    const item = event.data.item;
                     return item.getFilterNames('size').has('large'); // Only use large items
-                },
-            },
+                }
+
+            }],
             checked: {
                 color: [red],
             },

@@ -1,5 +1,5 @@
 import {ParserOptions} from "../src/parser";
-import {FilteringOptions} from "../src/filtering";
+import {EventCallback} from '../src/eventemitter';
 
 export interface TestDataTest {
     name: string,
@@ -11,7 +11,7 @@ export interface TestDataFiltering extends TestDataTest {
     filteredItems?: string[],
     possibleItems?: TestDataPossibleItems,
     allItems?: string[],
-    options?: FilteringOptions,
+    eventListeners?: {eventName: string, callback: EventCallback}[],
 }
 
 export interface TestDataParserWithHtml extends TestDataTest {

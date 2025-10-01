@@ -9,6 +9,8 @@ With filtering.js you can easily add filtering functionality to your project. It
 
 Also check out a [large demo](https://robertpainsi.github.io/filtering.js/demo.html) and [other examples](https://robertpainsi.github.io/filtering.js/examples.html).
 
+> Always check the GitHub Wiki for breaking changes if you upgrade to a new major version!
+
 ### Table of contents
 
 - [Difference to other libraries?](#difference-to-other-libraries)
@@ -22,7 +24,7 @@ Also check out a [large demo](https://robertpainsi.github.io/filtering.js/demo.h
 ### Difference to other libraries?
 
 - :zap: Lightning fast
-- :ant: [6.4kB (core)](https://github.com/robertpainsi/filtering.js/blob/main/dist/umd/index.core.js) or [11.7kB (with UI helpers)](https://github.com/robertpainsi/filtering.js/blob/main/dist/umd/index.ui.js)
+- :ant: [7.3kB (core)](https://github.com/robertpainsi/filtering.js/blob/main/dist/umd/index.core.js) or [12.9kB (with UI helpers)](https://github.com/robertpainsi/filtering.js/blob/main/dist/umd/index.ui.js)
 - :trophy: Supported by modern browsers using ES6 features.
   <sup>[1](https://caniuse.com/mdn-javascript_builtins_set),[2](https://caniuse.com/mdn-javascript_builtins_map),[3](https://caniuse.com/mdn-api_htmlelement_dataset),[4](https://caniuse.com/mdn-api_domtokenlist_contains)</sup>
 - :weight_lifting_man: Lifting complex logic from the developer.
@@ -90,7 +92,7 @@ The preferred way to add filtering functionality to your project is by using the
 
 <script>
     const {FilteringFlow} = filteringjs;
-    new FilteringFlow(document.querySelector('#root'));
+    new FilteringFlow(document.querySelector('#root')).filter();
 </script>
 ```
 
@@ -100,19 +102,21 @@ Check out more [examples](https://robertpainsi.github.io/filtering.js/examples).
 
 ---
 
-### Parser
+### Parser (HTML Schema)
 
-The Schema can be directly parsed from HTML. For this, the structure has to be built according to following rules. All class names can be adapted to suite existing projects. See above example or other [examples](https://robertpainsi.github.io/filtering.js/examples).
+The Schema can be directly parsed from HTML. For this, the structure has to be built according to specific but very simple rules. Simply check out the previous HTML example. All class names and attributes can be adapted to suite existing projects, but for now, we use the default class names and attribute schemas.
 
-- Group element
-    - `.filtering-group`
-    - `data-group-name="color"`
-    - Filter element
-        - `.filtering-filter`
-        - `data-filter-name="red"`
-- Item element
-    - `.filtering-item`
-    - `data-filter-color="red"`<br>(the attribute name ends with the group name and is assigned the filter name)
+- Root element
+    - Group element
+        - `class="filtering-group"`
+        - `data-group-name="color"` (replace `color` with any name you want)
+        - Filter element (descendant of a group element)
+            - `class="filtering-filter"`
+            - `data-filter-name="red"` (replace `red` with any name you want)
+    - Item element
+        - `class="filtering-item"`
+        - `data-filter-color="red"` (the attribute derives from the group name `color` and filter name `red`)
+          ![data-filter attribute schema](https://github.com/robertpainsi/filtering.js/raw/main/assets/html-schema.png?raw=true)
 
 ---
 

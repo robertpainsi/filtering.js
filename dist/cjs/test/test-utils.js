@@ -10,7 +10,13 @@ const server_1 = require("react-dom/server");
 const natural_orderby_1 = require("natural-orderby");
 function testFiltering(schema, test) {
     const filterData = createFilterData(test.checked);
-    const result = new filtering_1.Filtering(schema, test.options).filter(filterData);
+    const filtering = new filtering_1.Filtering(schema);
+    if (test.eventListeners) {
+        for (const { eventName, callback } of test.eventListeners) {
+            filtering.addEventListener(eventName, callback);
+        }
+    }
+    const result = filtering.filter(filterData);
     if (test.filteredItems) {
         (0, globals_1.expect)(getSortedNames(result.filteredItems, 'data.name')).toEqual((0, natural_orderby_1.orderBy)(test.filteredItems));
     }

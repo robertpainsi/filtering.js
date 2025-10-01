@@ -3,7 +3,7 @@ import {FilteringFlow} from './filteringflow';
 import {jsxToHtml} from '../test/test-utils';
 import {Schema} from './schema';
 import {Parser, ParserOptions} from './parser';
-import {FilterData, Filtering, FilteringOptions} from './filtering';
+import {FilterData, Filtering} from './filtering';
 import {
     jsxColors,
     jsxColorsSingleSelect,
@@ -18,32 +18,12 @@ describe('FilteringFlow', () => {
         const initializeSchemaSpy = jest.spyOn(FilteringFlow.prototype, 'initializeSchema');
         const initializeFilteringSpy = jest.spyOn(FilteringFlow.prototype, 'initializeFiltering');
         const initializeFilterListenerSpy = jest.spyOn(FilteringFlow.prototype, 'initializeFilterListener');
-        const filterListenerSpy = jest.spyOn(FilteringFlow.prototype, 'filter');
         new FilteringFlow(jsxToHtml(<div></div>));
 
         expect(initializeParserSpy).toBeCalledTimes(1);
         expect(initializeSchemaSpy).toBeCalledTimes(1);
         expect(initializeFilteringSpy).toBeCalledTimes(1);
         expect(initializeFilterListenerSpy).toBeCalledTimes(1);
-        expect(filterListenerSpy).toBeCalledTimes(1);
-    });
-
-    test('FilteringFlow triggerFilterAfterInitializing', () => {
-        const filterListenerSpyDisabled = jest.spyOn(FilteringFlow.prototype, 'filter');
-        filterListenerSpyDisabled.mockClear();
-
-        new FilteringFlow(jsxToHtml(<div></div>), {
-            triggerFilterAfterInitializing: false,
-        });
-
-        expect(filterListenerSpyDisabled).toBeCalledTimes(0);
-
-        const filterListenerSpyEnabled = jest.spyOn(FilteringFlow.prototype, 'filter');
-        new FilteringFlow(jsxToHtml(<div></div>), {
-            triggerFilterAfterInitializing: true,
-        });
-
-        expect(filterListenerSpyEnabled).toBeCalledTimes(1);
     });
 
     test('FilteringFlow filter', () => {
@@ -60,7 +40,7 @@ describe('FilteringFlow', () => {
                 return schema;
             }
 
-            initializeFiltering(filteringOptions?: FilteringOptions): Filtering {
+            initializeFiltering(): Filtering {
                 return filtering;
             }
         }
@@ -164,4 +144,6 @@ describe('FilteringFlow', () => {
         expect(schema.getGroup('color').getFilter('green').data.element.checked).toBeFalsy();
         expect(schema.getGroup('color').getFilter('blue').data.element.checked).toBeFalsy();
     });
+
+    // TODO: Test destroy
 })

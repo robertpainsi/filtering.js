@@ -14,7 +14,7 @@ $link-color: #0969da;
     min-width: 132px;
     max-width: 132px;
     margin-bottom: 8px;
-    border: 1px solid lightgrey;
+    border: 1px solid #b5b5b5;
     border-radius: 6px;
 
     &[data-group-name]:before {
@@ -22,7 +22,7 @@ $link-color: #0969da;
       margin-top: -10px;
       margin-left: 8px;
       background-color: white;
-      color: lightgrey;
+      color: #b5b5b5;
       font-size: 15px;
     }
 
@@ -68,7 +68,7 @@ $link-color: #0969da;
       }
 
       &[data-filter-type="all"] {
-        border-top: 1px solid lightgrey;
+        border-top: 1px solid #b5b5b5;
       }
     }
   }

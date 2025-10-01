@@ -1,10 +1,10 @@
+import { EventEmitter } from './eventemitter';
 import { Parser } from './parser';
 import { Filtering } from './filtering';
-import { getTagName } from './utils';
+import { getTagName, toBooly } from './utils';
 export class FilteringFlow {
     #options;
     static defaultOptions = {
-        triggerFilterAfterInitializing: true,
         disabledFilterClass: 'disabled',
         filteredItemClass: 'filtered',
     };
@@ -12,19 +12,15 @@ export class FilteringFlow {
     #schema;
     #parser;
     #filtering;
-    #listeners = [];
+    #elementListeners = [];
+    #eventEmitter = new EventEmitter();
     constructor(root, options = {}) {
         this.#root = root;
         this.#options = { ...FilteringFlow.defaultOptions, ...options };
-        this.beforeInitializing();
         this.#parser = this.initializeParser();
         this.#schema = this.initializeSchema();
         this.#filtering = this.initializeFiltering();
         this.initializeFilterListener();
-        this.afterInitializing();
-        if (this.options.triggerFilterAfterInitializing) {
-            this.filter();
-        }
     }
     get options() {
         return this.#options;
@@ -41,8 +37,6 @@ export class FilteringFlow {
     get filtering() {
         return this.#filtering;
     }
-    beforeInitializing() {
-    }
     initializeParser() {
         return new Parser(this.parserOptions);
     }
@@ -53,10 +47,7 @@ export class FilteringFlow {
         return this.parser.parseSchemaFromHtml(this.root);
     }
     initializeFiltering() {
-        return new Filtering(this.schema, this.filteringOptions);
-    }
-    get filteringOptions() {
-        return undefined;
+        return new Filtering(this.schema);
     }
     initializeFilterListener() {
         for (const group of this.schema.groups) {
@@ -67,8 +58,8 @@ export class FilteringFlow {
                 let eventType;
                 if (getTagName(filterElement) === 'input') {
                     eventType = 'change';
-                    eventListener = (event) => {
-                        if (this.beforeFilter(filterElement)) {
+                    eventListener = () => {
+                        if (this.#shouldFilter(filter)) {
                             if (filterElement.dataset.filterType === 'all') {
                                 this.#uncheckAllFiltersInGroup(group);
                                 filterElement.checked = true;
@@ -88,7 +79,7 @@ export class FilteringFlow {
                             // Ignore click if the filter would give 0 results
                             return;
                         }
-                        if (this.beforeFilter(filterElement)) {
+                        if (this.#shouldFilter(filter)) {
                             if (filterElement.dataset.filterType === 'all') {
                                 this.#uncheckAllFiltersInGroup(group);
                                 filterElement.classList.add(this.parser.options.filterCheckedClass);
@@ -107,7 +98,7 @@ export class FilteringFlow {
                     };
                 }
                 filterElement.addEventListener(eventType, eventListener);
-                this.#listeners.push({
+                this.#elementListeners.push({
                     element: filterElement,
                     type: eventType,
                     listener: eventListener,
@@ -139,12 +130,12 @@ export class FilteringFlow {
             }
         }
     }
-    afterInitializing() {
-    }
-    beforeFilter(filterElement) {
-        return true;
+    #shouldFilter(filter) {
+        const results = this.#eventEmitter.emit('should-filter', { source: this, data: { filter } });
+        return (results.length === 0 || results.every(toBooly));
     }
     filter(filterData) {
+        this.#eventEmitter.emit('before-filter', { source: this, data: { filterData } });
         if (!filterData) {
             // Parse checked filter from HTML
             filterData = this.parser.parseCheckedFilterDataFromHtml(this.root);
@@ -164,10 +155,11 @@ export class FilteringFlow {
             }
         }
         const result = this.filtering.filter(filterData);
-        this.handleFilterResult(result, filterData);
+        this.#handleFilterResult(result);
+        this.#eventEmitter.emit('filter', { source: this, data: { result, filterData } });
         return result;
     }
-    handleFilterResult(result, filterData) {
+    #handleFilterResult(result) {
         for (const group of result.groups) {
             for (const filter of group.filters) {
                 const filterElement = filter.schemaFilter.data.element;
@@ -191,8 +183,10 @@ export class FilteringFlow {
             item.data.element.classList.toggle(this.options.filteredItemClass, !result.filteredItems.includes(item) || !result.allItems.includes(item));
         }
     }
+    // TODO: Test
     destroy() {
-        for (const { element, type, listener } of this.#listeners) {
+        this.#eventEmitter.emit('destroy', { source: this });
+        for (const { element, type, listener } of this.#elementListeners) {
             element.removeEventListener(type, listener);
         }
         this.#options = null;
@@ -200,6 +194,10 @@ export class FilteringFlow {
         this.#schema = null;
         this.#parser = null;
         this.#filtering = null;
-        this.#listeners = null;
+        this.#elementListeners = null;
+        this.#eventEmitter = null;
+    }
+    addEventListener(eventName, callback, priority) {
+        return this.#eventEmitter.addEventListener(eventName, callback, priority);
     }
 }

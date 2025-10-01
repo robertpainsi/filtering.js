@@ -1,14 +1,12 @@
-import { Filter, Item, Schema } from './schema';
+import { Filter, Schema } from './schema';
 import { Result } from './result';
-export declare class Filtering {
+import { EventCallback, EventSubscribable } from './eventemitter';
+export declare class Filtering implements EventSubscribable {
     #private;
-    constructor(data: Schema, options?: FilteringOptions);
+    constructor(data: Schema);
     get schema(): Schema;
-    get options(): FilteringOptions;
     filter(filterData: FilterData): Result;
-}
-export interface FilteringOptions {
-    filterItem?(item: Item, schema: Schema, filterData: FilterData): boolean;
+    addEventListener(eventName: string, callback: EventCallback, priority?: number): () => void;
 }
 export declare class FilterData {
     #private;

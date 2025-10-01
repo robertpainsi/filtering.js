@@ -4,32 +4,22 @@ exports.FilterData = exports.Filtering = void 0;
 const schema_1 = require("./schema");
 const result_1 = require("./result");
 const utils_1 = require("./utils");
+const eventemitter_1 = require("./eventemitter");
 class Filtering {
     #schema;
-    #options;
-    constructor(data, options = {}) {
+    #eventEmitter = new eventemitter_1.EventEmitter();
+    constructor(data) {
         this.#schema = data;
-        this.#options = options;
     }
     get schema() {
         return this.#schema;
     }
-    get options() {
-        return this.#options;
-    }
     filter(filterData) {
         const result = new result_1.Result(this.#schema);
-        let relevantItems = [];
-        if (this.#options.filterItem) {
-            for (const item of this.#schema.items) {
-                if (this.#options.filterItem(item, this.#schema, filterData)) {
-                    relevantItems.push(item);
-                }
-            }
-        }
-        else {
-            relevantItems = [...this.#schema.items];
-        }
+        const relevantItems = this.#schema.items.filter((item) => {
+            const results = this.#eventEmitter.emit('filter-item', { source: this, data: { item, filterData, schema: this.#schema } });
+            return results.length === 0 || results.every(utils_1.toBooly);
+        });
         for (const item of relevantItems) {
             result.addAllItem(item);
         }
@@ -66,6 +56,9 @@ class Filtering {
             }
         }
         return result;
+    }
+    addEventListener(eventName, callback, priority) {
+        return this.#eventEmitter.addEventListener(eventName, callback, priority);
     }
 }
 exports.Filtering = Filtering;

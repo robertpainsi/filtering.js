@@ -37,7 +37,7 @@ To add an item to multiple filters, just separate the filter names in the `filte
 
 ```js
 const {FilteringFlow} = filteringjs;
-new FilteringFlow(document.querySelector('#root'));
+new FilteringFlow(document.querySelector('#root')).filter();
 ```
 
 <div class="tab-title"></div>

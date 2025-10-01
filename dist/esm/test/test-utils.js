@@ -7,7 +7,13 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { orderBy } from 'natural-orderby';
 export function testFiltering(schema, test) {
     const filterData = createFilterData(test.checked);
-    const result = new Filtering(schema, test.options).filter(filterData);
+    const filtering = new Filtering(schema);
+    if (test.eventListeners) {
+        for (const { eventName, callback } of test.eventListeners) {
+            filtering.addEventListener(eventName, callback);
+        }
+    }
+    const result = filtering.filter(filterData);
     if (test.filteredItems) {
         expect(getSortedNames(result.filteredItems, 'data.name')).toEqual(orderBy(test.filteredItems));
     }

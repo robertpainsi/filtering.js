@@ -41,7 +41,8 @@ Start using the library by checking out the [examples]({{site.baseurl}}/examples
     const parser = new Parser();
     const schema = parser.parseSchemaFromHtml(document.querySelector('#root'));
     const filtering = new Filtering(schema);
-    // ...
+    // Register plug-ins, listeners, ...
+    filtering.filter();
 </script>
 ```
 
@@ -78,7 +79,8 @@ item2.addFilter('size', 'large');
 schema.addItem(item2);
 
 const filtering = new Filtering(schema);
-// ...
+// Register plug-ins, listeners, ...
+filtering.filter();
 ```
 
 ### Workflow and structure
@@ -89,24 +91,6 @@ Once you built a `Schema`, you can use `Filtering.filter` to get a `Result` that
 
 ![Class diagram for Schema, Result and Item](./assets/class-diagram-schema-result-item.svg)
 
-> Note that `FilterResult` also has a list of items that *would
-pass* the filtering. `Result` and `GroupResult` don't because they would return the same items as `allItems`.
-
 ### `FilteringFlow`
 
-`FilteringFlow` is a helper class that can be used in the browser and removes to repetitive work of creating a schema from HTML, initializing filtering and updating the DOM by adding or removing classes. Each step of the workflow can be customized by overriding the corresponding methods.
-
-- `initializeParser`
-    - if you want to use custom `ParserOptions`, override this method and return a `Parser` with your options.
-- `initializeSchema`
-    - if you want to build the `Schema` yourself, override this method and return your `Schema`. This also allows you to partially build the `Schema` by using the `Parser` and by building it yourself.
-- `initializeFiltering`
-    - if you want to use custom `FilteringOptions`, override this method and return a `Filtering` with your options.
-- `initializeFilterListener`
-    - this will add a listener to each filter element and will trigger `filter` eventually. The `Parser` automatically stores a reference to the corresponding HTML element in `filter.data.element`. If you parse the schema yourself, you have to add the reference to the HTML element yourself.
-- `beforeFilter`
-    - is called before any classes are updated and `filter` would be called. Return `false` if you want to abort filtering.
-- `filter`
-    - parses checked filters from HTML, calculates the `Result` and returns it.
-- `handleFilterResult`
-    - adds or removes class `disabled` from filter elements and `filtered` from item elements. If you want to add additional logic to handle the `Result`, override this method. Don't forget to call `super.handleFilterResult(result)` to update the classes.
+`FilteringFlow` is a helper class that can be used in the browser and removes to repetitive work of creating a schema from HTML, initializing filtering and updating the DOM by adding or removing classes.

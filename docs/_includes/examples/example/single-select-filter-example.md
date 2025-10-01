@@ -38,7 +38,7 @@ A simple example that demonstrates single-select for filters. Add `data-select-t
 
 ```js
 const {FilteringFlow} = filteringjs;
-new FilteringFlow(document.querySelector('#root'));
+new FilteringFlow(document.querySelector('#root')).filter();
 ```
 
 <div class="tab-title"></div>

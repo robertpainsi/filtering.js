@@ -12,26 +12,11 @@ describe('FilteringFlow', () => {
         const initializeSchemaSpy = jest.spyOn(FilteringFlow.prototype, 'initializeSchema');
         const initializeFilteringSpy = jest.spyOn(FilteringFlow.prototype, 'initializeFiltering');
         const initializeFilterListenerSpy = jest.spyOn(FilteringFlow.prototype, 'initializeFilterListener');
-        const filterListenerSpy = jest.spyOn(FilteringFlow.prototype, 'filter');
         new FilteringFlow(jsxToHtml(_jsx("div", {})));
         expect(initializeParserSpy).toBeCalledTimes(1);
         expect(initializeSchemaSpy).toBeCalledTimes(1);
         expect(initializeFilteringSpy).toBeCalledTimes(1);
         expect(initializeFilterListenerSpy).toBeCalledTimes(1);
-        expect(filterListenerSpy).toBeCalledTimes(1);
-    });
-    test('FilteringFlow triggerFilterAfterInitializing', () => {
-        const filterListenerSpyDisabled = jest.spyOn(FilteringFlow.prototype, 'filter');
-        filterListenerSpyDisabled.mockClear();
-        new FilteringFlow(jsxToHtml(_jsx("div", {})), {
-            triggerFilterAfterInitializing: false,
-        });
-        expect(filterListenerSpyDisabled).toBeCalledTimes(0);
-        const filterListenerSpyEnabled = jest.spyOn(FilteringFlow.prototype, 'filter');
-        new FilteringFlow(jsxToHtml(_jsx("div", {})), {
-            triggerFilterAfterInitializing: true,
-        });
-        expect(filterListenerSpyEnabled).toBeCalledTimes(1);
     });
     test('FilteringFlow filter', () => {
         const parser = new Parser();
@@ -44,7 +29,7 @@ describe('FilteringFlow', () => {
             initializeSchema() {
                 return schema;
             }
-            initializeFiltering(filteringOptions) {
+            initializeFiltering() {
                 return filtering;
             }
         }
@@ -121,4 +106,5 @@ describe('FilteringFlow', () => {
         expect(schema.getGroup('color').getFilter('green').data.element.checked).toBeFalsy();
         expect(schema.getGroup('color').getFilter('blue').data.element.checked).toBeFalsy();
     });
+    // TODO: Test destroy
 });

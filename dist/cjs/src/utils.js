@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reorder = exports.getTagName = exports.findOne = void 0;
+exports.reorder = exports.getTagName = exports.toBooly = exports.findOne = void 0;
 function findOne(haystack, values) {
     const [smallerSet, largerSet] = haystack.size <= values.size ? [haystack, values] : [values, haystack];
     for (const v of smallerSet) {
@@ -11,6 +11,10 @@ function findOne(haystack, values) {
     return false;
 }
 exports.findOne = findOne;
+function toBooly(o) {
+    return !!o;
+}
+exports.toBooly = toBooly;
 function getTagName(element) {
     return element.tagName.toLowerCase();
 }
